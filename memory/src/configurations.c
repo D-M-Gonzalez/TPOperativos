@@ -7,9 +7,11 @@
 
 t_config_properties* load_configurations(){
 
-    t_config_properties* config_properties 
+    t_config_properties* config_properties; 
 
-    config = config_create(MEMORY_FILE_CONFIG_PATH);
+    t_config* config;
+	
+	config = config_create(MEMORY_FILE_CONFIG_PATH);
     
 
     if (config == NULL){
@@ -19,7 +21,6 @@ t_config_properties* load_configurations(){
 
 	if (config_has_property(config, PORT_PROPERTY_KEY_CONFIG)){
 		(*config_properties).puerto = config_get_string_value(config, PORT_PROPERTY_KEY_CONFIG);
-		log_debug(logger, (*config_properties).puerto );
 	}; 
 
     return config_properties;

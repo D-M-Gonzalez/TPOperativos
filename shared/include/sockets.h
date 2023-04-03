@@ -10,7 +10,7 @@
 #include<string.h>
 #include<commons/log.h>
 
-
+#define SOCKET_PENDING_CONNECTIONS 4
 
 int iniciar_servidor(t_log* logger, char* ip, char* puerto);
 int esperar_cliente(t_log* logger, int socket_servidor);

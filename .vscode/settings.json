@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "sockets.h": "c",
+        "readline.h": "c",
+        "config.h": "c"
+    }
+}

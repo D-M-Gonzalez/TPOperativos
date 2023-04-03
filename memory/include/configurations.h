@@ -3,6 +3,9 @@
 
 
 #include<commons/config.h>  
+#include <stddef.h>
+#include <stdlib.h>
+#include<commons/log.h>
 
 
 #define MEMORY_FILE_CONFIG_PATH "memory.config"
@@ -19,4 +22,6 @@ typedef struct
 
 t_config_properties* load_configurations();
 
-#endif MEMORY_CONFIG_H_
+extern t_log* logger;
+
+#endif /*MEMORY_CONFIG_H_*/
