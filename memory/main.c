@@ -20,6 +20,7 @@ int main() {
     int server_fd = iniciar_servidor(logger, IP_MEMORIA, (*config_properties).puerto);
 	int cliente_fd = esperar_cliente(logger, server_fd);
     
+	terminar_programa(logger);
 
     return EXIT_SUCCESS;
 }

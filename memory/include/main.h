@@ -8,6 +8,13 @@
 #include<readline/readline.h>
 #include <readline/history.h>  
 
+#include "finalization.h"
+#include "configurations.h"
+
+#include "../../shared/include/sockets.h"
+
+
+
 
 #define SOCKET_PENDING_CONNECTIONS 4
 
