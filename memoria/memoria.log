@@ -10,3 +10,6 @@
 [INFO] 13:47:43:746 Memoria/(6283:6283): Memoria lista para recibir al CPU, Kernel o File System
 [INFO] 13:52:27:604 Memoria/(6283:6283): Se conecto un cliente!
 [ERROR] 13:52:57:367 Memoria/(6283:6283): el cliente se desconecto. Terminando servidor
+[INFO] 18:06:57:559 Memoria/(144182:144182): Memoria lista para recibir al CPU, Kernel o File System
+[INFO] 18:06:59:139 Memoria/(144182:144182): Se conecto un cliente!
+[ERROR] 18:07:06:577 Memoria/(144182:144182): el cliente se desconecto. Terminando servidor
