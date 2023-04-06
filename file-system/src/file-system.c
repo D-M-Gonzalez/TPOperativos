@@ -1,18 +1,19 @@
 #include "file-system.h"
 
+int conexion_cliente;
+int conexion_servidor;
+char* ip;
+char* puerto_cliente;
+char* puerto_server;
+t_log* logger;
+t_config* config;
+
 int main(void)
 {
-	int conexion_cliente;
-	int conexion_servidor;
-	char* ip;
-	char* puerto_cliente;
-	char* puerto_server;
-
-	t_log* logger;
-	t_config* config;
-
 	logger = iniciar_logger();
 	config = iniciar_config();
+
+	log_info(logger,initial_setup());
 
 	ip = config_get_string_value(config,"IP_MEMORIA");
 	puerto_cliente = config_get_string_value(config,"PUERTO_MEMORIA");
@@ -58,59 +59,23 @@ void iterator(char* value) {
 	log_info(logger,"%s", value);
 }
 
-t_log* iniciar_logger(void)
-{
-	t_log* nuevo_logger = log_create("./file-system.log","File system",true,LOG_LEVEL_INFO);
+char* initial_setup(){
+	char* result = "";
+	int error = 1;
 
-	return nuevo_logger;
-}
-
-t_config* iniciar_config(void)
-{
-	t_config* nuevo_config = config_create("./file-system.config");
-
-	return nuevo_config;
-}
-
-void leer_consola(t_log* logger)
-{
-	char* leido;
-
-	while(1){
-		leido = readline("> ");
-
-		if(strcmp(leido,"")==0)break;
-
-		log_info(logger,leido);
-		free(leido);
+	if(error == 1 && strcmp(ip = config_get_string_value(config,"IP_MEMORIA"),"") == 0){
+		result = "No se pudo obtener la IP desde el archivo config";
+		error = 0;
 	}
-
-}
-
-void paquete(int conexion)
-{
-
-	char* leido;
-	t_paquete* paquete = crear_paquete();
-
-	while(1){
-		leido = readline("> ");
-
-		if(strcmp(leido,"")==0){
-			break;
-		}
-		agregar_a_paquete(paquete,leido,(strlen(leido)+1));
-		free(leido);
+	if(error == 1 && strcmp(puerto_server = config_get_string_value(config,"PUERTO_ESCUCHA"),"") == 0){
+		result = "No se pudo obtener el puerto de escucha desde el archivo config";
+		error = 0;
 	}
+	if(error == 1 && strcmp(puerto_cliente = config_get_string_value(config,"PUERTO_MEMORIA"),"") == 0){
+		result = "No se pudo obtener el puerto de conexion desde el archivo config";
+		error = 0;
+	}
+	if(error == 1) result = "Valores de configuracion leidos correctamente";
 
-	enviar_paquete(paquete,conexion);
-	eliminar_paquete(paquete);
-
-}
-
-void terminar_programa(int conexion, t_log* logger, t_config* config)
-{
-	log_destroy(logger);
-	config_destroy(config);
-	liberar_conexion(conexion);
+	return result;
 }

@@ -26,3 +26,6 @@
 [INFO] 17:08:02:200 Memoria/(150306:150306): Memoria lista para recibir al CPU, Kernel o File System
 [INFO] 17:08:03:790 Memoria/(150306:150306): Se conecto un cliente!
 [ERROR] 17:08:03:911 Memoria/(150306:150306): el cliente se desconecto. Terminando servidor
+[INFO] 18:03:41:982 Memoria/(3316:3316): Memoria lista para recibir al CPU, Kernel o File System
+[INFO] 18:03:43:347 Memoria/(3316:3316): Se conecto un cliente!
+[ERROR] 18:03:46:496 Memoria/(3316:3316): el cliente se desconecto. Terminando servidor
