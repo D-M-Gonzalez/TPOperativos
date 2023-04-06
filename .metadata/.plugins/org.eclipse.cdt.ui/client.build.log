@@ -1,0 +1,24 @@
+02:03:21 **** Build of configuration Debug for project client ****
+make all 
+Building file: ../src/client.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/client.d" -MT"src/client.o" -o "src/client.o" "../src/client.c"
+../src/client.c: In function ‘leer_consola’:
+../src/client.c:95:9: warning: format not a string literal and no format arguments [-Wformat-security]
+   95 |         log_info(logger,leido);
+      |         ^~~~~~~~
+Finished building: ../src/client.c
+ 
+Building file: ../src/utils.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/utils.d" -MT"src/utils.o" -o "src/utils.o" "../src/utils.c"
+Finished building: ../src/utils.c
+ 
+Building target: client
+Invoking: GCC C Linker
+gcc  -o "client" ./src/client.o ./src/utils.o    -lcommons -lreadline
+Finished building target: client
+ 
+
+02:03:24 Build Finished. 0 errors, 1 warnings. (took 3s.347ms)
+
