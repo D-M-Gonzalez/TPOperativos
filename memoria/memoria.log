@@ -13,3 +13,16 @@
 [INFO] 18:06:57:559 Memoria/(144182:144182): Memoria lista para recibir al CPU, Kernel o File System
 [INFO] 18:06:59:139 Memoria/(144182:144182): Se conecto un cliente!
 [ERROR] 18:07:06:577 Memoria/(144182:144182): el cliente se desconecto. Terminando servidor
+[INFO] 17:44:19:619 Memoria/(145563:145563): Memoria lista para recibir al CPU, Kernel o File System
+[INFO] 17:44:23:539 Memoria/(145563:145563): Se conecto un cliente!
+[INFO] 18:17:04:138 Memoria/(145687:145687): Memoria lista para recibir al CPU, Kernel o File System
+[INFO] 18:17:07:708 Memoria/(145687:145687): Se conecto un cliente!
+[ERROR] 18:17:15:707 Memoria/(145687:145687): el cliente se desconecto. Terminando servidor
+[INFO] 18:17:17:371 Memoria/(145689:145689): Memoria lista para recibir al CPU, Kernel o File System
+[INFO] 18:17:31:829 Memoria/(145689:145689): Se conecto un cliente!
+[INFO] 17:06:34:939 Memoria/(150184:150184): Memoria lista para recibir al CPU, Kernel o File System
+[INFO] 17:06:36:939 Memoria/(150184:150184): Se conecto un cliente!
+[ERROR] 17:06:37:058 Memoria/(150184:150184): el cliente se desconecto. Terminando servidor
+[INFO] 17:08:02:200 Memoria/(150306:150306): Memoria lista para recibir al CPU, Kernel o File System
+[INFO] 17:08:03:790 Memoria/(150306:150306): Se conecto un cliente!
+[ERROR] 17:08:03:911 Memoria/(150306:150306): el cliente se desconecto. Terminando servidor
