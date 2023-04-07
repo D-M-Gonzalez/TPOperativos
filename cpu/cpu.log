@@ -28,3 +28,7 @@
 [INFO] 19:13:47:148 CPU/(3622:3622): Conexion establecida con la memoria
 [INFO] 19:13:47:148 CPU/(3622:3622): Handshake realizado correctamente
 [INFO] 19:13:47:148 CPU/(3622:3622): Cpu lista para recibir al Kernel
+[INFO] 18:43:26:877 CPU/(2231:2231): Valores de configuracion leidos correctamente
+[INFO] 18:43:26:878 CPU/(2231:2231): Conexion establecida con la memoria
+[INFO] 18:43:26:879 CPU/(2231:2231): Fallo al realizar el handshake
+[INFO] 18:43:26:879 CPU/(2231:2231): Cpu lista para recibir al Kernel
