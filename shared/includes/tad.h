@@ -78,7 +78,10 @@ typedef struct
 	uint32_t param_length;
 	contexto_estado_t estado;
 
+
 } t_contexto;
+
+
 
 typedef struct{
 		 uint32_t ids;
@@ -98,8 +101,10 @@ typedef struct{
 
 
 	typedef struct{
+		char* nombre_archivo;
 		uint32_t id_archivo;
 		uint32_t posicion_puntero;
+		 t_list* cola_bloqueados;
 	}archivo_abierto_t;
 
 

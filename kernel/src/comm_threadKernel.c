@@ -64,12 +64,64 @@ void enviar_contexto(pcb_t* pcb){ // aca recibir un pcb (pbc_t pbc)
 						//si no existe pushear a exit, si existe sumar 1 a ese recurso
 						break;
 					case FSYSTEM:
+						archivo_abierto_t* archivo;
+
+						archivo->nombre_archivo=contexto_actualizado->param;
+						if(estaEnTabla_archivos_abiertos(archivo->nombre_archivo,archivos_abiertos))
+						{
+							pcb->tabla_archivos.archivos_abiertos->posicion_puntero=0;
+							push(pcb->tabla_archivos,archivo);
+							push(archivo->cola_bloqueados,pcb);//mandar estado block
+
+						}
+						else
+						{
+							if(existe_archivo(archivo))
+							{
+								push(archivos_abiertos,archivo);
+								pcb->tabla_archivos.archivos_abiertos->posicion_puntero=0;
+								push(pcb->tabla_archivos,archivo);
+								//agregar la entrada a la tabla global de archivos abiertos y
+								//se agrega a la tabla de archivos abiertos del proceso con el puntero en la posicion 0
+							}
+							else{
+							archivo_abierto_t* archivo_nuevo=crear_archivo();
+
+							push(archivos_abiertos,archivo_nuevo);
+
+							pcb->tabla_archivos.archivos_abiertos->posicion_puntero=0;
+
+							push(pcb->tabla_archivos,archivo_nuevo);
+                               //crear archivo con tam=0
+								//se agrega a la tabla de archivos abiertos del proceso con el puntero en la posicion 0
+							}
+						}
+
+
+
+
+
 						//revisar el recurso
 						//si el recurso no esta disponible, agregar al pcb el nombre en recurso_bloqueante
 						//y pushear a block
 						//Si no existe o existe y esta disponible ejecutar logica de FILE
 						//no hace falta meterlo en block
+						//break;
 					case MEM:
+						 int tam_segmento=contexto_actualizado->param;
+						 int id_segmento=contexto_actualizado->id_segmento;
+						 int result=crear_segmento(id_segmento,tam_segmento);
+						 if(result==0)
+						 {
+							 //se realizo correctamente el create_segment
+						 }
+						 else if(result==-1){
+							 //no hay espacio disponible, out of memory
+						 }
+						 else if(result==-2)
+						 {
+							 //se tiene el espacio disponible,pero el mismo no se encuentra contiguo, por lo que se debe compactar
+						 }
 						//revisar el recurso
 						//si el recurso no esta disponible, agregar al pcb el nombre en recurso_bloqueante
 						//y pushear a block

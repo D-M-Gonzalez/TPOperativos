@@ -1,6 +1,7 @@
 #ifndef FILE_SYSTEM_H_
 #define FILE_SYSTEM_H_
 
+#include "../../shared/includes/tad.h"
 #include<stdio.h>
 #include<stdlib.h>
 #include<commons/log.h>
@@ -35,6 +36,8 @@ char* memoria_port;
 char* server_port;
 
 t_config* config;
+
+tabla_archivos_abiertos_t* tabla_file_system;
 
 // _____________________
 

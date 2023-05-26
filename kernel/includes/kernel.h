@@ -83,6 +83,8 @@
 
 	int cant_threads_activos;
 
+	 tabla_archivos_abiertos_t archivos_abiertos;
+
 
 
 

@@ -42,3 +42,30 @@ void terminar_programa()
 	config_destroy(config);
 	liberar_conexion(memoria_connection);
 }
+void existe_archivo(archivo_abierto_t* archivo){
+
+	int encontrado=0;
+	int num_archivos=sizeof(tabla_file_system);
+
+	for(int i=0;i<num_archivos;i++){
+		 if (archivo->id_archivo == tabla_file_system->archivos_abiertos[i].id_archivo) { // Comparar el nombre del archivo con cada elemento de la lista
+		            encontrado = 1;
+		            break;
+		        }
+	}
+	if(encontrado){
+      log_info(logger,"existe el archivo en la tabla de archivos del file system");
+	}
+	else
+	{
+		 log_info(logger,"No existe el archivo en la tabla  de archivos del file system");
+	}
+}
+archivo_abierto_t* crear_archivo(){
+	archivo_abierto_t* archivo;
+
+	archivo=fopen("nombre_archivo.txt", "w");
+	//faltaria ver el tam del archivo
+	return archivo;
+}
+
