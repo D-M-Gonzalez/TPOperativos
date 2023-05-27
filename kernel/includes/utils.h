@@ -10,6 +10,7 @@
 #include<readline/readline.h>
 #include <commons/collections/list.h>
 #include <pthread.h>
+#include "../../shared/includes/tad.h"
 
 typedef struct {
 	t_list * lista;
@@ -24,4 +25,5 @@ void * list_pop(t_lista_mutex * list);
 void list_mutex_destroy(t_lista_mutex * list);
 bool list_mutex_is_empty(t_lista_mutex * list);
 int list_mutex_size(t_lista_mutex * list);
+bool estaEnTabla_archivos_abiertos(char* nombre_archivo,tabla_archivos_abiertos_t* tabla_archivos_abiertos);
 #endif /* CLIENT_H_ */

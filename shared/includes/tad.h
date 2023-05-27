@@ -64,7 +64,7 @@ typedef enum{
 	YIELD,
 	IO,
 	FSYSTEM,
-	MEM,
+	MEM,//se podria cambiar a create_segment y delete_segment
 	WAIT,
 	SIGNAL
 }contexto_estado_t;
@@ -75,6 +75,7 @@ typedef struct
 	t_list* instrucciones;
 	uint32_t pid;
 	char* param;
+	char* param2;
 	uint32_t param_length;
 	contexto_estado_t estado;
 

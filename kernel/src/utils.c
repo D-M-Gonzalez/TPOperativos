@@ -59,4 +59,16 @@ int list_mutex_size(t_lista_mutex * list){
 	pthread_mutex_unlock(&(list->mutex));
 	return size;
 }
+bool estaEnTabla_archivos_abiertos(char* nombre_archivo,tabla_archivos_abiertos_t* tabla_archivos_abiertos){
+	 int encontrado = 0; // Variable para indicar si se encuentra el archivo
+	    int num_archivos = sizeof(archivos_abiertos); // Obtener el número de archivos en la lista
+
+	    for (int i = 0; i < num_archivos; i++) {
+	        if (strcmp(nombre_archivo, tabla_archivos_abiertos->archivos_abiertos->nombre_archivo[i]) == 0) { // Comparar el nombre del archivo con cada elemento de la lista
+	            encontrado = 1;
+	            break;
+	        }
+	    }
+	return encontrado;
+}
 

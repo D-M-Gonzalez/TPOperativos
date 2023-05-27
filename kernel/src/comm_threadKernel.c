@@ -67,7 +67,7 @@ void enviar_contexto(pcb_t* pcb){ // aca recibir un pcb (pbc_t pbc)
 						archivo_abierto_t* archivo;
 
 						archivo->nombre_archivo=contexto_actualizado->param;
-						if(estaEnTabla_archivos_abiertos(archivo->nombre_archivo,archivos_abiertos))
+						if(estaEnTabla_archivos_abiertos(archivo->nombre_archivo,archivos_abiertos))//implementarlo en utils.c y depues definirla en utils.h
 						{
 							pcb->tabla_archivos.archivos_abiertos->posicion_puntero=0;
 							push(pcb->tabla_archivos,archivo);
@@ -108,20 +108,25 @@ void enviar_contexto(pcb_t* pcb){ // aca recibir un pcb (pbc_t pbc)
 						//no hace falta meterlo en block
 						//break;
 					case MEM:
+						//ver como mandar mensaje de memoria a kernel , lo mismo para file system,
 						 int tam_segmento=contexto_actualizado->param;
-						 int id_segmento=contexto_actualizado->id_segmento;
+						 int id_segmento=contexto_actualizado->param2;
 						 int result=crear_segmento(id_segmento,tam_segmento);
 						 if(result==0)
 						 {
+							 log_info(logger,"se creo correctamente el segmento");
 							 //se realizo correctamente el create_segment
 						 }
 						 else if(result==-1){
+							 log_info(logger,"no hay espacio disponible, out of memory");
 							 //no hay espacio disponible, out of memory
 						 }
 						 else if(result==-2)
 						 {
+							 log_info(logger,"hay espacio disponible, pero el mismo se encuentra contiguo, por lo que se debe compactar");
 							 //se tiene el espacio disponible,pero el mismo no se encuentra contiguo, por lo que se debe compactar
 						 }
+						 tabla_segmentos_t* tabla_nueva=borrar_segmento(id_segmento);
 						//revisar el recurso
 						//si el recurso no esta disponible, agregar al pcb el nombre en recurso_bloqueante
 						//y pushear a block
