@@ -29,8 +29,10 @@ void estado_ready() {
 		sem_wait(&sem_estado_ready); // espera a que haya algun proceso en la lista de ready
 
 		sem_wait(&sem_exec_libre); // espera a que exec este libre para planificar
+		log_info(logger, "Cola Ready %s : [0]",algoritmo_planificacion); //Averiguar como imprimir una lista
 
-		log_info(logger, "Exec libre => estado_ready comienza a planificar");
+
+		//log_info(logger, "Exec libre => estado_ready comienza a planificar");
 
 		if(strcmp(algoritmo_planificacion, "FIFO") == 0){
 			// Comportamiento por defecto
@@ -60,7 +62,8 @@ void estado_exec(){
 
 			temporal_destroy(pcb_a_ejecutar->tiempo_espera_en_ready);
 
-			log_info(logger, "El proceso: %d llego a estado exec", pcb_a_ejecutar->pid);
+
+			//log_info(logger, "El proceso: %d llego a estado exec", pcb_a_ejecutar->pid);
 
 			t_temporal* tiempo_en_ejecucion = temporal_create(); // Empieza el temporizador de cuanto tarda en ejecutar el proceso
 
@@ -73,7 +76,7 @@ void estado_exec(){
 
 			temporal_destroy(tiempo_en_ejecucion);
 
-			log_info(logger, "El proceso: %d termino de ejecutar", pcb_a_ejecutar->pid);
+			//log_info(logger, "El proceso: %d termino de ejecutar", pcb_a_ejecutar->pid);
 
 		sem_post(&sem_exec_libre); // le avisa a ready que exec ya esta libre
 	}
@@ -114,11 +117,13 @@ bool mayor_ratio(void* proceso_1, void* proceso_2){
 void io_block(void *args){
 	 t_io_block_args *arguments = (t_io_block_args *)args;
 
-	log_info(logger, "El proceso: %d esta en I/O block. Tiempo: %d ", arguments->pcb->pid, arguments->block_time);
+	log_info(logger,"PID: %d - Ejecuta IO: %d",arguments->pcb->pid, arguments->block_time);
+	log_info(logger,"PID: %d - Bloqueado por: IO",arguments->pcb->pid);
+	//log_info(logger, "El proceso: %d esta en I/O block. Tiempo: %d ", arguments->pcb->pid, arguments->block_time);
 
 	sleep(arguments->block_time);
 
-	log_info(logger, "El proceso: %d finalizo en I/O block", arguments->pcb->pid);
+	//log_info(logger, "El proceso: %d finalizo en I/O block", arguments->pcb->pid);
 
 	list_push(pcb_ready_list,arguments->pcb);
 	arguments->pcb->tiempo_espera_en_ready = temporal_create();

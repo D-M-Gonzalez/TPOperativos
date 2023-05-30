@@ -34,7 +34,7 @@ void enviar_contexto(pcb_t *pcb) { // aca recibir un pcb (pbc_t pbc)
 			//log_info(logger,contexto_actualizado->registros->ax);
 			// aca va logica de exit
 
-		log_info(logger, "El IP esta en %d",
+		/*log_info(logger, "El IP esta en %d",
 				contexto_actualizado->registros->ip);
 		log_info(logger, "El size de las instrucciones es %d",
 				(uint16_t) list_size(contexto->instrucciones));
@@ -42,29 +42,31 @@ void enviar_contexto(pcb_t *pcb) { // aca recibir un pcb (pbc_t pbc)
 				contexto_actualizado->estado);
 		log_info(logger, "El parametro de interrupcion es: %s",
 				contexto_actualizado->param);
-
+*/
 			pcb->registros_cpu=*(contexto_actualizado->registros);
 
 			//esto hay que mejorarlo
 
 			switch(contexto_actualizado->estado){
 				case EXIT:
+					log_info(logger, "PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_EXIT", pcb->pid);
 					list_push(pcb_exit_list,pcb);
 					sem_post(&sem_estado_exit);
 					break;
 
 				case YIELD:
+					log_info(logger, "PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_READY", pcb->pid);
 					list_push(pcb_ready_list,pcb);
 					pcb->tiempo_espera_en_ready = temporal_create();
-					log_info(logger, "El proceso %d llego a yield. Se envio al final de ready",
-							pcb->pid);
+					//log_info(logger, "El proceso %d llego a yield. Se envio al final de ready",
+					//		pcb->pid);
 					sem_post(&sem_estado_ready);
 					break;
 
 				case IO:
 					//crear un hilo por cada uno, que espere el tiempo de sleep y despues vuelva a ready
 //https://stackoverflow.com/questions/1352749/multiple-arguments-to-function-called-by-pthread-create
-					log_info(logger, "IO BLOCK");
+					//log_info(logger, "IO BLOCK");
 
 					t_io_block_args  * args = malloc(sizeof(t_io_block_args));;
 
@@ -72,7 +74,7 @@ void enviar_contexto(pcb_t *pcb) { // aca recibir un pcb (pbc_t pbc)
 					int time = atoi(contexto_actualizado->param);
 					args->block_time = time;
 
-					log_info(logger, "Tiempo: %d", args->block_time);
+					//log_info(logger, "Tiempo: %d", args->block_time);
 
 					pthread_t thread_io_block;
 					pthread_create(&thread_io_block, NULL,(void*) io_block, (t_io_block_args *)args);
@@ -91,12 +93,14 @@ void enviar_contexto(pcb_t *pcb) { // aca recibir un pcb (pbc_t pbc)
 						if (instancias_recurso < 0) {
 
 							pcb->recurso_bloqueante = recurso_wait;
-
+							//log_info(logger, "PID: %d - Wait: %s - Instancias: %d", pcb->pid,recurso_wait,instancias_recurso);
+							log_info(logger, "PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_BLOCK", pcb->pid);
 							list_push(pcb_block_list, pcb);
 
 							sem_post(&sem_estado_block);
 						}
 					} else {
+						log_info(logger, "PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_EXIT", pcb->pid);
 						list_push(pcb_exit_list, pcb);
 
 						sem_post(&sem_estado_exit);
@@ -117,12 +121,14 @@ void enviar_contexto(pcb_t *pcb) { // aca recibir un pcb (pbc_t pbc)
 							t_recurso* recurso_bloqueante = buscar_recurso(lista_recursos, recurso_signal);
 
 							pcb_t* pcb_desbloqueado = list_pop(recurso_bloqueante->cola_bloqueados);
-
+							//log_info(logger, "PID: %d - Signal: %s - Instancias: %d", pcb->pid,recurso_wait,instancias_recurso);
+							log_info(logger, "PID: %d - Estado Anterior: PCB_BLOCK - Estado Actual: PCB_READY", pcb->pid);
 							list_push(pcb_ready_list, pcb_desbloqueado);
 
 							sem_post(&sem_estado_ready);
 						}
 					} else {
+						log_info(logger, "PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_EXIT", pcb->pid);
 						list_push(pcb_exit_list, pcb);
 
 						sem_post(&sem_estado_exit);
@@ -158,7 +164,7 @@ void enviar_contexto(pcb_t *pcb) { // aca recibir un pcb (pbc_t pbc)
 		// Hasta linea 49
 		if (contexto_actualizado->registros->ip
 				== (uint16_t) list_size(contexto->instrucciones)) {
-			log_info(logger, "El contexto se ejecutó completamente");
+			//log_info(logger, "El contexto se ejecutó completamente");
 
 			list_destroy_and_destroy_elements(
 					contexto_actualizado->instrucciones, free);

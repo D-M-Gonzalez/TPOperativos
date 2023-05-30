@@ -15,7 +15,7 @@ void estado_new(){
 		list_push(pcb_ready_list,pcb_para_listo);
 		pcb_para_listo->tiempo_espera_en_ready = temporal_create();
 		pcb_para_listo->estado = PCB_READY;
-		log_info(logger, "El proceso: %d se agrego a la lista de ready", pcb_para_listo->pid);
+		log_info(logger, "PID: %d - Estado Anterior: PCB_NEW - Estado Actual: PCB_READY", pcb_para_listo->pid);
 		sem_post(&sem_estado_ready);
 	}
 }
@@ -24,7 +24,7 @@ void agregar_pcb_a_new(t_list* instrucciones, uint32_t socket){
 	//uint32_t largo = list_mutex_size(pcb_new_list);
 	pcb_t *proceso = crear_proceso(instrucciones, socket);
 	list_push(pcb_new_list,proceso);
-	log_info(logger, "El proceso: %d llego a estado new", proceso->pid);
+	log_info(logger, "Se crea el proceso: %d en NEW", proceso->pid);
 	sem_post(&sem_estado_new);
 }
 
@@ -59,8 +59,8 @@ void estado_exit(){
 		sem_wait(&sem_estado_exit);
 		pcb_t* proceso = list_pop(pcb_exit_list);
 		proceso->estado=PCB_EXIT;
-		log_info(logger, "El proceso: %d ingreso a exit", proceso->pid);
-		log_info(logger, "El proceso: %d finalizo definitivamente", proceso->pid);
+		//log_info(logger, "El proceso: %d ingreso a exit", proceso->pid);
+		log_info(logger, "Finaliza el proceso %d - Motivo: SUCCESS", proceso->pid);
 		send(proceso->consola, &resultado, sizeof(uint8_t), NULL);
 		//hace el free de todo lo que tiene adentro el pcb
 		free(proceso);
