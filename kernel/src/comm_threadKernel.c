@@ -9,6 +9,13 @@ t_contexto* obtener_contexto_pcb(pcb_t *pcb)
 	contexto->pid = pcb->pid;
 	return contexto;
 }
+void enviar_instruccion_a_memoria(t_contexto* contexto, int memoria_connection)
+{
+	t_paquete *paquete = malloc(sizeof(t_paquete));
+	paquete->buffer = malloc(sizeof(t_buffer));
+
+	serializar_contexto_memoria(memoria_connection, contexto);
+}
 
 contexto_estado_t enviar_contexto(pcb_t *pcb)
 {
@@ -157,10 +164,13 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			//cambiar por la correcta
 			break;
 		case CREATE_SEGMENT:
+
 			//logica temporal hasta tener la que va
 			//pthread_t thread_m_block;
 			//pthread_create(&thread_m_block, NULL, (void*) m_block, (t_m_block_args*) args);
 			//pthread_join(thread_m_block);
+			enviar_instruccion_a_memoria(contexto_actualizado, memoria_connection);
+			log_info(logger, "El proceso %d se comunico con Memoria. Se continua su ejecucion", pcb->pid);
 			log_info(logger, "El proceso %d se comunico con Memoria. Se continua su ejecucion", pcb->pid);
 			enviar_contexto(pcb);
 			//cambiar por la correcta

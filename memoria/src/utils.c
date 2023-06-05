@@ -16,3 +16,22 @@ t_log* iniciar_logger(void)
 
 	return nuevo_logger;
 }
+t_contexto* inicializar_contexto()
+{
+	t_contexto *contexto = malloc(sizeof(t_contexto));
+	contexto->instrucciones = list_create();
+	//contexto->registros = inicializar_registros();
+	contexto->param1 = malloc(sizeof(char) * 2);
+	memcpy(contexto->param1, "0", (sizeof(char) * 2));
+	contexto->param1_length = sizeof(char) * 2;
+	contexto->param2 = malloc(sizeof(char) * 2);
+	memcpy(contexto->param2, "0", (sizeof(char) * 2));
+	contexto->param2_length = sizeof(char) * 2;
+	contexto->param3 = malloc(sizeof(char) * 2);
+	memcpy(contexto->param3, "0", (sizeof(char) * 2));
+	contexto->param3_length = sizeof(char) * 2;
+	contexto->estado = EXIT;
+	//contexto->pid = 0;
+
+	return contexto;
+}

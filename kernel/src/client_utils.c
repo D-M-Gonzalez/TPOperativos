@@ -173,6 +173,52 @@ void copiar_contexto(void* stream, t_contexto* contexto){
 	memcpy(stream + offset, contexto->param3, contexto->param3_length);
 }
 
+void copiar_contexto_memoria(void* stream, t_contexto* contexto){
+	int lineas = list_size(contexto->instrucciones);
+	int offset = 0;
+
+	for(int i = 0; i < lineas; i++){
+			t_instruc* instrucciones = list_get(contexto->instrucciones, i);
+
+			memcpy(stream + offset, &instrucciones->nro, sizeof(uint32_t));
+			offset += sizeof(uint32_t);
+			memcpy(stream + offset, &instrucciones->instruct_length, sizeof(uint32_t));
+			offset += sizeof(uint32_t);
+			memcpy(stream + offset, instrucciones->instruct, instrucciones->instruct_length);
+			offset += instrucciones->instruct_length;
+			memcpy(stream + offset, &instrucciones->param1_length, sizeof(uint32_t));
+			offset += sizeof(uint32_t);
+			memcpy(stream + offset, instrucciones->param1, instrucciones->param1_length);
+			offset += instrucciones->param1_length;
+			memcpy(stream + offset, &instrucciones->param2_length, sizeof(uint32_t));
+			offset += sizeof(uint32_t);
+			memcpy(stream + offset, instrucciones->param2, instrucciones->param2_length);
+			offset += instrucciones->param2_length;
+			memcpy(stream + offset, &instrucciones->param3_length, sizeof(uint32_t));
+			offset += sizeof(uint32_t);
+			memcpy(stream + offset, instrucciones->param3, instrucciones->param3_length);
+			offset += instrucciones->param3_length;
+		}
+
+
+	memcpy(stream + offset, &contexto->estado, sizeof(contexto_estado_t));
+	offset += sizeof(contexto_estado_t);
+
+	memcpy(stream + offset, &contexto->param1_length, sizeof(uint32_t));
+	offset += sizeof(uint32_t);
+	memcpy(stream + offset, contexto->param1, contexto->param1_length);
+	offset += contexto->param1_length;
+
+	memcpy(stream + offset, &contexto->param2_length, sizeof(uint32_t));
+	offset += sizeof(uint32_t);
+	memcpy(stream + offset, contexto->param2, contexto->param2_length);
+	offset += contexto->param2_length;
+
+	memcpy(stream + offset, &contexto->param3_length, sizeof(uint32_t));
+	offset += sizeof(uint32_t);
+	memcpy(stream + offset, contexto->param3, contexto->param3_length);
+}
+
 void crear_header(void* a_enviar, t_buffer* buffer, int lineas){
 	//Reservo el stream para el header del paquete
 	int offset = 0;
@@ -217,6 +263,37 @@ void serializar_contexto(int socket, t_contexto* contexto){
 	free(buffer->stream);
 	free(buffer);
 	free(a_enviar);
+}
+void serializar_contexto_memoria(int socket,t_contexto* contexto)
+{
+	//Creo el buffer a utilizar para las instrucciones
+		t_buffer* buffer = malloc(sizeof(t_buffer));
+
+		buffer->size = buffer->size + calcular_tam_contexto(contexto);
+		buffer->size = buffer->size + calcular_tam_instrucciones(contexto->instrucciones);
+
+		//Asigno memoria para el stream del tamaño de mi lista
+			void* stream = malloc(buffer->size);
+
+		//Leo toda la lista para copiar los valores en memoria
+			copiar_contexto_memoria(stream,contexto);
+
+		//Añado el stream a mi buffers
+			buffer->stream = stream;
+
+			void* a_enviar = malloc(buffer->size + sizeof(uint32_t) * 3);
+
+			crear_header(a_enviar,buffer,list_size(contexto->instrucciones));
+
+			//Envio todo el stream al servidor
+			send(socket, a_enviar, buffer->size + sizeof(uint32_t) + sizeof(uint32_t) + sizeof(uint32_t), 0);
+
+			//Libero memoria que ya no voy a utilizar
+			free(buffer->stream);
+			free(buffer);
+			free(a_enviar);
+
+
 }
 
 void liberar_conexion(int socket_cliente)
