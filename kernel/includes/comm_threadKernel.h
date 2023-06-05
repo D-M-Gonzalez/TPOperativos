@@ -12,8 +12,11 @@
 //#include "../includes/kernel.h"
 //extern  pcb_t* pcb;
 extern int cpu_connection;
+extern int memoria_connection;
+extern int file_system_connection;
 extern t_log* logger;
 extern tabla_archivos_abiertos_t archivos_abiertos;
+
 
 t_contexto* obtener_contexto_pcb(pcb_t* pcb);
 void enviar_contexto(pcb_t* pcb);

@@ -107,10 +107,11 @@ void enviar_contexto(pcb_t* pcb){ // aca recibir un pcb (pbc_t pbc)
 						//Si no existe o existe y esta disponible ejecutar logica de FILE
 						//no hace falta meterlo en block
 						//break;
-					case MEM:
+					case CREATE_SEGMENT:
 						//ver como mandar mensaje de memoria a kernel , lo mismo para file system,
-						 int tam_segmento=contexto_actualizado->param;
-						 int id_segmento=contexto_actualizado->param2;
+						 //int tam_segmento=contexto_actualizado->param;
+						 //int id_segmento=contexto_actualizado->param2;
+						 serializar_contexto(memoria_connection, contexto_actualizado);
 						 int result=crear_segmento(id_segmento,tam_segmento);
 						 if(result==0)
 						 {

@@ -59,6 +59,7 @@ void thread_main(t_conexion *conexion){
 void iterator(char* value) {
 	log_info(logger,"%s", value);
 }
+
 int crear_segmento(int id_segmento,int tam_segmento)
 {
 	//se tendria que ver como crear el segemento
@@ -69,4 +70,11 @@ tabla_segmentos_t* borrar_segmento(id_segmento)
 {
 
 	//hacer logica para borrar el segmento
+}
+
+switch(contexto_actualizado->estado)
+{
+case CREATE_SEGMENT:
+	int tam_segmento=contexto_actualizado->param;
+	int id_segmento=contexto_actualizado->param2;
 }

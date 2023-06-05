@@ -64,7 +64,9 @@ typedef enum{
 	YIELD,
 	IO,
 	FSYSTEM,
-	MEM,//se podria cambiar a create_segment y delete_segment
+	//MEM,//se podria cambiar a create_segment y delete_segment
+	CREATE_SEGMENT,
+	DELETE_SEGMENT,
 	WAIT,
 	SIGNAL
 }contexto_estado_t;
