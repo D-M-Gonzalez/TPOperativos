@@ -7,7 +7,7 @@
 
 extern int tam_max_segmento;
 
-void traducir_direccion(char* param);
-obtener_direccion_base(int num_segmento);
+void traducir_direccion(char* param, int pid);
+obtener_direccion_base(int num_segmento, int pid);
 
 #endif /* MMU_H_ */
