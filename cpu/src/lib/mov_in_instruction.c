@@ -1,4 +1,5 @@
 #include "../../includes/code_reader.h"
+#include "../../includes/mmu.h"
 
 int ejecutar_mov_in(t_contexto *contexto, t_instruc *instruccion)
 {
@@ -6,6 +7,8 @@ int ejecutar_mov_in(t_contexto *contexto, t_instruc *instruccion)
 	contexto->param1_length = instruccion->param1_length;
 	contexto->param1 = realloc(contexto->param1, contexto->param1_length);
 	memcpy(contexto->param1, instruccion->param1, contexto->param1_length);
+
+	//traducir_direccion(instruccion->param2);
 
 	contexto->param2_length = instruccion->param2_length;
 	contexto->param2 = realloc(contexto->param2, contexto->param2_length);
