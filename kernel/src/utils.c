@@ -301,6 +301,7 @@ t_contexto* inicializar_contexto()
 	contexto->param3_length = sizeof(char) * 2;
 	contexto->estado = EXIT;
 	contexto->pid = 0;
+	contexto->tabla_segmento = list_create();
 
 	return contexto;
 }
