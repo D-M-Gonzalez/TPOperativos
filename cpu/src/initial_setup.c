@@ -58,11 +58,11 @@ int initial_setup()
 	// TAMANIO MAXIMO DE SEGMENTO
 	if (config_has_property(config, "TAM_MAX_SEGMENTO"))
 	{
-		tam_max_segmento = config_get_int_value(config, "TAM_MAX_SEGMENTO") / 1000;
+		tam_max_segmento = config_get_int_value(config, "TAM_MAX_SEGMENTO");
 	}
 	else
 	{
-		failed_initial_setup("RETARDO_INSTRUCCION");
+		failed_initial_setup("TAM_MAX_SEGMENTO");
 		error = 0;
 	}
 
