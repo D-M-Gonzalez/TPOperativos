@@ -169,6 +169,21 @@ void copiar_contexto(void* stream, t_contexto* contexto){
 	memcpy(stream + offset, &contexto->estado, sizeof(contexto_estado_t));
 	offset += sizeof(contexto_estado_t);
 
+	memcpy(stream + offset, &contexto->param1_length, sizeof(uint32_t));
+	offset += sizeof(uint32_t);
+	memcpy(stream + offset, contexto->param1, contexto->param1_length);
+	offset += contexto->param1_length;
+
+	memcpy(stream + offset, &contexto->param2_length, sizeof(uint32_t));
+	offset += sizeof(uint32_t);
+	memcpy(stream + offset, contexto->param2, contexto->param2_length);
+	offset += contexto->param2_length;
+
+	memcpy(stream + offset, &contexto->param3_length, sizeof(uint32_t));
+	offset += sizeof(uint32_t);
+	memcpy(stream + offset, contexto->param3, contexto->param3_length);
+	offset += contexto->param3_length;
+
 	//copiar tabla de segmentos
 	memcpy(stream + offset, &contexto->tabla_segmento->pid, sizeof(uint32_t));
 	offset += sizeof(uint32_t);
@@ -185,20 +200,6 @@ void copiar_contexto(void* stream, t_contexto* contexto){
 		memcpy(stream + offset, &segmento->tamanio, sizeof(uint32_t));
 		offset += sizeof(uint32_t);
 	}
-
-	memcpy(stream + offset, &contexto->param1_length, sizeof(uint32_t));
-	offset += sizeof(uint32_t);
-	memcpy(stream + offset, contexto->param1, contexto->param1_length);
-	offset += contexto->param1_length;
-
-	memcpy(stream + offset, &contexto->param2_length, sizeof(uint32_t));
-	offset += sizeof(uint32_t);
-	memcpy(stream + offset, contexto->param2, contexto->param2_length);
-	offset += contexto->param2_length;
-
-	memcpy(stream + offset, &contexto->param3_length, sizeof(uint32_t));
-	offset += sizeof(uint32_t);
-	memcpy(stream + offset, contexto->param3, contexto->param3_length);
 }
 
 void crear_header(void* a_enviar, t_buffer* buffer, int lineas){

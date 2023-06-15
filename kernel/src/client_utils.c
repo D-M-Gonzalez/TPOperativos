@@ -184,23 +184,6 @@ void copiar_contexto(void* stream, t_contexto* contexto){
 	memcpy(stream + offset, &contexto->estado, sizeof(contexto_estado_t));
 	offset += sizeof(contexto_estado_t);
 
-	//copiar tabla de segmentos
-	memcpy(stream + offset, &contexto->tabla_segmento->pid, sizeof(uint32_t));
-	offset += sizeof(uint32_t);
-	uint32_t size_lista = list_size(contexto->tabla_segmento->segmentos);
-	memcpy(stream + offset, &size_lista, sizeof(uint32_t));
-	offset += sizeof(uint32_t);
-	for(int i = 0; i < size_lista; i++)
-	{
-		segmento_t* segmento = list_get(contexto->tabla_segmento->segmentos, i);
-		memcpy(stream + offset, &segmento->ids, sizeof(uint32_t));
-		offset += sizeof(uint32_t);
-		memcpy(stream + offset, &segmento->direccion_base, sizeof(uint32_t));
-		offset += sizeof(uint32_t);
-		memcpy(stream + offset, &segmento->tamanio, sizeof(uint32_t));
-		offset += sizeof(uint32_t);
-	}
-
 	memcpy(stream + offset, &contexto->param1_length, sizeof(uint32_t));
 	offset += sizeof(uint32_t);
 	memcpy(stream + offset, contexto->param1, contexto->param1_length);
@@ -214,6 +197,24 @@ void copiar_contexto(void* stream, t_contexto* contexto){
 	memcpy(stream + offset, &contexto->param3_length, sizeof(uint32_t));
 	offset += sizeof(uint32_t);
 	memcpy(stream + offset, contexto->param3, contexto->param3_length);
+	offset += contexto->param3_length;
+
+	//copiar tabla de segmentos
+	memcpy(stream + offset, &contexto->tabla_segmento->pid, sizeof(uint32_t));
+	offset += sizeof(uint32_t);
+	uint32_t size_lista = list_size(contexto->tabla_segmento->segmentos);
+	memcpy(stream + offset, &size_lista, sizeof(uint32_t));
+	offset += sizeof(uint32_t);
+	for (int i = 0; i < size_lista; i++)
+	{
+		segmento_t *segmento = list_get(contexto->tabla_segmento->segmentos, i);
+		memcpy(stream + offset, &segmento->ids, sizeof(uint32_t));
+		offset += sizeof(uint32_t);
+		memcpy(stream + offset, &segmento->direccion_base, sizeof(uint32_t));
+		offset += sizeof(uint32_t);
+		memcpy(stream + offset, &segmento->tamanio, sizeof(uint32_t));
+		offset += sizeof(uint32_t);
+	}
 }
 
 void crear_header(void* a_enviar, t_buffer* buffer, int lineas, uint32_t codigo){
