@@ -120,6 +120,7 @@ uint32_t calcular_tam_tabla_segmentos(tabla_segmentos_t * tabla_segmento)
 	{
 		segmento_t* segmento = list_get(tabla_segmento->segmentos, i);
 		size += sizeof(uint32_t) * 3;
+
 	}
 
 	return size;

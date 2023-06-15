@@ -45,7 +45,10 @@ t_contexto* contexto_create(){
 	contexto->param3_length = sizeof(char) * 2;
 	contexto->estado = EXIT;
 	contexto->pid = 0;
-	contexto->tabla_segmento = list_create();
+
+	contexto->tabla_segmento = malloc(sizeof(tabla_segmentos_t));
+	contexto->tabla_segmento->pid = 0;
+	contexto->tabla_segmento->segmentos = list_create();
 
 	return contexto;
 }
