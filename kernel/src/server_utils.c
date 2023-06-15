@@ -198,6 +198,7 @@ void deserializar_contexto(t_contexto* contexto, t_buffer* buffer, int lineas){
 
 		list_add(contexto->tabla_segmento->segmentos, segmento);
 	}
+
 }
 
 void deserializar_tabla_segmentos(t_lista_mutex* lista_tablas, t_buffer* buffer, int lineas){

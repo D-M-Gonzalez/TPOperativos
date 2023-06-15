@@ -98,6 +98,19 @@ uint32_t calcular_tam_contexto(t_contexto* contexto){
 	return size;
 }
 
+uint32_t calcular_tam_tabla_segmentos(tabla_segmentos_t * tabla_segmento)
+{
+	uint32_t size = sizeof(uint32_t); //size del PID
+
+	for(int i = 0; i < list_size(tabla_segmento->segmentos); i++) //size de los elementos de la lista
+	{
+		segmento_t* segmento = list_get(tabla_segmento->segmentos, i);
+		size += sizeof(uint32_t) * 3;
+	}
+
+	return size;
+}
+
 void copiar_contexto(void* stream, t_contexto* contexto){
 	int lineas = list_size(contexto->instrucciones);
 	int offset = 0;
@@ -156,6 +169,23 @@ void copiar_contexto(void* stream, t_contexto* contexto){
 	memcpy(stream + offset, &contexto->estado, sizeof(contexto_estado_t));
 	offset += sizeof(contexto_estado_t);
 
+	//copiar tabla de segmentos
+	memcpy(stream + offset, &contexto->tabla_segmento->pid, sizeof(uint32_t));
+	offset += sizeof(uint32_t);
+	uint32_t size_lista = list_size(contexto->tabla_segmento->segmentos);
+	memcpy(stream + offset, &size_lista, sizeof(uint32_t));
+	offset += sizeof(uint32_t);
+	for (int i = 0; i < size_lista; i++)
+	{
+		segmento_t *segmento = list_get(contexto->tabla_segmento->segmentos, i);
+		memcpy(stream + offset, &segmento->ids, sizeof(uint32_t));
+		offset += sizeof(uint32_t);
+		memcpy(stream + offset, &segmento->direccion_base, sizeof(uint32_t));
+		offset += sizeof(uint32_t);
+		memcpy(stream + offset, &segmento->tamanio, sizeof(uint32_t));
+		offset += sizeof(uint32_t);
+	}
+
 	memcpy(stream + offset, &contexto->param1_length, sizeof(uint32_t));
 	offset += sizeof(uint32_t);
 	memcpy(stream + offset, contexto->param1, contexto->param1_length);
@@ -194,6 +224,7 @@ void serializar_contexto(int socket, t_contexto* contexto){
 	buffer->size = calcular_tam_registros(contexto->registros);
 	buffer->size = buffer->size + calcular_tam_contexto(contexto);
 	buffer->size = buffer->size + calcular_tam_instrucciones(contexto->instrucciones);
+	buffer->size = buffer->size + calcular_tam_tabla_segmentos(contexto->tabla_segmento);
 
 	//Asigno memoria para el stream del tamaño de mi lista
 	void* stream = malloc(buffer->size);
