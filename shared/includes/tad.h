@@ -91,7 +91,6 @@ typedef struct
 
 typedef struct
 {
-	tabla_segmentos_t *tabla_segmento;
 	t_registros *registros;
 	t_list *instrucciones;
 	uint32_t pid;
@@ -102,6 +101,7 @@ typedef struct
 	char *param3;
 	uint32_t param3_length;
 	contexto_estado_t estado;
+	tabla_segmentos_t *tabla_segmento;
 
 } t_contexto;
 
