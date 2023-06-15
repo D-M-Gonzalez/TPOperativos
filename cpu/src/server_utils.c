@@ -136,6 +136,31 @@ t_contexto* deserializar_contexto(t_buffer* buffer, int lineas, t_contexto* cont
 	contexto->pid = pid;
 	contexto->estado = estado;
 
+	//deserializacion de la tabla de segmentos
+
+	uint32_t size_lista;
+	memcpy(&size_lista, stream, sizeof(uint32_t));
+	stream += sizeof(uint32_t);
+
+	contexto->tabla_segmento = malloc(sizeof(tabla_segmentos_t));
+	contexto->tabla_segmento->segmentos = list_create();
+
+	for (int i = 0; i < size_lista; i++)
+	{
+		segmento_t *segmento = malloc(sizeof(segmento_t));
+
+		memcpy(&(segmento->ids), stream, sizeof(uint32_t));
+		stream += sizeof(uint32_t);
+
+		memcpy(&(segmento->direccion_base), stream, sizeof(uint32_t));
+		stream += sizeof(uint32_t);
+
+		memcpy(&(segmento->tamanio), stream, sizeof(uint32_t));
+		stream += sizeof(uint32_t);
+
+		list_add(contexto->tabla_segmento->segmentos, segmento);
+	}
+
 	return contexto;
 }
 
