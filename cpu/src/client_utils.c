@@ -100,11 +100,10 @@ uint32_t calcular_tam_contexto(t_contexto* contexto){
 
 uint32_t calcular_tam_tabla_segmentos(tabla_segmentos_t * tabla_segmento)
 {
-	uint32_t size = sizeof(uint32_t); //size del PID
+	uint32_t size = sizeof(uint32_t) + sizeof(uint32_t); //size del PID + size de la lista
 
-	for(int i = 0; i < list_size(tabla_segmento->segmentos); i++) //size de los elementos de la lista
+	for (int i = 0; i < list_size(tabla_segmento->segmentos); i++) //size de los elementos de la lista
 	{
-		segmento_t* segmento = list_get(tabla_segmento->segmentos, i);
 		size += sizeof(uint32_t) * 3;
 	}
 

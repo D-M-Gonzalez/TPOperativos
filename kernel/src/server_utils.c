@@ -173,15 +173,14 @@ void deserializar_contexto(t_contexto* contexto, t_buffer* buffer, int lineas){
 	stream += sizeof(uint32_t);
 	contexto->param3 = realloc(contexto->param3,contexto->param3_length);
 	memcpy(contexto->param3, stream, contexto->param3_length);
+	stream += contexto->param3_length;
 
 	//deserializacion de la tabla de segmentos
-
-	uint32_t size_lista;
+	memcpy(&contexto->tabla_segmento->pid, stream, sizeof(uint32_t));
+	stream += sizeof(uint32_t);
+	uint32_t size_lista = 0;
 	memcpy(&size_lista, stream, sizeof(uint32_t));
 	stream += sizeof(uint32_t);
-
-	contexto->tabla_segmento = malloc(sizeof(tabla_segmentos_t));
-	contexto->tabla_segmento->segmentos = list_create();
 
 	for (int i = 0; i < size_lista; i++)
 	{
