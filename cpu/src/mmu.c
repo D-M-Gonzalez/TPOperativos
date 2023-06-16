@@ -11,13 +11,15 @@ void traducir_direccion(char *param, tabla_segmentos_t *tabla_segmentos)
 
 	direccion_fisica = direccion_base_segmento + desplazamiento_segmento;
 
+	log_info(logger, "Direccion fisica: %d", direccion_fisica);
+
 	//if(desplazamiento_segmento + tamanio_direccion > tamanio_segmento) segmentation fault
-	//log_info(logger, "Direccion fisica: %d", direccion_fisica);
+
 }
 
 int obtener_direccion_base(int num_segmento, tabla_segmentos_t *tabla_segmentos)
 {
-	int direccion_base;
+	int direccion_base = -1;
 	t_list *segmentos = tabla_segmentos->segmentos;
 
 	for (int i = 0; i < list_size(segmentos); i++)
@@ -29,6 +31,11 @@ int obtener_direccion_base(int num_segmento, tabla_segmentos_t *tabla_segmentos)
 			direccion_base = segmento->direccion_base;
 			break;
 		}
+	}
+
+	if(direccion_base == -1)
+	{
+		log_info(logger, "El numero de segmento no pertenece a la tabla de segmentos del proceso");
 	}
 
 	return direccion_base;
