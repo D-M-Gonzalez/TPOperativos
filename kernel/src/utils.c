@@ -285,6 +285,22 @@ t_list* copiar_lista_instrucciones(t_list *nueva_lista, t_list *lista_instruccio
 	return nueva_lista;
 }
 
+void copiar_tabla_segmentos(tabla_segmentos_t* tabla_contexto,tabla_segmentos_t* tabla_pcb){
+	uint32_t size = list_size(tabla_pcb->segmentos);
+	tabla_contexto->pid = tabla_pcb->pid;
+
+	for(int i = 0; i<size; i++){
+		segmento_t* segmento = list_get(tabla_pcb->segmentos,i);
+		segmento_t* nuevo_segmento = malloc(sizeof(segmento_t));
+
+		nuevo_segmento->direccion_base = segmento->direccion_base;
+		nuevo_segmento->ids = segmento->ids;
+		nuevo_segmento->tamanio = segmento->tamanio;
+
+		list_add(tabla_contexto->segmentos,nuevo_segmento);
+	}
+}
+
 t_contexto* inicializar_contexto()
 {
 	t_contexto *contexto = malloc(sizeof(t_contexto));
