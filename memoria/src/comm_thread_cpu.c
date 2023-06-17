@@ -25,6 +25,7 @@ void conexion_cpu(int server_connection)
 
 			case MOV_IN:
 				log_info(logger, "MOV_IN llego a memoria");
+				log_info(logger, "La direc fisica que me llego es: %s" ,nueva_instruccion->param2);
 				//fijarse la direccion (param2)
 				//devolver el valor que esta dentro de ese registro a CPU
 				break;

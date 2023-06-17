@@ -20,6 +20,8 @@ void traducir_direccion(char *param, t_contexto *contexto)
 
 	direccion_fisica = direccion_base_segmento + desplazamiento_segmento;
 
+	snprintf(param, sizeof(param), "%d", direccion_fisica);
+
 	log_info(logger, "Direccion fisica: %d", direccion_fisica);
 
 }
