@@ -8,7 +8,7 @@ int ejecutar_mov_in(t_contexto *contexto, t_instruc *instruccion)
 	contexto->param1 = realloc(contexto->param1, contexto->param1_length);
 	memcpy(contexto->param1, instruccion->param1, contexto->param1_length);
 
-	traducir_direccion(instruccion->param2, contexto->tabla_segmento);
+	traducir_direccion(instruccion->param2, contexto);
 
 	contexto->param2_length = instruccion->param2_length;
 	contexto->param2 = realloc(contexto->param2, contexto->param2_length);
@@ -31,19 +31,19 @@ int ejecutar_mov_in(t_contexto *contexto, t_instruc *instruccion)
 }
 
 /*void cambiar_registro(char *registro, char *valor)
-{
-	copiar_string(valor, registro);
-}*/
+ {
+ copiar_string(valor, registro);
+ }*/
 
 /*char* esperar_valor_registro(int memoria_connection)
-{
-	t_paquete *paquete = malloc(sizeof(t_paquete));
-	paquete->buffer = malloc(sizeof(t_buffer));
-	deserializar_header(paquete, server_connection);
+ {
+ t_paquete *paquete = malloc(sizeof(t_paquete));
+ paquete->buffer = malloc(sizeof(t_buffer));
+ deserializar_header(paquete, server_connection);
 
-	switch (paquete->codigo_operacion)
-	{
-	case 1:
+ switch (paquete->codigo_operacion)
+ {
+ case 1:
 
-	}
-}*/
+ }
+ }*/
