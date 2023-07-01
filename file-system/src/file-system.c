@@ -154,41 +154,46 @@ void asignar_bloque(fcb_t* archivo)
     // setear_bit_en_bitmap(archivo->puntero_directo);
 }
 
-/*
+
 void escribir_bloque(uint32_t bloque_a_escribir, void* datos){
 	int tamanio_datos = strlen(datos) + 1;
-	memcpy(memoria_file_system + (bloque_a_escribir * tamanio_bloque), datos, tamanio_datos);
+	memcpy(memoria_file_system + (bloque_a_escribir * tamanio_de_bloque), datos, tamanio_datos);
 }
 
-void escribir_bytes(int bytes_a_escribir, void* todos_los_datos)
+void escribir_bytes(uint32_t id_fcb,int bytes_a_escribir, void* todos_los_datos)
 {
-	uint32_t cantidad_de_bloques_a_escribir = ceil(cantidad_de_bloques / bytes_a_escribir);
+	uint32_t cantidad_de_bloques_a_escribir = ceil(bytes_a_escribir / tamanio_de_bloque);
 
-	//uint32_t primer_bloque_libre = obtener_primer_bloque_libre();
+
    //verificar de tener los bloques necesarios para escribir
-	      for(uint32_t i =0; i < cantidad_de_bloques_a_escribir; i++)
-	      {
-
-	       escribir_bloque(i,todos_los_datos + (i * tamanio_bloque));
-	      }
-
+	  if(tiene_bloques_disponibles(id_fcb, cantidad_de_bloques_a_escribir))
+	  {
+	          t_list* lista_de_bloques = obtener_lista_de_bloques(id_fcb);
+	              for(uint32_t i=0 ; i < cantidad_de_bloques_a_escribir;i++)
+	          {
+	         //   uint32_t bloque_obtenido = list_get(lista_de_bloques, i)
+	           //escribir_bloque(bloque_obtenido ,todos_los_datos + (i * tamanio_de_bloque));
+	          }
+	   }
 }
 
 uint32_t leer_bloque(uint32_t id_bloque_a_leer)
 {
-      uint32_t bloque;
-      memcpy(bloque, (char*)(memoria_file_system + id_bloque_a_leer * sizeof(uint32_t)), sizeof(uint32_t));
-      //creo q actualizar offset?
-      return bloque;
+      uint32_t bloque_leido;
+      sleep(retardo_acceso_bloque);
+      memcpy(bloque_leido, memoria_file_system + (id_bloque_a_leer * tamanio_de_bloque), sizeof(uint32_t));
+
+
+      return bloque_leido;
 }
 void leer_bytes(int bytes_a_leer)
 {
-       uint32_t cantidad_de_bloques_a_leer= ceil(cantidad_de_bloques / bytes_a_leer);
+       uint32_t cantidad_de_bloques_a_leer= ceil( bytes_a_leer/tamanio_de_bloque);
       for(uint32_t i = 0; i < cantidad_de_bloques_a_leer; i++)
       {
-            leer_bloque(array_de_bloques[i]);
+            leer_bloque(i);
       }
 }
-*/
+
 
 
