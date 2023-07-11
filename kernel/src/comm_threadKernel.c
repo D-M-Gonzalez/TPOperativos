@@ -207,6 +207,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 
 		case F_TRUNCATE:
 
+			log_info(logger,"PID: %d - Archivo: %s - Tamanio: %d",pcb->pid,contexto_actualizado->param1, contexto_actualizado->param2);
 			t_read_write_block_args *args_truncate = malloc(sizeof(t_read_write_block_args));
 			args_truncate->pcb = pcb;
 			args_truncate->contexto = inicializar_contexto();

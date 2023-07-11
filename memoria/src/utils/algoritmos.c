@@ -4,6 +4,7 @@
 
 int first(uint32_t pid, int id_segmento, int tamanio_segmento){
 	int estado_first = 	COMPACTION_NEEDED;
+	log_info(logger,"Solicitud de Compactacion");
 	for (int i = 0; i < list_size(lista_de_huecos_libres); i++)
 	{
 		hueco_libre_t *hueco_libre = (hueco_libre_t*) list_get(lista_de_huecos_libres, i);
@@ -52,8 +53,10 @@ int best(uint32_t pid, int id_segmento, int tamanio_segmento){
 
 	}
 
-	if (indice_hueco_mas_chico == -1)
+	if (indice_hueco_mas_chico == -1){
+		log_info(logger,"Solicitud de Compactacion");
 		return COMPACTION_NEEDED;
+	}
 	else{
 
 		hueco_libre = (hueco_libre_t*) list_get(lista_de_huecos_libres, indice_hueco_mas_chico);
@@ -97,7 +100,11 @@ int worst(uint32_t pid, int id_segmento, int tamanio_segmento){
 	}
 
 	if (indice_hueco_mas_grande == -1 )
+	{
+		log_info(logger,"Solicitud de Compactacion");
 		return COMPACTION_NEEDED;
+	}
+
 	else{
 		hueco_libre = (hueco_libre_t*) list_get(lista_de_huecos_libres, indice_hueco_mas_grande);
 
