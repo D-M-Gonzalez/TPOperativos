@@ -35,7 +35,7 @@ extern char* contexto_param;
 extern uint32_t contexto_estado;
 extern t_contexto* contexto;
 
-extern int retardo_instruc;
+extern double retardo_instruc;
 
 
 #endif /* MANEJADOR_CONTEXTO_H_ */

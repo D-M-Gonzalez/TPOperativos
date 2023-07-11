@@ -106,6 +106,7 @@ void conexion_kernel(int server_connection){
 				log_info(logger,"Resultado de COMPACTACION");
 				imprimir_tabla_segmentos();
 				t_resp_mem estado_memoria = COMPACTATION_SUCCESS;
+				sleep(retardo_compactacion);
 				serializar_respuesta_memoria_kernel(server_connection, estado_memoria);
 				break;
 			default:

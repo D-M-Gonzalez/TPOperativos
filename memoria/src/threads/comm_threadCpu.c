@@ -28,7 +28,6 @@ void conexion_cpu(int server_connection)
 					nueva_instruccion->param3 = realloc(nueva_instruccion->param3, tamanio);
 					memcpy(nueva_instruccion->param3,memoria + direccion_fisica, tamanio);
 					nueva_instruccion->param3_length = tamanio;
-					serializar_instruccion_mov(server_connection, nueva_instruccion);
 					log_info(logger,"PID: %d - Accion: LEER - Direccion Fisica: %d - Tamanio: %d - Origen: CPU",nueva_instruccion->pid,direccion_fisica,tamanio);
 					break;
 				case MOV_OUT:
@@ -38,6 +37,9 @@ void conexion_cpu(int server_connection)
 					log_info(logger,"PID: %d - Accion: ESCRIBIR - Direccion Fisica: %d - Tamanio: %d - Origen: CPU",nueva_instruccion->pid,direccion_fisica,tamanio);
 					break;
 			}
+
+			sleep(retardo_memoria);
+			serializar_instruccion_mov(server_connection, nueva_instruccion);
 
 			free(nueva_instruccion->param1);
 			free(nueva_instruccion->param2);

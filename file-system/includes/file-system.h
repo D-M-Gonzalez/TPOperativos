@@ -51,7 +51,7 @@ char* path_bitmap;
 char* path_bloques;
 char* path_fcb_folder;
 
-int retardo_acceso_bloque;
+double retardo_acceso_bloque;
 
 // Variables de SuperBloque
 int tamanio_de_bloque;

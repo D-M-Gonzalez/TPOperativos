@@ -37,7 +37,7 @@ int initial_setup(){
 
 	// RETARDO_MEMORIA
 	if (config_has_property(config, "RETARDO_MEMORIA")){
-		retardo_memoria = config_get_int_value(config, "RETARDO_MEMORIA");
+		retardo_memoria = config_get_double_value(config, "RETARDO_MEMORIA")/1000;
 	} else {
 		failed_initial_setup("RETARDO_MEMORIA");
 		error = 0;
@@ -45,7 +45,7 @@ int initial_setup(){
 
 	// RETARDO_COMPACTACION
 	if (config_has_property(config, "RETARDO_COMPACTACION")){
-		retardo_compactacion = config_get_int_value(config, "RETARDO_COMPACTACION");
+		retardo_compactacion = config_get_double_value(config, "RETARDO_COMPACTACION")/1000;
 	} else {
 		failed_initial_setup("RETARDO_COMPACTACION");
 		error = 0;

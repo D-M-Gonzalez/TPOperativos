@@ -38,5 +38,7 @@ void realizar_f_read(t_instruc_file* instruccion_file){
 	t_instruc_mov *instruccion_mem = inicializar_instruc_mov();
 	generar_instruccion_mov(instruccion_mem, F_READ, direccion_fisica, tamanio, datos);
 	serializar_instruccion_mov(memoria_connection, instruccion_mem);
+	esperar_valor(memoria_connection);
+
 	destroy_instruc_mov(instruccion_mem);
 }

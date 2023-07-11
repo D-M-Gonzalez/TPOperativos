@@ -33,8 +33,6 @@ void conexion_file_system(int server_connection){
 
 						log_info(logger, "Lei el valor %s", nueva_instruccion->param3);
 
-						serializar_instruccion_mov(server_connection, nueva_instruccion);
-
 						break;
 
 					case F_READ:
@@ -48,14 +46,17 @@ void conexion_file_system(int server_connection){
 
 						memcpy(memoria + direccion_fisica, nueva_instruccion->param3 , tamanio);
 
-
-
 						break;
 
 					default:
 						break;
 				}
+
+				sleep(retardo_memoria);
+				serializar_instruccion_mov(server_connection, nueva_instruccion);
+
 				break;
+
 			default:
 				exit_status = 1;
 				break;
