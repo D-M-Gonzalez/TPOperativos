@@ -300,6 +300,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			{
 				log_info(logger, "PID: %d - Comunicacion con MEMORIA", pcb->pid);
 				t_instruc_mem* instruccion = inicializar_instruc_mem();
+				instruccion->pid = pcb->pid;
 				copiar_instruccion_mem(instruccion,contexto_actualizado);
 				serializar_instruccion_memoria(memoria_connection, instruccion);
 				imprimir_tabla_segmentos();
@@ -310,6 +311,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			{
 				log_info(logger, "PID: %d - Comunicacion con MEMORIA", pcb->pid);
 				t_instruc_mem* instruccion = inicializar_instruc_mem();
+				instruccion->pid = pcb->pid;
 				copiar_instruccion_mem(instruccion,contexto_actualizado);
 				serializar_instruccion_memoria(memoria_connection, instruccion);
 			}

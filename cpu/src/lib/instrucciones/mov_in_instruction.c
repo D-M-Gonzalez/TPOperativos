@@ -4,6 +4,7 @@
 int ejecutar_mov_in(t_contexto *contexto, t_instruc *instruccion)
 {
 	t_instruc_mov *instruccion_movimiento = inicializar_instruc_mov();
+	instruccion_movimiento->pid = contexto->pid;
 	char *registro = seleccionar_registro(instruccion->param1);
 	char* placeholder = "0";
 	uint32_t tamanio = strlen(registro);
