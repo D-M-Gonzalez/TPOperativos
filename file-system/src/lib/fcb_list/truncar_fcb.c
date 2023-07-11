@@ -42,6 +42,7 @@ void asignar_bloques_indirectos(int id_fcb, int cant_bloques_indirectos)
 {
 	t_list *lista_total_de_bloques = obtener_lista_total_de_bloques(id_fcb);
 	int indice_inicial;
+	int bloques_indirectos_agregados = 0;
 
 	for (int i = 0; i < cant_bloques_indirectos; i++)
 	{
@@ -50,9 +51,10 @@ void asignar_bloques_indirectos(int id_fcb, int cant_bloques_indirectos)
 		log_info(logger, "Bloque indirecto: %d", bloque->id_bloque);
 		setear_bit_en_bitmap(bloque->id_bloque);
 		list_add(lista_total_de_bloques, bloque);
+		bloques_indirectos_agregados++;
 	}
 
-	indice_inicial = lista_total_de_bloques->elements_count;
+	indice_inicial = lista_total_de_bloques->elements_count - bloques_indirectos_agregados;
 
 	escribir_bloques_indirectos(lista_total_de_bloques, indice_inicial);
 }
@@ -61,7 +63,7 @@ void asignar_bloques(int id_fcb, int nuevo_tamanio)
 {
 	int tamanio_archivo = valor_fcb(id_fcb, TAMANIO_ARCHIVO);
 	int cant_bloques_a_asignar = ceil((double) ((nuevo_tamanio - tamanio_archivo) / tamanio_de_bloque));
-	int cant_bloques_indirectos = cant_bloques_a_asignar - 2;
+	int cant_bloques_indirectos = cant_bloques_a_asignar - 1;
 
 	log_info(logger, "Ejecutando asignar bloques");
 
