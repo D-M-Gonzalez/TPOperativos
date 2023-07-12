@@ -34,6 +34,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			list_push(pcb_exit_list, pcb);
 			sem_post(&sem_estado_exit);
 			break;
+
 		case EXIT:
 			log_info(logger, "PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_EXIT", pcb->pid);
 			log_info(logger, "Finaliza el proceso %d - Motivo: SUCCESS", pcb->pid);
@@ -82,8 +83,10 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			}
 			else
 			{
-				list_push(pcb_exit_list, pcb);
 				log_error(logger, "No existe el recurso %s - terminando proceso PID: %d", recurso_wait, pcb->pid);
+				log_info(logger, "PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_EXIT", pcb->pid);
+				log_info(logger, "Finaliza el proceso %d - Motivo: INVALID_RESOURCE", pcb->pid);
+				list_push(pcb_exit_list, pcb);
 				sem_post(&sem_estado_exit);
 			}
 
