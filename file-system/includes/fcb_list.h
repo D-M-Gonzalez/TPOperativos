@@ -21,6 +21,7 @@ extern fcb_list_t* lista_global_fcb;
 extern t_log* logger;
 extern int fcb_id;
 extern int tamanio_de_bloque;
+extern int formatear;
 
 void inicializar_fcb_list();
 int buscar_fcb(char* nombre_fcb);

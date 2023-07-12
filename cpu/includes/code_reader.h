@@ -23,7 +23,12 @@ int ejecutar_syscall(t_contexto *contexto, t_instruc *instruccion, contexto_esta
 int ejecutar_mov_in(t_contexto *contexto, t_instruc *instruccion);
 int ejecutar_mov_out(t_contexto *contexto, t_instruc *instruccion);
 int ejecutar_f_write_read(t_contexto *contexto, t_instruc *instruccion, contexto_estado_t estado);
+int ejecutar_cmp(uint32_t pid, char* param1, char* param2);
+int ejecutar_ip(uint32_t pid, char* param1);
+int ejecutar_jz(uint32_t pid, char* param1);
+int ejecutar_inc(uint32_t pid, char* param1, char* param2);
 void* esperar_valor(int memoria_connection);
+void incrementar_registro(char* registro, int valor);
 
 extern t_log *logger;
 extern char ax[5];
@@ -38,6 +43,9 @@ extern char rax[17];
 extern char rbx[17];
 extern char rcx[17];
 extern char rdx[17];
+extern int ZF;
+extern int CF;
+extern uint16_t ip;
 extern char *contexto_param;
 extern uint32_t contexto_estado;
 extern t_contexto *contexto;

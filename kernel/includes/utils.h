@@ -74,6 +74,9 @@ void eliminar_archivo_abierto_t(t_list *tabla_archivos_abiertos, const char *nom
 
 void duplicar_contexto(t_contexto* contexto_destino, t_contexto* contexto_origen);
 
+void destruir_contexto(t_contexto* contexto);
+void destruir_instruc_mem(t_instruc_mem* instruccion);
+
 extern t_lista_mutex* lista_tabla_segmentos;
 extern t_list* tabla_global_archivos_abiertos;
 extern t_lista_mutex* lista_recursos;

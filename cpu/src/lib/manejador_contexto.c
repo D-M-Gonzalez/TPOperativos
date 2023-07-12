@@ -49,17 +49,12 @@ void armar_contexto(t_contexto* contexto){
 }
 
 void ejecutar_instrucciones(t_contexto* contexto, t_list* lista, int lineas){
-	int instruc_pointer = ip;
 	int exit = 0;
 
-	while(instruc_pointer < lineas && exit == 0){
+	while(ip < lineas && exit == 0){
 		t_instruc* instruccion;
-		instruccion = list_get(lista, instruc_pointer);
+		instruccion = list_get(lista, ip);
 		exit = leer_instruccion(contexto, instruccion);
-		instruc_pointer++;
-
 		sleep(retardo_instruc);
 	}
-
-	ip = instruc_pointer;
 }

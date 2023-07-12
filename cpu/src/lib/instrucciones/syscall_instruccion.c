@@ -56,5 +56,7 @@ int ejecutar_syscall(t_contexto* contexto, t_instruc* instruccion, contexto_esta
 
 	free(params);
 
+	ip++;
+
 	return 1;
 }

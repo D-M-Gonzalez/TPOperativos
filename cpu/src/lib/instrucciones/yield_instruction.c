@@ -9,5 +9,7 @@ int ejecutar_yield(t_contexto* contexto){
 	log_instruccion(contexto->pid,"YIELD","");
 	contexto_estado = YIELD;
 
+	ip++;
+
 	return 1;
 }

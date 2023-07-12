@@ -3,7 +3,11 @@
 int leer_instruccion(t_contexto* contexto, t_instruc* instruccion){
 	//Genericas
 	if((strcmp(instruccion->instruct,"SET"))==0) return ejecutar_set(contexto->pid,instruccion->param1,instruccion->param2);
+	if((strcmp(instruccion->instruct,"CMP"))==0) return ejecutar_cmp(contexto->pid,instruccion->param1,instruccion->param2);
 	if((strcmp(instruccion->instruct,"YIELD"))==0) return ejecutar_yield(contexto);
+	if((strcmp(instruccion->instruct,"IP"))==0) return ejecutar_ip(contexto->pid,instruccion->param1);
+	if((strcmp(instruccion->instruct,"JZ"))==0) return ejecutar_jz(contexto->pid,instruccion->param1);
+	if((strcmp(instruccion->instruct,"INC"))==0) return ejecutar_inc(contexto->pid,instruccion->param1,instruccion->param2);
 	if((strcmp(instruccion->instruct,"EXIT"))==0) return ejecutar_exit(contexto);
 	//IO
 	if((strcmp(instruccion->instruct,"I/O"))==0) return ejecutar_syscall(contexto,instruccion,IO,1);

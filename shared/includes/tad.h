@@ -252,8 +252,7 @@ typedef enum
 {
 	TAMANIO_ARCHIVO,
 	PUNTERO_INDIRECTO,
-	PUNTERO_DIRECTO,
-	PUNTERO_ARCHIVO
+	PUNTERO_DIRECTO
 } fcb_prop_t;
 
 typedef struct

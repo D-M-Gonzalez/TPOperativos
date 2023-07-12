@@ -27,5 +27,7 @@ int ejecutar_mov_in(t_contexto *contexto, t_instruc *instruccion)
 
 	log_info(logger, "PID: %d - Accion: [MOV_IN] - Valor: %s - Registro: %s",contexto->pid, seleccionar_registro(contexto->param1), contexto->param2);
 
+	ip++;
+
 	return 0;
 }

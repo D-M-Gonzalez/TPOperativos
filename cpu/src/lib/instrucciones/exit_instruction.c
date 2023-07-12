@@ -9,5 +9,7 @@ int ejecutar_exit(t_contexto* contexto){
 	log_instruccion(contexto->pid,"EXIT","");
 	contexto_estado = EXIT;
 
+	ip++;
+
 	return 1;
 }

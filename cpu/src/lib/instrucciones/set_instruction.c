@@ -5,6 +5,8 @@ int ejecutar_set(uint32_t pid, char* param1, char* param2){
 
 	cambiar_registro(seleccionar_registro(param1),param2);
 
+	ip++;
+
 	return 0;
 }
 

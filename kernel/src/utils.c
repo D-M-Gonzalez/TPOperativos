@@ -324,6 +324,17 @@ t_contexto* inicializar_contexto()
 	return contexto;
 }
 
+void destruir_contexto(t_contexto* contexto){
+	list_destroy_and_destroy_elements(contexto->instrucciones, (void*) instrucciones_destroy);
+	list_destroy_and_destroy_elements(contexto->tabla_segmento->segmentos, free);
+	free(contexto->tabla_segmento);
+	free(contexto->param1);
+	free(contexto->param2);
+	free(contexto->param3);
+	free(contexto->registros);
+	free(contexto);
+}
+
 void duplicar_contexto(t_contexto* contexto_destino, t_contexto* contexto_origen){
 	contexto_destino->param1_length = contexto_origen->param1_length;
 	contexto_destino->param2_length = contexto_origen->param2_length;
@@ -363,6 +374,13 @@ t_instruc_mem* inicializar_instruc_mem()
 	return instruccion;
 }
 
+void destruir_instruc_mem(t_instruc_mem* instruccion){
+	free(instruccion->param1);
+	free(instruccion->param2);
+	free(instruccion->param3);
+	free(instruccion);
+}
+
 void copiar_instruccion_mem(t_instruc_mem* instruccion, t_contexto* contexto){
 
 	instruccion->param1_length = contexto->param1_length;
@@ -393,7 +411,7 @@ void eliminar_tabla_segmentos(pcb_t* proceso){
 	//La peticion de eliminacion se hace directamente a memoria
 	delete_segment(contexto_eliminar,proceso);
 
-	free(contexto_eliminar);
+	destruir_contexto(contexto_eliminar);
 }
 void destroy_proceso(pcb_t *proceso) {
 
@@ -421,15 +439,12 @@ void destroy_proceso(pcb_t *proceso) {
 
 	while(list_size(proceso->tabla_segmento->segmentos) > 0){
 		segmento_t* segmento = list_remove(proceso->tabla_segmento->segmentos,0);
-		if(segmento->ids != 0){
-			free(segmento);
-		}
+		free(segmento);
 	}
 	free(proceso->tabla_segmento->segmentos);
 	list_remove_element(lista_tabla_segmentos->lista, proceso->tabla_segmento);
+	free(proceso->tabla_segmento);
 	solicitar_tabla_segmentos();
-
-
 	list_destroy_and_destroy_elements(proceso->instrucciones, (void*) instrucciones_destroy);
 	list_destroy(proceso->tabla_archivos_abiertos);
 	free(proceso->recurso_bloqueante);
@@ -472,6 +487,8 @@ tabla_segmentos_t* solicitar_segmento_0(int pid){
 	solicitar_tabla_segmentos();
 
 	tabla_segmentos_t* tabla = buscar_tabla_segmentos(lista_tabla_segmentos->lista,pid);
+
+	destruir_instruc_mem(instruccion);
 
 	return tabla;
 }
