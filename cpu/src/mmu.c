@@ -14,7 +14,7 @@ int traducir_direccion(char *param, t_contexto *contexto)
 	if (direccion_base_segmento == -1 || tamanio_segmento == -1 || desplazamiento_segmento > tamanio_segmento){
 		log_error(logger, "PID: %d - Error SEG_FAULT - Segmento: %d - Offset: %d - Tamanio: %d",
 				contexto->pid, num_segmento, desplazamiento_segmento, tamanio_segmento);
-		contexto_estado = EXIT;
+		contexto_estado = ERROR_SEG_FAULT;
 		return -1;
 	}
 
@@ -23,6 +23,11 @@ int traducir_direccion(char *param, t_contexto *contexto)
 	log_info(logger, "[MMU] - Segmento: %d - Direccion fisica: %d", num_segmento, direccion_fisica);
 
 	return direccion_fisica;
+}
+
+bool validar_tam_segmento(int tam_segmento)
+{
+	return tam_segmento <= tam_max_segmento;
 }
 
 segmento_t* buscar_segmento(int num_segmento, t_list *segmentos)

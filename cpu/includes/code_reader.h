@@ -24,6 +24,7 @@ int ejecutar_mov_in(t_contexto *contexto, t_instruc *instruccion);
 int ejecutar_mov_out(t_contexto *contexto, t_instruc *instruccion);
 int ejecutar_f_write_read(t_contexto *contexto, t_instruc *instruccion, contexto_estado_t estado);
 void* esperar_valor(int memoria_connection);
+int ejecutar_create_segment(t_contexto *contexto, t_instruc *instruccion);
 
 extern t_log *logger;
 extern char ax[5];
