@@ -60,18 +60,19 @@ void create_segment(t_contexto* contexto, pcb_t* pcb){
 			enviar_contexto(pcb);
 			break;
 		case OUT_OF_MEMORY:
-			log_info(logger,"ERROR OUT OF MEMORY");
+			log_info(logger, "Finaliza el proceso %d - Motivo: OUT_OF_MEMORY", pcb->pid);
 			log_info(logger, "PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_EXIT", pcb->pid);
 			list_push(pcb_exit_list, pcb);
 			sem_post(&sem_estado_exit);
 			break;
 		case COMPACTION_NEEDED:
-			log_info(logger,"Solicitud de COMPACTACION recibida, esperando Fin de Operaciones de FS");
+			log_info(logger,"Compactación:Esperando Fin de Operaciones de FS");
 			sem_wait(&sem_compactacion);
+			log_info(logger,"Compactación:Se solicitó compactación");
 			serializar_solicitud_compactacion(memoria_connection);
 			t_resp_mem resp_comp = esperar_respuesta_memoria();
 			sem_post(&sem_compactacion);
-			if(resp_comp == COMPACTATION_SUCCESS) log_info(logger,"COMPACTACION Finalizada");
+			if(resp_comp == COMPACTATION_SUCCESS) log_info(logger,"Se finalizó el proceso de compactación");
 			else {
 				log_info(logger,"ERROR COMPACTACION");
 				log_info(logger, "PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_EXIT", pcb->pid);

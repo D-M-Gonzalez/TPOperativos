@@ -29,6 +29,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 		switch (contexto_actualizado->estado)
 		{
 		case ERROR_SEG_FAULT:
+			log_info(logger,"Finaliza el proceso %d - Motivo: SEG_FAULT",pcb->pid);
 			break;
 		case EXIT:
 			log_info(logger, "PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_EXIT", pcb->pid);
@@ -63,6 +64,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 				restar_instancia(lista_recursos, recurso_wait);
 				int instancias_recurso = obtener_instancias(lista_recursos, recurso_wait);
 				log_info(logger, "PID: %d - Wait: %s - Instancias: %d", pcb->pid, recurso_wait, instancias_recurso);
+				log_info(logger,"PID: %d - Bloqueado por: %s",pcb->pid,recurso_wait);
 				if (instancias_recurso < 0)
 				{
 					int recurso_length = strlen(recurso_wait) + 1;
@@ -79,6 +81,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			else
 			{
 				list_push(pcb_exit_list, pcb);
+				log_info(logger, "Finaliza el proceso %d - Motivo: INVALID_RESOURCE", pcb->pid);
 				log_error(logger, "No existe el recurso %s - terminando proceso PID: %d", recurso_wait, pcb->pid);
 				sem_post(&sem_estado_exit);
 			}
@@ -100,6 +103,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			else
 			{
 				list_push(pcb_exit_list, pcb);
+				log_info(logger, "Finaliza el proceso %d - Motivo: INVALID_RESOURCE", pcb->pid);
 				log_error(logger, "No existe el recurso %s - terminando proceso PID: %d", recurso_signal, pcb->pid);
 				sem_post(&sem_estado_exit);
 			}
