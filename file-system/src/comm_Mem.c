@@ -8,6 +8,7 @@ void realizar_f_write(t_instruc_file* instruccion_file){
 	char* placeholder = "0";
 
 	t_instruc_mov *instruccion_mem = inicializar_instruc_mov();
+	instruccion_mem->pid = instruccion_file->pid;
 	generar_instruccion_mov(instruccion_mem, F_WRITE, direccion_fisica, tamanio, placeholder);
 	serializar_instruccion_mov(memoria_connection, instruccion_mem);
 
