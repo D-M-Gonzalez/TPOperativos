@@ -68,6 +68,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 				restar_instancia(lista_recursos, recurso_wait);
 				int instancias_recurso = obtener_instancias(lista_recursos, recurso_wait);
 				log_info(logger, "PID: %d - Wait: %s - Instancias: %d", pcb->pid, recurso_wait, instancias_recurso);
+				log_info(logger,"PID: %d - Bloqueado por: %s",pcb->pid,recurso_wait);
 				if (instancias_recurso < 0)
 				{
 					int recurso_length = strlen(recurso_wait) + 1;
@@ -107,6 +108,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			else
 			{
 				list_push(pcb_exit_list, pcb);
+				log_info(logger, "Finaliza el proceso %d - Motivo: INVALID_RESOURCE", pcb->pid);
 				log_error(logger, "No existe el recurso %s - terminando proceso PID: %d", recurso_signal, pcb->pid);
 				sem_post(&sem_estado_exit);
 			}
@@ -214,6 +216,8 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 
 		case F_TRUNCATE:
 
+
+			log_info(logger,"PID: %d - Archivo: %s - Tamanio: %d",pcb->pid,contexto_actualizado->param1, contexto_actualizado->param2);
 			t_read_write_block_args *args_truncate = malloc(sizeof(t_read_write_block_args));
 			args_truncate->pcb = pcb;
 			args_truncate->contexto = inicializar_contexto();
