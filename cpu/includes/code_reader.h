@@ -29,6 +29,7 @@ int ejecutar_jz(uint32_t pid, char* param1);
 int ejecutar_inc(uint32_t pid, char* param1, char* param2);
 void* esperar_valor(int memoria_connection);
 void incrementar_registro(char* registro, int valor);
+int ejecutar_create_segment(t_contexto *contexto, t_instruc *instruccion);
 
 extern t_log *logger;
 extern char ax[5];

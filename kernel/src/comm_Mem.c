@@ -58,8 +58,9 @@ void create_segment(t_contexto* contexto, pcb_t* pcb){
 			enviar_contexto(pcb);
 			break;
 		case OUT_OF_MEMORY:
-			log_info(logger,"ERROR OUT OF MEMORY");
+			log_error(logger,"ERROR OUT OF MEMORY");
 			log_info(logger, "PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_EXIT", pcb->pid);
+			log_info(logger, "Finaliza el proceso %d - Motivo: OUT_OF_MEMORY", pcb->pid);
 			list_push(pcb_exit_list, pcb);
 			sem_post(&sem_estado_exit);
 			break;

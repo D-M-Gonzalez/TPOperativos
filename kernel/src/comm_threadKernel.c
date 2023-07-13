@@ -28,7 +28,12 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 		switch (contexto_actualizado->estado)
 		{
 		case ERROR_SEG_FAULT:
+			log_info(logger, "PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_EXIT", pcb->pid);
+			log_info(logger, "Finaliza el proceso %d - Motivo: SEG_FAULT", pcb->pid);
+			list_push(pcb_exit_list, pcb);
+			sem_post(&sem_estado_exit);
 			break;
+
 		case EXIT:
 			log_info(logger, "PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_EXIT", pcb->pid);
 			log_info(logger, "Finaliza el proceso %d - Motivo: SUCCESS", pcb->pid);
@@ -77,8 +82,10 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			}
 			else
 			{
-				list_push(pcb_exit_list, pcb);
 				log_error(logger, "No existe el recurso %s - terminando proceso PID: %d", recurso_wait, pcb->pid);
+				log_info(logger, "PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_EXIT", pcb->pid);
+				log_info(logger, "Finaliza el proceso %d - Motivo: INVALID_RESOURCE", pcb->pid);
+				list_push(pcb_exit_list, pcb);
 				sem_post(&sem_estado_exit);
 			}
 
@@ -299,6 +306,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			{
 				log_info(logger, "PID: %d - Comunicacion con MEMORIA", pcb->pid);
 				t_instruc_mem* instruccion = inicializar_instruc_mem();
+				instruccion->pid = pcb->pid;
 				copiar_instruccion_mem(instruccion,contexto_actualizado);
 				serializar_instruccion_memoria(memoria_connection, instruccion);
 				imprimir_tabla_segmentos();
@@ -309,6 +317,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			{
 				log_info(logger, "PID: %d - Comunicacion con MEMORIA", pcb->pid);
 				t_instruc_mem* instruccion = inicializar_instruc_mem();
+				instruccion->pid = pcb->pid;
 				copiar_instruccion_mem(instruccion,contexto_actualizado);
 				serializar_instruccion_memoria(memoria_connection, instruccion);
 			}
