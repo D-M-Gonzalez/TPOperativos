@@ -19,11 +19,15 @@ int ejecutar_mov_out(t_contexto *contexto, t_instruc *instruccion)
 
 	serializar_instruccion_mov(memoria_connection, instruccion_movimiento);
 
+	char* valor = esperar_valor(memoria_connection);
+
 	destroy_instruc_mov(instruccion_movimiento);
 
 	log_info(logger, "PID: %d - Accion: [MOV_OUT] - Valor: %s - Registro: %s",contexto->pid, contexto->param2, instruccion->param2);
 
 	ip++;
+
+	free(valor);
 
 	return exit_status;
 }

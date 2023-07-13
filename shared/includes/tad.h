@@ -175,8 +175,7 @@ typedef struct
 	char *param2;
 	uint32_t param3_length;
 	char *param3;
-	uint32_t param4_length;
-	char *param4;
+	uint32_t param4;
 } t_instruc_file;
 
 typedef struct
@@ -194,7 +193,7 @@ typedef struct
 {
 	uint32_t pid;
 	char *nombre_archivo;
-	char * posicion_puntero;
+	uint32_t posicion_puntero;
 } archivo_abierto_t;
 
 typedef enum

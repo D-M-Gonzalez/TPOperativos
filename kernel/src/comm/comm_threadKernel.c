@@ -1,4 +1,4 @@
-#include "../includes/comm_threadKernel.h"
+#include "../../includes/comm_threadKernel.h"
 
 t_contexto* obtener_contexto_pcb(pcb_t *pcb)
 {
@@ -95,14 +95,15 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 
 		case SIGNAL:
 			char *recurso_signal = crear_recurso(contexto_actualizado->param1);
+
 			if (recurso_existe_en_lista(lista_recursos, recurso_signal))
 			{
-				desasignar_recurso_si_lo_tiene_asignado(pcb, recurso_signal);
-				sumar_instancia(lista_recursos, recurso_signal);
 				int instancias_recurso = obtener_instancias(lista_recursos, recurso_signal);
-				log_info(logger, "PID: %d - Signal: %s - Instancias: %d", pcb->pid, recurso_signal, instancias_recurso);
+				sumar_instancia(lista_recursos, recurso_signal);
 				enviar_contexto(pcb);
 				liberar_proceso_de_bloqueados_si_necesario(recurso_signal, instancias_recurso);
+				int instancias_actualizadas = obtener_instancias(lista_recursos, recurso_signal);
+				log_info(logger, "PID: %d - Signal: %s - Instancias: %d", pcb->pid, recurso_signal, instancias_actualizadas);
 			}
 			else
 			{
@@ -118,17 +119,13 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 
 			log_info(logger, "PID: %d - Abrir Archivo: %s", pcb->pid, contexto_actualizado->param1);
 
-			archivo_abierto_t *archivo = malloc(sizeof(archivo_abierto_t));;
-			archivo->nombre_archivo = crear_recurso(contexto_actualizado->param1);;
-			archivo->posicion_puntero = "0";
-
+			archivo_abierto_t *archivo = crear_archivo(contexto_actualizado->param1);
 
 			list_add(pcb->tabla_archivos_abiertos, archivo);
 
 			if(!archivo_existe_en_tabla(tabla_global_archivos_abiertos, archivo->nombre_archivo)){
 
 				list_add(tabla_global_archivos_abiertos, archivo->nombre_archivo);
-
 
 				int recurso_length = strlen(archivo->nombre_archivo) + 1;
 				t_recurso *recurso = malloc(sizeof(t_recurso));
@@ -143,8 +140,6 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			}
 
 
-			manejar_archivo(contexto_actualizado,pcb);
-
 			asignar_recurso(pcb, archivo->nombre_archivo);
 			restar_instancia(lista_recursos, archivo->nombre_archivo);
 
@@ -152,6 +147,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			if (instancias_recurso < 0)
 			{
 				int recurso_length = strlen(archivo->nombre_archivo) + 1;
+				pcb->registros_cpu->ip--;
 				pcb->recurso_bloqueante = realloc(pcb->recurso_bloqueante, recurso_length);
 				memcpy(pcb->recurso_bloqueante, archivo->nombre_archivo, recurso_length);
 				list_push(pcb_block_list, pcb);
@@ -159,6 +155,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			}
 			else
 			{
+				manejar_archivo(contexto_actualizado,pcb);
 				enviar_contexto(pcb);
 			}
 
@@ -197,7 +194,6 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 					pthread_mutex_destroy(&(recurso_a_eliminar->mutex_instancias));
 					list_remove_element(lista_recursos->lista, recurso_a_eliminar);
 					free(archivo_abierto_pcb->nombre_archivo);
-					free(archivo_abierto_pcb->posicion_puntero);
 					free(archivo_abierto_pcb);
 					free(recurso_a_eliminar->nombre_recurso);
 					free(recurso_a_eliminar);
@@ -233,16 +229,14 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 
 			log_info(logger, "PID: %d - Actualizar puntero Archivo: %s - Puntero: %s", pcb->pid, contexto_actualizado->param1, contexto_actualizado->param2);
 
-			char *archivo_abierto_seek = contexto_actualizado->param1;
+			int archivo_abierto_seek = atoi(contexto_actualizado->param2);
 
-			int tamanio = strlen(archivo_abierto_seek);
+			log_info(logger, "Tamanio %d", archivo_abierto_seek);
+			archivo_abierto_t* archivo_abierto_seek_pcb = buscar_archivo_abierto_t(pcb->tabla_archivos_abiertos, contexto_actualizado->param1);
 
-			log_info(logger, "Tamanio %d", tamanio);
-			archivo_abierto_t* archivo_abierto_seek_pcb = buscar_archivo_abierto_t(pcb->tabla_archivos_abiertos, archivo_abierto_seek);
+			archivo_abierto_seek_pcb->posicion_puntero = archivo_abierto_seek;
 
-			archivo_abierto_seek_pcb->posicion_puntero = copiar_char_puntero(contexto_actualizado->param2);
-
-			log_info(logger, "Puntero %s", archivo_abierto_seek_pcb->posicion_puntero);
+			log_info(logger, "Puntero %d", archivo_abierto_seek_pcb->posicion_puntero);
 
 			manejar_archivo(contexto_actualizado,pcb);
 			enviar_contexto(pcb);
@@ -259,7 +253,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 
 			archivo_abierto_t* archivo_abierto_pcb_read = buscar_archivo_abierto_t(pcb->tabla_archivos_abiertos, contexto_actualizado->param1);
 
-			log_info(logger, "PID: %d - Leer Archivo: %s - Puntero %s - Dirección Memoria %s - Tamaño %s", pcb->pid, contexto_actualizado->param1, archivo_abierto_pcb_read->posicion_puntero, contexto_actualizado->param2, contexto_actualizado->param3);
+			log_info(logger, "PID: %d - Leer Archivo: %s - Puntero %d - Dirección Memoria %s - Tamaño %s", pcb->pid, contexto_actualizado->param1, archivo_abierto_pcb_read->posicion_puntero, contexto_actualizado->param2, contexto_actualizado->param3);
 
 			pthread_t thread_read_block;
 			pthread_create(&thread_read_block, NULL, (void*) file_system_read_write_block, args_read);
@@ -276,7 +270,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 
 			archivo_abierto_t* archivo_abierto_pcb_write = buscar_archivo_abierto_t(pcb->tabla_archivos_abiertos, contexto_actualizado->param1);
 
-			log_info(logger, "PID: %d - Escribir  Archivo: %s - Puntero %s - Dirección Memoria %s - Tamaño %s", pcb->pid, contexto_actualizado->param1, archivo_abierto_pcb_write->posicion_puntero, contexto_actualizado->param2, contexto_actualizado->param3);
+			log_info(logger, "PID: %d - Escribir  Archivo: %s - Puntero %d - Dirección Memoria %s - Tamaño %s", pcb->pid, contexto_actualizado->param1, archivo_abierto_pcb_write->posicion_puntero, contexto_actualizado->param2, contexto_actualizado->param3);
 
 			pthread_t thread_write_block;
 			pthread_create(&thread_write_block, NULL, (void*) file_system_read_write_block, args_write);

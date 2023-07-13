@@ -1,4 +1,4 @@
-#include "../includes/utils.h"
+#include "../../includes/utils.h"
 
 t_config* iniciar_config(char *path_config)
 {
@@ -135,21 +135,24 @@ void asignar_recurso(pcb_t *pcb, const char *nombre_recurso)
 
 void desasignar_recurso_si_lo_tiene_asignado(pcb_t *pcb, const char *nombre_recurso)
 {
-	bool buscar_recurso(void *recurso){
-		t_recurso *recurso_actual = (t_recurso *) recurso;
-		return strcmp(recurso_actual->nombre_recurso, nombre_recurso) == 0;
-	}
+	for(int i = 0; i<list_size(pcb->recursos_asignados); i++){
+		t_recurso* recurso = list_get(pcb->recursos_asignados,i);
 
-	list_remove_by_condition(pcb->recursos_asignados, buscar_recurso);
+		if(strcmp(recurso->nombre_recurso, nombre_recurso) == 0){
+			log_info(logger,"desasigne %s de PID: %d",recurso->nombre_recurso, pcb->pid);
+			list_remove(pcb->recursos_asignados,i);
+		}
+	}
 }
 
 void devolver_instancias(pcb_t *pcb, t_lista_mutex *lista_recursos)
 {
 	if (!list_is_empty(pcb->recursos_asignados))
 	{
-		for (int i = 0; i < list_size(pcb->recursos_asignados); i++)
+		while(list_size(pcb->recursos_asignados)>0)
 		{
-			t_recurso *recurso_asignado = list_remove(pcb->recursos_asignados, i);
+			t_recurso *recurso_asignado = list_remove(pcb->recursos_asignados, 0);
+			log_info(logger,"Liberacion PID: %d - Recurso: %s", pcb->pid, recurso_asignado->nombre_recurso);
 			sumar_instancia(lista_recursos, recurso_asignado->nombre_recurso);
 
 			liberar_proceso_de_bloqueados_si_necesario(recurso_asignado->nombre_recurso, recurso_asignado->instancias);
@@ -157,15 +160,15 @@ void devolver_instancias(pcb_t *pcb, t_lista_mutex *lista_recursos)
 			log_info(logger, "PID: %d - Libera recurso: %s - Instancias: %d", pcb->pid, recurso_asignado->nombre_recurso, recurso_asignado->instancias);
 		}
 	}
-
 }
 
 void liberar_proceso_de_bloqueados_si_necesario(const char *recurso, int instancias_recurso)
 {
-	if (instancias_recurso <= 0)
+	if (instancias_recurso < 0)
 	{
 		t_recurso *recurso_bloqueante = buscar_recurso(lista_recursos, recurso);
 		pcb_t *pcb_desbloqueado = list_pop(recurso_bloqueante->cola_bloqueados);
+		desasignar_recurso_si_lo_tiene_asignado(pcb_desbloqueado, recurso_bloqueante->nombre_recurso);
 		list_push(pcb_ready_list, pcb_desbloqueado);
 		pcb_desbloqueado->tiempo_espera_en_ready = temporal_create();
 		log_info(logger, "El proceso %d se libero de la cola de bloqueados", pcb_desbloqueado->pid);
@@ -433,9 +436,8 @@ void destroy_proceso(pcb_t *proceso) {
 		archivo_abierto_t* archivo = (archivo_abierto_t*) list_get(proceso->tabla_archivos_abiertos, 0);
 		if (recurso_existe_en_lista(lista_recursos, archivo->nombre_archivo) && archivo_existe_en_tabla(tabla_global_archivos_abiertos, archivo->nombre_archivo))
 		{
-			desasignar_recurso_si_lo_tiene_asignado(proceso, archivo->nombre_archivo);
-			sumar_instancia(lista_recursos, archivo->nombre_archivo);
 			int instancias_recurso = obtener_instancias(lista_recursos, archivo->nombre_archivo);
+			sumar_instancia(lista_recursos, archivo->nombre_archivo);
 			liberar_proceso_de_bloqueados_si_necesario(archivo->nombre_archivo, instancias_recurso);
 			list_remove(proceso->tabla_archivos_abiertos,0);
 			if(instancias_recurso==1){
@@ -445,7 +447,6 @@ void destroy_proceso(pcb_t *proceso) {
 				pthread_mutex_destroy(&(recurso_a_eliminar->mutex_instancias));
 				list_remove_element(lista_recursos->lista, recurso_a_eliminar);
 				free(archivo->nombre_archivo);
-				free(archivo->posicion_puntero);
 				free(archivo);
 				free(recurso_a_eliminar->nombre_recurso);
 				free(recurso_a_eliminar);
@@ -462,11 +463,16 @@ void destroy_proceso(pcb_t *proceso) {
 	list_remove_element(lista_tabla_segmentos->lista, proceso->tabla_segmento);
 	free(proceso->tabla_segmento);
 	solicitar_tabla_segmentos();
+
+
 	list_destroy_and_destroy_elements(proceso->instrucciones, (void*) instrucciones_destroy);
+
 	list_destroy(proceso->tabla_archivos_abiertos);
+
 	free(proceso->recurso_bloqueante);
 	devolver_instancias(proceso, lista_recursos);
 	free(proceso->recursos_asignados);
+
 	free(proceso->registros_cpu);
 	free(proceso);
 }
@@ -523,9 +529,7 @@ t_instruc_file* inicializar_instruc_file()
 	instruccion->param3 = malloc(sizeof(char) * 2);
 	memcpy(instruccion->param3, "0", (sizeof(char) * 2));
 	instruccion->param3_length = sizeof(char) * 2;
-	instruccion->param4 = malloc(sizeof(char) * 2);
-	memcpy(instruccion->param4, "0", (sizeof(char) * 2));
-	instruccion->param4_length = sizeof(char) * 2;
+	instruccion->param4 = 0;
 	instruccion->estado = F_OPEN;
 
 	return instruccion;
@@ -535,29 +539,7 @@ void destruir_instruc_file(t_instruc_file* instruccion){
 	free(instruccion->param1);
 	free(instruccion->param2);
 	free(instruccion->param3);
-	free(instruccion->param4);
 	free(instruccion);
-}
-
-void copiar_instruccion_file(t_instruc_file* instruccion, t_contexto* contexto, char* puntero){
-
-	instruccion->param1_length = contexto->param1_length;
-	instruccion->param2_length = contexto->param2_length;
-	instruccion->param3_length = contexto->param3_length;
-	instruccion->param4_length = strlen(puntero) + 1;
-	instruccion->estado = contexto->estado;
-	instruccion->pid = contexto->pid;
-
-	instruccion->param1 = realloc(instruccion->param1,instruccion->param1_length);
-	instruccion->param2 = realloc(instruccion->param2,instruccion->param2_length);
-	instruccion->param3 = realloc(instruccion->param3,instruccion->param3_length);
-	instruccion->param4 = realloc(instruccion->param4,instruccion->param4_length);
-
-	memcpy(instruccion->param1,contexto->param1,instruccion->param1_length);
-	memcpy(instruccion->param2,contexto->param2,instruccion->param2_length);
-	memcpy(instruccion->param3,contexto->param3,instruccion->param3_length);
-	memcpy(instruccion->param4,puntero,instruccion->param4_length);
-
 }
 
 void imprimir_tabla_segmentos(){

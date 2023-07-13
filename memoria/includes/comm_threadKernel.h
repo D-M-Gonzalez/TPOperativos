@@ -23,6 +23,6 @@ extern uint16_t ip;
 extern t_list* lista_de_tablas;
 extern char* algoritmo_asignacion;
 extern void* memoria;
-
+extern double retardo_compactacion;
 
 #endif /* COMM_THREADKERNEL_H_ */

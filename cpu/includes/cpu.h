@@ -35,7 +35,7 @@ int memoria_connection;
 char* memoria_ip;
 char* memoria_port;
 char* server_port;
-int retardo_instruc;
+double retardo_instruc;
 int tam_max_segmento;
 
 // _____________________

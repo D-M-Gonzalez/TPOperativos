@@ -47,7 +47,7 @@ int initial_setup()
 	// RETARDO
 	if (config_has_property(config, "RETARDO_INSTRUCCION"))
 	{
-		retardo_instruc = config_get_int_value(config, "RETARDO_INSTRUCCION") / 1000;
+		retardo_instruc = config_get_double_value(config, "RETARDO_INSTRUCCION") / 1000;
 	}
 	else
 	{

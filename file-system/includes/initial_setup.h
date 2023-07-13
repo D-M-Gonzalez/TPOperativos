@@ -35,7 +35,7 @@ extern char* path_bitmap;
 extern char* path_bloques;
 extern char* path_fcb_folder;
 
-extern int retardo_acceso_bloque;
+extern double retardo_acceso_bloque;
 
 extern int formatear;
 

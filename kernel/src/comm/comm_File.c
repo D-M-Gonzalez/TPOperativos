@@ -1,10 +1,8 @@
-#include "../includes/comm_File.h"
+#include "../../includes/comm_File.h"
 
 void manejar_archivo(t_contexto* contexto, pcb_t* pcb){
 	t_instruc_file* instruccion = inicializar_instruc_file();
-	char* puntero = string_new();
-	string_append(&puntero,"");
-	copiar_instruccion_file(instruccion,contexto,puntero);
+	copiar_instruccion_file(instruccion,contexto,0);
 	serializar_instruccion_file(file_system_connection, instruccion);
 
 	t_resp_file respuesta = esperar_respuesta_file();
@@ -37,7 +35,6 @@ void manejar_archivo(t_contexto* contexto, pcb_t* pcb){
 	}
 
 	destruir_instruc_file(instruccion);
-	free(puntero);
 }
 
 void editar_archivo(t_contexto* contexto, pcb_t* pcb){

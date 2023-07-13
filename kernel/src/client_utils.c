@@ -120,7 +120,7 @@ uint32_t calcular_tam_instruc_file(t_instruc_file* instruccion){
 			sizeof(uint32_t) + instruccion->param1_length +
 			sizeof(uint32_t) + instruccion->param2_length +
 			sizeof(uint32_t) + instruccion->param3_length +
-			sizeof(uint32_t) + instruccion->param4_length;
+			sizeof(uint32_t);
 
 	return size;
 }
@@ -394,9 +394,7 @@ void copiar_instruc_file(void* stream, t_instruc_file* instruccion){
 	memcpy(stream + offset, instruccion->param3, instruccion->param3_length);
 	offset += instruccion->param3_length;
 
-	memcpy(stream + offset, &instruccion->param4_length, sizeof(uint32_t));
-	offset += sizeof(uint32_t);
-	memcpy(stream + offset, instruccion->param4, instruccion->param4_length);
+	memcpy(stream + offset, &instruccion->param4, sizeof(uint32_t));
 }
 
 void serializar_instruccion_file(int socket,t_instruc_file* instruccion)

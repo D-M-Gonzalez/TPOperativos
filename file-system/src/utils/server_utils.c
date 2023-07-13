@@ -103,11 +103,7 @@ void deserializar_instruccion_file(t_instruc_file* instruccion, t_buffer* buffer
 	memcpy(instruccion->param3, stream, instruccion->param3_length);
 	stream += instruccion->param3_length;
 
-	memcpy(&(instruccion->param4_length), stream, sizeof(uint32_t));
-	stream += sizeof(uint32_t);
-	instruccion->param4 = realloc(instruccion->param4,instruccion->param4_length);
-	memcpy(instruccion->param4, stream, instruccion->param4_length);
-	stream += instruccion->param4_length;
+	memcpy(&(instruccion->param4), stream, sizeof(uint32_t));
 }
 
 void deserializar_instruccion_memoria(t_instruc_mem* instruccion, t_buffer* buffer, int lineas){

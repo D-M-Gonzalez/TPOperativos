@@ -13,9 +13,7 @@ t_instruc_file* inicializar_instruc_file()
 	contexto->param3 = malloc(sizeof(char) * 2);
 	memcpy(contexto->param3, "0", (sizeof(char) * 2));
 	contexto->param3_length = sizeof(char) * 2;
-	contexto->param4 = malloc(sizeof(char) * 2);
-	memcpy(contexto->param4, "0", (sizeof(char) * 2));
-	contexto->param4_length = sizeof(char) * 2;
+	contexto->param4 = 0;
 	contexto->estado = CREATE_SEGMENT;
 
 	return contexto;

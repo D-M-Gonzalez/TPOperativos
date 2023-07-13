@@ -1,4 +1,4 @@
-#include "../includes/comm_Mem.h"
+#include "../../includes/comm_Mem.h"
 
 void solicitar_tabla_segmentos(){
 	serializar_solicitud_tabla(memoria_connection);

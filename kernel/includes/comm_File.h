@@ -8,6 +8,7 @@
 #include "client_utils.h"
 #include "server_utils.h"
 #include "utils.h"
+#include "datos.h"
 #include "long_term_planification.h"
 #include "short_term_planification.h"
 

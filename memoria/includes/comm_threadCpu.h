@@ -17,5 +17,6 @@ void conexion_cpu(int server_connection);
 extern int exit_status;
 extern t_log* logger;
 extern void* memoria;
+extern double retardo_memoria;
 
 #endif /* COMM_THREADCPU_H_ */

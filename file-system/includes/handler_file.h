@@ -21,7 +21,7 @@ extern t_log* logger;
 extern int fcb_id;
 extern int tamanio_de_bloque;
 extern void* memoria_file_system;
-extern int retardo_acceso_bloque;
+extern double retardo_acceso_bloque;
 
 uint32_t leer_int(int offset, int size);
 void* leer_dato(int offset, int size);

@@ -15,8 +15,8 @@ extern char* server_port;
 extern int tam_memoria;
 extern int tam_segmento_0;
 extern int cant_segmentos;
-extern int retardo_memoria;
-extern int retardo_compactacion;
+extern double retardo_memoria;
+extern double retardo_compactacion;
 extern char* algoritmo_asignacion;
 
 extern t_config* config;

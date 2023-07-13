@@ -32,31 +32,33 @@ void conexion_file_system(int server_connection)
 				nueva_instruccion->param3 = realloc(nueva_instruccion->param3, tamanio);
 				memcpy(nueva_instruccion->param3, memoria + direccion_fisica, tamanio);
 				nueva_instruccion->param3_length = tamanio;
-
-				serializar_instruccion_mov(server_connection, nueva_instruccion);
-
 				break;
 
 			case F_READ:
 
-				log_info(logger, "PID: %d - Accion: ESCRIBIR - Direccion Fisica: %d - Tamanio: %d - Origen: FS", nueva_instruccion->pid, direccion_fisica, tamanio);
+				log_info(logger,"PID: %d - Accion: ESCRIBIR - Direccion Fisica: %d - Tamanio: %d - Origen: FS",nueva_instruccion->pid,direccion_fisica,tamanio);
 
 				direccion_fisica = atoi(nueva_instruccion->param1);
 				tamanio = atoi(nueva_instruccion->param2);
 
-				memcpy(memoria + direccion_fisica, nueva_instruccion->param3, tamanio);
+				memcpy(memoria + direccion_fisica, nueva_instruccion->param3 , tamanio);
 
 				break;
 
 			default:
 				break;
 			}
+			sleep(retardo_memoria);
+			serializar_instruccion_mov(server_connection, nueva_instruccion);
 			destruir_instruc_mov(nueva_instruccion);
+
 			break;
+
 		default:
 			exit_status = 1;
 			break;
 		}
+
 		free(paquete->buffer->stream);
 		free(paquete->buffer);
 		free(paquete);
