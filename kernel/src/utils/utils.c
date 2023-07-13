@@ -141,6 +141,7 @@ void desasignar_recurso_si_lo_tiene_asignado(pcb_t *pcb, const char *nombre_recu
 		if(strcmp(recurso->nombre_recurso, nombre_recurso) == 0){
 			log_info(logger,"desasigne %s de PID: %d",recurso->nombre_recurso, pcb->pid);
 			list_remove(pcb->recursos_asignados,i);
+			i--;
 		}
 	}
 }
