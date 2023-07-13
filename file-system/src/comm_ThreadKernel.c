@@ -89,6 +89,7 @@ void comm_threadKernel(int kernel_connection){
 				free(nueva_instruccion->param1);
 				free(nueva_instruccion->param2);
 				free(nueva_instruccion->param3);
+				free(nueva_instruccion->param4);
 				free(nueva_instruccion);
 				break;
 			default:

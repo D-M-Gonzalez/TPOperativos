@@ -35,6 +35,9 @@ void manejar_archivo(t_contexto* contexto, pcb_t* pcb){
 		default:
 			break;
 	}
+
+	destruir_instruc_file(instruccion);
+	free(puntero);
 }
 
 void editar_archivo(t_contexto* contexto, pcb_t* pcb){
@@ -57,6 +60,7 @@ void editar_archivo(t_contexto* contexto, pcb_t* pcb){
 		default:
 			break;
 	}
+	destruir_instruc_file(instruccion);
 }
 
 t_resp_file esperar_respuesta_file(){

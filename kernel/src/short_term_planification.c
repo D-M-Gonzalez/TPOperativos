@@ -150,6 +150,7 @@ void file_system_read_write_block(t_read_write_block_args* args)
 	sem_post(&sem_compactacion);
 	sem_post(&sem_estado_ready);
 
+	destruir_contexto(args->contexto);
 	free(args);
 }
 
@@ -169,6 +170,6 @@ void file_system_truncate_block(t_read_write_block_args* args)
 	log_info(logger,"PID: %d - Salio del Bloqueo por: Truncate",arguments->pcb->pid);
 
 	sem_post(&sem_estado_ready);
-
+	destruir_contexto(args->contexto);
 	free(args);
 }

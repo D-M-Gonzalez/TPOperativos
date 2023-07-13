@@ -353,7 +353,7 @@ void duplicar_contexto(t_contexto* contexto_destino, t_contexto* contexto_origen
 	copiar_registros(contexto_destino->registros, contexto_origen->registros);
 	copiar_lista_instrucciones(contexto_destino->instrucciones,contexto_origen->instrucciones);
 
-	contexto_destino->tabla_segmento = contexto_origen->tabla_segmento;
+	duplicar_tabla_segmentos(contexto_origen->tabla_segmento,contexto_destino->tabla_segmento);
 }
 
 t_instruc_mem* inicializar_instruc_mem()
@@ -413,6 +413,20 @@ void eliminar_tabla_segmentos(pcb_t* proceso){
 
 	destruir_contexto(contexto_eliminar);
 }
+
+void duplicar_tabla_segmentos(tabla_segmentos_t* tabla_origen, tabla_segmentos_t* tabla_destino){
+	void duplicar(segmento_t* segmento){
+		segmento_t* nuevo_segmento = malloc(sizeof(segmento_t));
+
+		nuevo_segmento->direccion_base = segmento->direccion_base;
+		nuevo_segmento->ids = segmento->ids;
+		nuevo_segmento->tamanio = segmento->tamanio;
+
+		list_add(tabla_destino->segmentos,nuevo_segmento);
+	}
+	list_iterate(tabla_origen->segmentos, (void*) duplicar);
+	tabla_destino->pid = tabla_origen->pid;
+}
 void destroy_proceso(pcb_t *proceso) {
 
 	while(list_size(proceso->tabla_archivos_abiertos) != 0){
@@ -432,6 +446,8 @@ void destroy_proceso(pcb_t *proceso) {
 				list_mutex_destroy(recurso_a_eliminar->cola_bloqueados);
 				pthread_mutex_destroy(&(recurso_a_eliminar->mutex_instancias));
 				list_remove_element(lista_recursos->lista, recurso_a_eliminar);
+				free(recurso_a_eliminar->nombre_recurso);
+				free(recurso_a_eliminar);
 			}
 		}
 	}
@@ -512,6 +528,14 @@ t_instruc_file* inicializar_instruc_file()
 	instruccion->estado = F_OPEN;
 
 	return instruccion;
+}
+
+void destruir_instruc_file(t_instruc_file* instruccion){
+	free(instruccion->param1);
+	free(instruccion->param2);
+	free(instruccion->param3);
+	free(instruccion->param4);
+	free(instruccion);
 }
 
 void copiar_instruccion_file(t_instruc_file* instruccion, t_contexto* contexto, char* puntero){

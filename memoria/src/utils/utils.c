@@ -88,9 +88,6 @@ void compactar_memoria(){
 		segmento_t* segmento = list_get(lista_segmentos,i);
 
 		memcpy(memoria + last_tamanio,memoria + segmento->direccion_base, segmento->tamanio);
-		//memcpy(memoria + base, asdasd, offset);
-
-		//5646578676 base + offset, 54 5678 segmento + limite
 
 		segmento->direccion_base = last_tamanio;
 		last_tamanio = segmento->tamanio + last_tamanio;
@@ -103,7 +100,8 @@ void compactar_memoria(){
 	nuevo_hueco->tamanio = max_size - (nuevo_segmento_max->direccion_base + nuevo_segmento_max ->tamanio);
 
 	while(size_huecos > 0){
-		list_remove_and_destroy_element(lista_de_huecos_libres,size_huecos - 1,free);
+		hueco_libre_t* hueco_a_borrar = list_remove(lista_de_huecos_libres,0);
+		free(hueco_a_borrar);
 		size_huecos = list_size(lista_de_huecos_libres);
 	}
 	list_add(lista_de_huecos_libres,nuevo_hueco);

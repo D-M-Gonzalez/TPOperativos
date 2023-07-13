@@ -39,10 +39,7 @@ void conexion_cpu(int server_connection)
 					break;
 			}
 
-			free(nueva_instruccion->param1);
-			free(nueva_instruccion->param2);
-			free(nueva_instruccion->param3);
-			free(nueva_instruccion);
+			destruir_instruc_mov(nueva_instruccion);
 			break;
 
 		default:

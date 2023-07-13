@@ -170,6 +170,8 @@ t_list* armar_lista_offsets(int id_fcb, int tam_a_leer, int p_seek){
 		list_add(lista_offsets,nuevo_offset);
 	}
 
+	list_destroy_and_destroy_elements(lista_bloques,free);
+
 	return lista_offsets;
 }
 

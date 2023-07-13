@@ -76,6 +76,8 @@ void duplicar_contexto(t_contexto* contexto_destino, t_contexto* contexto_origen
 
 void destruir_contexto(t_contexto* contexto);
 void destruir_instruc_mem(t_instruc_mem* instruccion);
+void destruir_instruc_file(t_instruc_file* instruccion);
+void duplicar_tabla_segmentos(tabla_segmentos_t* tabla_origen, tabla_segmentos_t* tabla_destino);
 
 extern t_lista_mutex* lista_tabla_segmentos;
 extern t_list* tabla_global_archivos_abiertos;

@@ -111,6 +111,8 @@ void asignar_bloques(int id_fcb, int nuevo_tamanio)
 
 	log_info(logger, "Asigne: %d", cant_bloques_a_asignar);
 
+	list_destroy_and_destroy_elements(lista_total_de_bloques,free);
+
 	modificar_fcb(id_fcb, TAMANIO_ARCHIVO, nuevo_tamanio);
 }
 
@@ -135,6 +137,8 @@ void desasignar_bloques(int id_fcb, int nuevo_tamanio)
 		limpiar_bit_en_bitmap(bloque->id_bloque);
 		i++;
 	}
+
+	list_destroy_and_destroy_elements(lista_de_bloques,free);
 
 	modificar_fcb(id_fcb, TAMANIO_ARCHIVO, nuevo_tamanio);
 }

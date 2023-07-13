@@ -129,3 +129,10 @@ t_instruc_mov* inicializar_instruc_mov()
 
 	return instruccion;
 }
+
+void destruir_instruc_mov(t_instruc_mov* instruccion){
+	free(instruccion->param1);
+	free(instruccion->param2);
+	free(instruccion->param3);
+	free(instruccion);
+}

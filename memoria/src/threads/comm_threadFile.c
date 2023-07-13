@@ -33,8 +33,6 @@ void conexion_file_system(int server_connection)
 				memcpy(nueva_instruccion->param3, memoria + direccion_fisica, tamanio);
 				nueva_instruccion->param3_length = tamanio;
 
-				log_info(logger, "Lei el valor %s", nueva_instruccion->param3);
-
 				serializar_instruccion_mov(server_connection, nueva_instruccion);
 
 				break;
@@ -46,8 +44,6 @@ void conexion_file_system(int server_connection)
 				direccion_fisica = atoi(nueva_instruccion->param1);
 				tamanio = atoi(nueva_instruccion->param2);
 
-				log_info(logger, "ESCRIBI el valor %s", (char*) nueva_instruccion->param3);
-
 				memcpy(memoria + direccion_fisica, nueva_instruccion->param3, tamanio);
 
 				break;
@@ -55,6 +51,7 @@ void conexion_file_system(int server_connection)
 			default:
 				break;
 			}
+			destruir_instruc_mov(nueva_instruccion);
 			break;
 		default:
 			exit_status = 1;

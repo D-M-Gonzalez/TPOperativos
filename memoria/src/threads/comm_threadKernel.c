@@ -69,6 +69,7 @@ void conexion_kernel(int server_connection){
 									eliminar_segmento(tabla_de_proceso_to_delete, lista_de_huecos_libres, id_segmento);
 								}
 							}
+							list_remove(tabla_de_proceso_to_delete->segmentos,0);
 							list_remove_element(lista_de_tablas, tabla_de_proceso_to_delete);
 							free(tabla_de_proceso_to_delete->segmentos);
 							free(tabla_de_proceso_to_delete);
