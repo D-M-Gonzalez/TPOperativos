@@ -66,7 +66,6 @@ t_bitarray *bitmap;
 
 // _____________________
 
-fcb_t* fcb;
 int fcb_id;
 char* nombre_archivo;
 int tamanio_archivo;

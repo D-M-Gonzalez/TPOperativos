@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
 
 	//Verificar si existe el directorio
 
-	log_info(logger,"cant de bits del bitmap %d", bitarray_get_max_bit(bitmap));
+	log_info(logger,"cant de bits del bitmap %d", (int) bitarray_get_max_bit(bitmap));
 
 	// Conectamos al monitor, comentar para la entrega
 
@@ -79,46 +79,8 @@ void terminar_programa()
 	log_destroy(logger);
 	config_destroy(config);
 	config_destroy(superbloque_config);
-	config_destroy(fcb);
 	liberar_conexion(memoria_connection);
 }
-
-/*
-void escribir_bloque(uint32_t bloque_a_escribir, void* datos){
-	int tamanio_datos = strlen(datos) + 1;
-	memcpy(memoria_file_system + (bloque_a_escribir * tamanio_bloque), datos, tamanio_datos);
-}
-
-void escribir_bytes(int bytes_a_escribir, void* todos_los_datos)
-{
-	uint32_t cantidad_de_bloques_a_escribir = ceil(cantidad_de_bloques / bytes_a_escribir);
-
-	//uint32_t primer_bloque_libre = obtener_primer_bloque_libre();
-   //verificar de tener los bloques necesarios para escribir
-	      for(uint32_t i =0; i < cantidad_de_bloques_a_escribir; i++)
-	      {
-
-	       escribir_bloque(i,todos_los_datos + (i * tamanio_bloque));
-	      }
-
-}
-
-uint32_t leer_bloque(uint32_t id_bloque_a_leer)
-{
-      uint32_t bloque;
-      memcpy(bloque, (char*)(memoria_file_system + id_bloque_a_leer * sizeof(uint32_t)), sizeof(uint32_t));
-      //creo q actualizar offset?
-      return bloque;
-}
-void leer_bytes(int bytes_a_leer)
-{
-       uint32_t cantidad_de_bloques_a_leer= ceil(cantidad_de_bloques / bytes_a_leer);
-      for(uint32_t i = 0; i < cantidad_de_bloques_a_leer; i++)
-      {
-            leer_bloque(array_de_bloques[i]);
-      }
-}
-*/
 
 void thread_monitor(int connection){
 	while(1){

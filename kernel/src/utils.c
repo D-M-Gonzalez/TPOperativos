@@ -431,21 +431,22 @@ void destroy_proceso(pcb_t *proceso) {
 
 	while(list_size(proceso->tabla_archivos_abiertos) != 0){
 		archivo_abierto_t* archivo = (archivo_abierto_t*) list_get(proceso->tabla_archivos_abiertos, 0);
-		char *archivo_abierto = archivo->nombre_archivo;
-		if (recurso_existe_en_lista(lista_recursos, archivo_abierto) && archivo_existe_en_tabla(tabla_global_archivos_abiertos, archivo_abierto))
+		if (recurso_existe_en_lista(lista_recursos, archivo->nombre_archivo) && archivo_existe_en_tabla(tabla_global_archivos_abiertos, archivo->nombre_archivo))
 		{
-			desasignar_recurso_si_lo_tiene_asignado(proceso, archivo_abierto);
-			sumar_instancia(lista_recursos, archivo_abierto);
-			int instancias_recurso = obtener_instancias(lista_recursos, archivo_abierto);
-			liberar_proceso_de_bloqueados_si_necesario(archivo_abierto, instancias_recurso);
-			archivo_abierto_t* archivo_abierto_pcb = buscar_archivo_abierto_t(proceso->tabla_archivos_abiertos, archivo_abierto);
-			list_remove_element(proceso->tabla_archivos_abiertos,archivo_abierto_pcb);
+			desasignar_recurso_si_lo_tiene_asignado(proceso, archivo->nombre_archivo);
+			sumar_instancia(lista_recursos, archivo->nombre_archivo);
+			int instancias_recurso = obtener_instancias(lista_recursos, archivo->nombre_archivo);
+			liberar_proceso_de_bloqueados_si_necesario(archivo->nombre_archivo, instancias_recurso);
+			list_remove(proceso->tabla_archivos_abiertos,0);
 			if(instancias_recurso==1){
-				eliminar_archivo_abierto_t(tabla_global_archivos_abiertos, archivo_abierto);
-				t_recurso *recurso_a_eliminar = buscar_recurso(lista_recursos, archivo_abierto);
+				eliminar_archivo_abierto_t(tabla_global_archivos_abiertos, archivo->nombre_archivo);
+				t_recurso *recurso_a_eliminar = buscar_recurso(lista_recursos, archivo->nombre_archivo);
 				list_mutex_destroy(recurso_a_eliminar->cola_bloqueados);
 				pthread_mutex_destroy(&(recurso_a_eliminar->mutex_instancias));
 				list_remove_element(lista_recursos->lista, recurso_a_eliminar);
+				free(archivo->nombre_archivo);
+				free(archivo->posicion_puntero);
+				free(archivo);
 				free(recurso_a_eliminar->nombre_recurso);
 				free(recurso_a_eliminar);
 			}

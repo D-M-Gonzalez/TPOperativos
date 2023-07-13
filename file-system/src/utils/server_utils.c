@@ -1,10 +1,10 @@
-#include "../includes/server_utils.h"
+#include "../../includes/server_utils.h"
 
 int iniciar_servidor(char* puerto)
 {
 
 	int socket_servidor;
-	struct addrinfo hints, *servinfo, *p;
+	struct addrinfo hints, *servinfo;
 
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_UNSPEC;

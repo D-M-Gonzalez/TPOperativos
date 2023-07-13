@@ -36,6 +36,7 @@ int crear_fcb(char* nombre_fcb);
 int buscar_fcb_id(int id);
 int borrar_fcb(int id);
 int obtener_cantidad_de_bloques(int id_fcb);
+int truncar_fcb(char *nombre_fcb, int nuevo_tamanio);
 
 t_list* obtener_lista_de_bloques(int id_fcb,int primer_bloque, int size);
 t_list* obtener_lista_total_de_bloques(int id_fcb);

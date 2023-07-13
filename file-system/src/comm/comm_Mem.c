@@ -1,4 +1,4 @@
-#include "../includes/comm_Mem.h"
+#include "../../includes/comm_Mem.h"
 
 void realizar_f_write(t_instruc_file* instruccion_file){
 

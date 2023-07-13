@@ -118,8 +118,6 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 
 			log_info(logger, "PID: %d - Abrir Archivo: %s", pcb->pid, contexto_actualizado->param1);
 
-			char *archivo_a_abrir = crear_recurso(contexto_actualizado->param1);
-
 			archivo_abierto_t *archivo = malloc(sizeof(archivo_abierto_t));;
 			archivo->nombre_archivo = crear_recurso(contexto_actualizado->param1);;
 			archivo->posicion_puntero = "0";
@@ -127,16 +125,16 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 
 			list_add(pcb->tabla_archivos_abiertos, archivo);
 
-			if(!archivo_existe_en_tabla(tabla_global_archivos_abiertos, archivo_a_abrir)){
+			if(!archivo_existe_en_tabla(tabla_global_archivos_abiertos, archivo->nombre_archivo)){
 
-				list_add(tabla_global_archivos_abiertos, archivo_a_abrir);
+				list_add(tabla_global_archivos_abiertos, archivo->nombre_archivo);
 
 
-				int recurso_length = strlen(archivo_a_abrir) + 1;
+				int recurso_length = strlen(archivo->nombre_archivo) + 1;
 				t_recurso *recurso = malloc(sizeof(t_recurso));
 				recurso->id = list_size(lista_recursos->lista);
 				recurso->nombre_recurso = malloc(recurso_length);
-				memcpy(recurso->nombre_recurso,archivo_a_abrir,recurso_length);
+				memcpy(recurso->nombre_recurso,archivo->nombre_archivo,recurso_length);
 				recurso->instancias = 1;
 				pthread_mutex_init(&(recurso->mutex_instancias), NULL);
 				recurso->cola_bloqueados = init_list_mutex();
@@ -147,15 +145,15 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 
 			manejar_archivo(contexto_actualizado,pcb);
 
-			asignar_recurso(pcb, archivo_a_abrir);
-			restar_instancia(lista_recursos, archivo_a_abrir);
+			asignar_recurso(pcb, archivo->nombre_archivo);
+			restar_instancia(lista_recursos, archivo->nombre_archivo);
 
-			int instancias_recurso = obtener_instancias(lista_recursos, archivo_a_abrir);
+			int instancias_recurso = obtener_instancias(lista_recursos, archivo->nombre_archivo);
 			if (instancias_recurso < 0)
 			{
-				int recurso_length = strlen(archivo_a_abrir) + 1;
+				int recurso_length = strlen(archivo->nombre_archivo) + 1;
 				pcb->recurso_bloqueante = realloc(pcb->recurso_bloqueante, recurso_length);
-				memcpy(pcb->recurso_bloqueante, archivo_a_abrir, recurso_length);
+				memcpy(pcb->recurso_bloqueante, archivo->nombre_archivo, recurso_length);
 				list_push(pcb_block_list, pcb);
 				sem_post(&sem_estado_block);
 			}
@@ -198,6 +196,11 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 					list_mutex_destroy(recurso_a_eliminar->cola_bloqueados);
 					pthread_mutex_destroy(&(recurso_a_eliminar->mutex_instancias));
 					list_remove_element(lista_recursos->lista, recurso_a_eliminar);
+					free(archivo_abierto_pcb->nombre_archivo);
+					free(archivo_abierto_pcb->posicion_puntero);
+					free(archivo_abierto_pcb);
+					free(recurso_a_eliminar->nombre_recurso);
+					free(recurso_a_eliminar);
 
 				}
 
@@ -209,14 +212,12 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 				log_error(logger, "No existe el archivo %s - terminando proceso PID: %d", archivo_abierto, pcb->pid);
 				sem_post(&sem_estado_exit);
 			}
-
-			//cambiar por la correcta
 			break;
 
 		case F_TRUNCATE:
 
 
-			log_info(logger,"PID: %d - Archivo: %s - Tamanio: %d",pcb->pid,contexto_actualizado->param1, contexto_actualizado->param2);
+			log_info(logger,"PID: %d - Archivo: %s - Tamanio: %s",pcb->pid,contexto_actualizado->param1, contexto_actualizado->param2);
 			t_read_write_block_args *args_truncate = malloc(sizeof(t_read_write_block_args));
 			args_truncate->pcb = pcb;
 			args_truncate->contexto = inicializar_contexto();
@@ -234,7 +235,9 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 
 			char *archivo_abierto_seek = contexto_actualizado->param1;
 
-			log_info(logger, "Tamanio %d", strlen(archivo_abierto_seek));
+			int tamanio = strlen(archivo_abierto_seek);
+
+			log_info(logger, "Tamanio %d", tamanio);
 			archivo_abierto_t* archivo_abierto_seek_pcb = buscar_archivo_abierto_t(pcb->tabla_archivos_abiertos, archivo_abierto_seek);
 
 			archivo_abierto_seek_pcb->posicion_puntero = copiar_char_puntero(contexto_actualizado->param2);

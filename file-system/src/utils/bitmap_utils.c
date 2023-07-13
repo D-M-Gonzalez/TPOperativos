@@ -1,4 +1,4 @@
-#include "../includes/bitmap_utils.h"
+#include "../../includes/bitmap_utils.h"
 
 void setear_bit_en_bitmap(uint32_t id_bloque) // Setea el bit en 1 para el bloque indicado
 {

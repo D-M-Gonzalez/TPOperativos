@@ -13,7 +13,9 @@ OBJS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+src/comm \
 src \
 src/lib/fcb_list \
 src/lib/handler_file \
+src/utils \
 

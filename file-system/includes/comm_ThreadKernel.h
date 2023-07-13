@@ -15,6 +15,7 @@
 #include "server_utils.h"
 #include "fcb_list.h"
 #include "utils.h"
+#include "datos.h"
 #include "comm_Mem.h"
 
 extern t_log* logger;

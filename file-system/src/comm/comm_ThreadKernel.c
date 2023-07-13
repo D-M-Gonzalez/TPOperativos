@@ -1,4 +1,4 @@
-#include "../includes/comm_ThreadKernel.h"
+#include "../../includes/comm_ThreadKernel.h"
 
 void comm_threadKernel(int kernel_connection){
 	while(exit_status == 0){
