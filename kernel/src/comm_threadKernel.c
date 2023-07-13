@@ -2,7 +2,6 @@
 
 t_contexto* obtener_contexto_pcb(pcb_t *pcb)
 {
-
 	t_contexto *contexto = inicializar_contexto();
 	copiar_registros(contexto->registros, pcb->registros_cpu);
 	copiar_lista_instrucciones(contexto->instrucciones, pcb->instrucciones);
@@ -333,12 +332,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			break;
 		}
 
-		list_destroy_and_destroy_elements(contexto_actualizado->instrucciones, (void*) instrucciones_destroy);
-		free(contexto_actualizado->param1);
-		free(contexto_actualizado->param2);
-		free(contexto_actualizado->param3);
-		free(contexto_actualizado->registros);
-		free(contexto_actualizado);
+		destruir_contexto(contexto_actualizado);
 		break;
 
 	default:
@@ -346,12 +340,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 		break;
 	}
 
-	list_destroy_and_destroy_elements(contexto->instrucciones, (void*) instrucciones_destroy);
-	free(contexto->param1);
-	free(contexto->param2);
-	free(contexto->param3);
-	free(contexto->registros);
-	free(contexto);
+	destruir_contexto(contexto);
 	free(paquete->buffer->stream);
 	free(paquete->buffer);
 	free(paquete);

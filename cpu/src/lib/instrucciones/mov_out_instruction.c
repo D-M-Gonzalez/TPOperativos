@@ -23,5 +23,7 @@ int ejecutar_mov_out(t_contexto *contexto, t_instruc *instruccion)
 
 	log_info(logger, "PID: %d - Accion: [MOV_OUT] - Valor: %s - Registro: %s",contexto->pid, contexto->param2, instruccion->param2);
 
+	ip++;
+
 	return exit_status;
 }

@@ -37,6 +37,8 @@ extern char* path_fcb_folder;
 
 extern int retardo_acceso_bloque;
 
+extern int formatear;
+
  // Variables de SuperBloque
 extern int tamanio_de_bloque;
 extern int cantidad_de_bloques;

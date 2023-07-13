@@ -92,6 +92,17 @@ int initial_setup()
 		error = 0;
 	}
 
+	// FORMEATEAR ANTES DE INICIAR
+	if (config_has_property(config, "FORMATEAR"))
+	{
+		formatear = config_get_int_value(config, "FORMATEAR");
+	}
+	else
+	{
+		failed_setup("FORMATEAR");
+		error = 0;
+	}
+
 	if (error == 1)
 	{
 		log_info(logger, "Valores de configuracion leidos correctamente");
@@ -125,7 +136,7 @@ int crear_bitmap()
 		return EXIT_FAILURE;
 	}
 
-	memset(bitmap_data, 0, tamanio_bitmap); // Inicializo los bits en 0
+	if(formatear == 1) memset(bitmap_data, 0, tamanio_bitmap); // Inicializo los bits en 0
 
 	bitmap = bitarray_create_with_mode(bitmap_data, tamanio_bitmap, LSB_FIRST);
 

@@ -27,10 +27,6 @@ int _modificar_fcb(fcb_t* fcb, fcb_prop_t llave, uint32_t valor){
 			fcb->puntero_indirecto = valor;
 			config_set_value(fcb_fisico, "PUNTERO_INDIRECTO", valor_string);
 			break;
-		case PUNTERO_ARCHIVO:
-			fcb->puntero_archivo = valor;
-			config_set_value(fcb_fisico, "PUNTERO_ARCHIVO", valor_string);
-			break;
 		default:
 			resultado = -1;
 			break;

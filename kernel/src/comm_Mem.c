@@ -10,8 +10,6 @@ void solicitar_tabla_segmentos(){
 	switch (paquete->codigo_operacion){
 		case 1:
 			deserializar_tabla_segmentos(lista_tabla_segmentos,paquete->buffer,paquete->lineas);
-			//log_info(logger,"Tabla de segmentos ACTUALIZADA");
-			//imprimir_tabla_segmentos();
 			break;
 		default:
 			log_error(logger,"Fallo la lectura de la tabla de segmentos");
@@ -88,6 +86,8 @@ void create_segment(t_contexto* contexto, pcb_t* pcb){
 		default:
 			break;
 	}
+
+	destruir_instruc_mem(instruccion);
 }
 
 void delete_segment(t_contexto* contexto, pcb_t* pcb){
@@ -95,4 +95,5 @@ void delete_segment(t_contexto* contexto, pcb_t* pcb){
 	copiar_instruccion_mem(instruccion_delete,contexto);
 	serializar_instruccion_memoria(memoria_connection, instruccion_delete);
 	log_info(logger,"PID: %d - Eliminar Segmento - Id: %s", contexto->pid, contexto->param1);
+	destruir_instruc_mem(instruccion_delete);
 }

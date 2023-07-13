@@ -21,9 +21,6 @@ uint32_t _valor_fcb(fcb_t* fcb, fcb_prop_t llave){
 		case PUNTERO_INDIRECTO:
 			valor = fcb->puntero_indirecto;
 			break;
-		case PUNTERO_ARCHIVO:
-			valor = fcb->puntero_archivo;
-			break;
 		default:
 			break;
 	}

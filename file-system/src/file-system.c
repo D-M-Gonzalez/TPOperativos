@@ -2,7 +2,6 @@
 
 int main(int argc, char *argv[]) {
 	logger = iniciar_logger();
-	inicializar_fcb_list();
 
 	//Inicializamos las variables globales desde el config, que loggee errores o success si todo esta bien
 	if (argc < 2) {
@@ -31,27 +30,15 @@ int main(int argc, char *argv[]) {
 
 	memoria_file_system = mmap(NULL,tam_memoria_file_system, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
 
-	inicializar_datos_memoria();
-
-	/*
-	memcpy(memoria_file_system,"0123456789ABCDEF",sizeof(char) * 16);
-	int bloque1 = 2;
-	int bloque2 = 3;
-	int bloque3 = 4;
-	memcpy(memoria_file_system + 16, &bloque1, sizeof(uint32_t));
-	memcpy(memoria_file_system + 20, &bloque2, sizeof(uint32_t));
-	memcpy(memoria_file_system + 24, &bloque3, sizeof(uint32_t));
-
-	memcpy(memoria_file_system + 32,"FEDCBA9876543210",sizeof(char) * 16);
-	memcpy(memoria_file_system + 48,"0123456789ABCDEF",sizeof(char) * 16);
-	memcpy(memoria_file_system + 64,"FEDCBA9876543210",sizeof(char) * 16);
-	*/
+	if(formatear == 1) inicializar_datos_memoria();
 
 	exit_status = crear_bitmap();
 	if (exit_status == EXIT_FAILURE)
 	{
 		return EXIT_FAILURE;
 	}
+
+	inicializar_fcb_list();
 
 	//Verificar si existe el directorio
 

@@ -38,5 +38,7 @@ int ejecutar_f_write_read(t_contexto *contexto, t_instruc *instruccion, contexto
 
 	free(params);
 
+	ip++;
+
 	return 1;
 }

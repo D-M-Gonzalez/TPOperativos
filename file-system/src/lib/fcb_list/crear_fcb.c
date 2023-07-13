@@ -30,7 +30,6 @@ int crear_fcb(char* nombre_fcb){
 	dictionary_put(fcb_fisico->properties,"TAMANIO_ARCHIVO", "0");
 	dictionary_put(fcb_fisico->properties,"PUNTERO_DIRECTO", "0");
 	dictionary_put(fcb_fisico->properties,"PUNTERO_INDIRECTO", "0");
-	dictionary_put(fcb_fisico->properties,"PUNTERO_ARCHIVO", "0");
 
 	config_save_in_file(fcb_fisico,nombre_completo);
 	list_add(lista_global_fcb->lista_fcb,nuevo_fcb);
