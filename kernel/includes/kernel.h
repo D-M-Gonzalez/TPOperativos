@@ -59,6 +59,7 @@
 	sem_t sem_pid_aumento;
 	sem_t sem_grado_multi;
 	sem_t sem_compactacion;
+	sem_t sem_tabla_archivos;
 
 	//sem_t sem_recursos[N];
 

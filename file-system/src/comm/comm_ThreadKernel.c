@@ -15,18 +15,18 @@ void comm_threadKernel(int kernel_connection){
 				switch (nueva_instruccion->estado){
 					case F_OPEN:
 						if(buscar_fcb(nueva_instruccion->param1)!=-1){
-							log_info(logger,"Abrir Archivo: %s",nueva_instruccion->param1);
+							log_info(logger,"PID: %d - F_OPEN: %s",nueva_instruccion->pid,nueva_instruccion->param1);
 							estado_file = F_OPEN_SUCCESS;
 						}
 						else {
-							log_info(logger,"Archivo %s no existe", nueva_instruccion->param1);
+							log_info(logger,"PID: %d - F_OPEN: %s - NO EXISTE",nueva_instruccion->pid,nueva_instruccion->param1);
 							estado_file = FILE_DOESNT_EXISTS;
 						}
 						serializar_respuesta_file_kernel(kernel_connection, estado_file);
 						break;
 					case F_CREATE:
 						if(crear_fcb(nueva_instruccion->param1) != -1){
-							log_info(logger,"Crear Archivo: %s",nueva_instruccion->param1);
+							log_info(logger,"PID: %d - F_CREATE: %s",nueva_instruccion->pid,nueva_instruccion->param1);
 							estado_file = F_CREATE_SUCCESS;
 						}
 						serializar_respuesta_file_kernel(kernel_connection, estado_file);
@@ -34,14 +34,14 @@ void comm_threadKernel(int kernel_connection){
 					case F_CLOSE:
 						if(buscar_fcb(nueva_instruccion->param1) != -1){
 							estado_file = F_CLOSE_SUCCESS;
-							log_info(logger,"Cerrar Archivo: %s", nueva_instruccion->param1);
+							log_info(logger,"PID: %d - F_CLOSE: %s",nueva_instruccion->pid,nueva_instruccion->param1);
 						}
 						serializar_respuesta_file_kernel(kernel_connection, estado_file);
 						break;
 					case F_TRUNCATE:
+						log_info(logger,"PID: %d - F_TRUNCATE: %s - Tamanio: %s",nueva_instruccion->pid,nueva_instruccion->param1, nueva_instruccion->param2);
 						if(truncar_fcb(nueva_instruccion->param1, atoi(nueva_instruccion->param2)) != -1)
 						{
-							log_info(logger,"Truncar Archivo: %s - Tamaño: %s",nueva_instruccion->param1, nueva_instruccion->param2);
 							estado_file = F_TRUNCATE_SUCCESS;
 						}
 
@@ -50,8 +50,7 @@ void comm_threadKernel(int kernel_connection){
 						break;
 
 					case F_WRITE:
-
-						log_info(logger,"Escribir Archivo: %s - Puntero: %d - Memoria: %s - Tamaño: %s",nueva_instruccion->param1,nueva_instruccion->param4,nueva_instruccion->param2,nueva_instruccion->param3);
+						log_info(logger,"PID: %d - F_WRITE: %s - Puntero: %d - Memoria: %s - Tamaño: %s",nueva_instruccion->pid,nueva_instruccion->param1,nueva_instruccion->param4,nueva_instruccion->param2,nueva_instruccion->param3);
 						realizar_f_write(nueva_instruccion);
 
 						estado_file = F_WRITE_SUCCESS;
@@ -60,28 +59,21 @@ void comm_threadKernel(int kernel_connection){
 						break;
 
 					case F_READ:
-
-						log_info(logger,"Leer Archivo: %s - Puntero: %d - Memoria: %s - Tamaño: %s",nueva_instruccion->param1,nueva_instruccion->param4,nueva_instruccion->param2,nueva_instruccion->param3);
+						log_info(logger,"PID: %d - F_READ: %s - Puntero: %d - Memoria: %s - Tamaño: %s",nueva_instruccion->pid,nueva_instruccion->param1,nueva_instruccion->param4,nueva_instruccion->param2,nueva_instruccion->param3);
 						realizar_f_read(nueva_instruccion);
 
 						estado_file = F_READ_SUCCESS;
 						serializar_respuesta_file_kernel(kernel_connection, estado_file);
 
 						break;
-
-					case F_SEEK:
-						estado_file = F_SEEK_SUCCESS;
-						log_info(logger,"PID: %d solicito F_SEEK para el archivo %s en el puntero %d",pid, nueva_instruccion->param1, nueva_instruccion->param4);
-						serializar_respuesta_file_kernel(kernel_connection, estado_file);
-						break;
 					case F_DELETE:
 						borrar_fcb(buscar_fcb(nueva_instruccion->param1));
 						estado_file = F_DELETE_SUCCESS;
-						log_info(logger,"Eliminar Archivo: %s",nueva_instruccion->param1);
+						log_info(logger,"PID: %d - F_DELETE: %s",nueva_instruccion->pid,nueva_instruccion->param1);
 						serializar_respuesta_file_kernel(kernel_connection, estado_file);
 						break;
 					case PRINT_FILE_DATA:
-						log_info(logger,"PID: %d solicito impresion de datos",pid);
+						log_info(logger,"PID: %d Solicito impresion de datos",pid);
 						break;
 					default:
 						break;
@@ -89,7 +81,6 @@ void comm_threadKernel(int kernel_connection){
 				free(nueva_instruccion->param1);
 				free(nueva_instruccion->param2);
 				free(nueva_instruccion->param3);
-				free(nueva_instruccion->param4);
 				free(nueva_instruccion);
 				break;
 			default:

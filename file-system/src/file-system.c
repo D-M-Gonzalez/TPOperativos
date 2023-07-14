@@ -40,10 +40,6 @@ int main(int argc, char *argv[]) {
 
 	inicializar_fcb_list();
 
-	//Verificar si existe el directorio
-
-	log_info(logger,"cant de bits del bitmap %d", (int) bitarray_get_max_bit(bitmap));
-
 	// Conectamos al monitor, comentar para la entrega
 
 	int monitor_connection = crear_conexion("127.0.0.1","8050");

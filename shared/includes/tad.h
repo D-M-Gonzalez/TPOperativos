@@ -198,7 +198,11 @@ typedef struct
 
 typedef enum
 {
-	PCB_NEW, PCB_READY, PCB_EXEC, PCB_BLOCK, PCB_EXIT
+	PCB_NEW,
+	PCB_READY,
+	PCB_EXEC,
+	PCB_BLOCK,
+	PCB_EXIT
 } pcb_estado_t;
 
 typedef struct
@@ -221,7 +225,8 @@ typedef struct
 	uint32_t pid;
 	uint32_t consola;
 	char *recurso_bloqueante; //se podria utilizar un int y hacer referencia al id de la lista de recursos
-	pcb_estado_t estado; 					// tipo de estado, puede ser un enum
+	contexto_estado_t estado_exec; 					// tipo de estado, puede ser un enum
+	pcb_estado_t estado;				// tipo de estado de ejecucion
 	uint32_t estimado_proxima_rafaga; 		// se saca inicialmente del config
 	t_temporal *tiempo_espera_en_ready; 	// se hace con timer, ver timestamp
 	t_registros *registros_cpu; 			// crear struct de registros de cpu

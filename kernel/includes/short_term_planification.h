@@ -11,6 +11,7 @@
 #include "comm_threadKernel.h"
 #include "semaphore.h"
 #include "utils.h"
+#include "interruption_handler.h"
 #include<stdbool.h>
 
 typedef struct {

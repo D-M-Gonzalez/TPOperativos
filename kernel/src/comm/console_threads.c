@@ -5,8 +5,8 @@
  *      Author: utnso
  */
 
-#include "../includes/console_threads.h"
-#include "../includes/server_utils.h"
+#include "../../includes/console_threads.h"
+#include "../../includes/server_utils.h"
 
 void atender_consola(int socket_servidor){
 	while (1){

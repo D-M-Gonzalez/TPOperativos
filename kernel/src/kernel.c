@@ -74,18 +74,6 @@ int main(int argc, char *argv[])
 
 	iniciar_tabla_segmentos();
 
-	void imprimir_tablas(tabla_segmentos_t* tabla){
-		void imprimir_segmentos(segmento_t* segmento){
-			log_info(logger,"Segmento %d, base %d, tamanio %d",segmento->ids,segmento->direccion_base,segmento->tamanio);
-		}
-
-		log_info(logger,"Tabla %d", tabla->pid);
-
-		list_iterate(tabla->segmentos,imprimir_segmentos);
-	}
-
-	list_iterate(lista_tabla_segmentos->lista,imprimir_tablas);
-
 	// ---------------------------------------------
 
 	// Inicio servidor del Kernel
@@ -118,6 +106,7 @@ void iniciar_semaforos()
 	sem_init(&sem_estado_exit, 0, 0);
 	sem_init(&sem_pid_aumento, 0, 1);
 	sem_init(&sem_compactacion, 0, 1);
+	sem_init(&sem_tabla_archivos, 0, 1);
 }
 
 void iniciar_pcb_lists()

@@ -4,7 +4,7 @@ void* leer_dato(int offset, int size){
 	void* dato = malloc(size);
 
 	memcpy(dato,memoria_file_system + offset, size);
-
+	msync(memoria_file_system,tam_memoria_file_system,MS_SYNC);
 	sleep(retardo_acceso_bloque);
 
 	return dato;
@@ -14,7 +14,7 @@ uint32_t leer_int(int offset, int size){
 	uint32_t dato = 0;
 
 	memcpy(&dato,memoria_file_system + offset, size);
-
+	msync(memoria_file_system,tam_memoria_file_system,MS_SYNC);
 	sleep(retardo_acceso_bloque);
 
 	return dato;
@@ -24,7 +24,7 @@ uint32_t _leer_int(int offset, int size){
 	uint32_t dato = 0;
 
 	memcpy(&dato,memoria_file_system + offset, size);
-
+	msync(memoria_file_system,tam_memoria_file_system,MS_SYNC);
 	return dato;
 }
 
@@ -63,6 +63,7 @@ void* leer_datos(t_list* lista_offsets){
 	for(int i = 1; i<cant_bloques; i++){
 		offset_fcb_t* bloque = list_get(lista_offsets,i);
 
+		log_info(logger,"ACCESO A BLOQUE - ID Bloque: %d", bloque->id_bloque);
 		void* dato2 = leer_dato(bloque->offset,bloque->tamanio);
 
 		datos = realloc(datos,offset + bloque->tamanio);
