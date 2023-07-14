@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
 
 	// Conectamos al monitor, comentar para la entrega
 
-	int monitor_connection = crear_conexion("127.0.0.1","8050");
+	int monitor_connection = crear_conexion(monitor_ip,monitor_port);
 
 	pthread_t thread_mon;
 	pthread_create(&thread_mon, NULL, (void*) thread_monitor, monitor_connection);

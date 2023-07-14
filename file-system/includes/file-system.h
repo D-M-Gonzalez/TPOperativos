@@ -43,6 +43,8 @@ int memoria_connection;
 // ___ CONFIG VARIABLES ____
 char* memoria_ip;
 char* memoria_port;
+char* monitor_ip;
+char* monitor_port;
 
 char* server_port;
 

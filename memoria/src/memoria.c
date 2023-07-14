@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 	// Asigno tamaño a la memoria, creo lista de tablas de segmentos, de huecos_libres y segmento 0
 
 	memoria = malloc(tam_memoria);
-	inicializar_datos_memoria();
+	if(inicializar == 1)inicializar_datos_memoria();
 
 	segmento_0->tamanio = tam_segmento_0;
 	segmento_0->direccion_base = 0;
@@ -51,15 +51,9 @@ int main(int argc, char *argv[])
 	primer_hueco_libre->tamanio = tam_memoria - segmento_0->tamanio;
 	list_add(lista_de_huecos_libres,primer_hueco_libre);
 
-	//mando un dato temporal
-
-	char* ejemplo = "A";
-
-	memcpy(memoria,ejemplo,2);
-
 	// Conectamos al monitor, comentar para la entrega
 
-	int monitor_connection = crear_conexion("127.0.0.1","8040");
+	int monitor_connection = crear_conexion(monitor_ip,monitor_port);
 
 	pthread_t thread_mon;
 	pthread_create(&thread_mon, NULL, (void*) thread_monitor, monitor_connection);

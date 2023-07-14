@@ -92,6 +92,27 @@ int initial_setup()
 		error = 0;
 	}
 
+	//MONITOR
+	if (config_has_property(config, "IP_MONITOR_FILE"))
+	{
+		monitor_ip = config_get_string_value(config, "IP_MONITOR_FILE");
+	}
+	else
+	{
+		failed_setup("IP_MONITOR_FILE");
+		error = 0;
+	}
+
+	if (config_has_property(config, "PUERTO_MONITOR_FILE"))
+	{
+		monitor_port = config_get_string_value(config, "PUERTO_MONITOR_FILE");
+	}
+	else
+	{
+		failed_setup("PUERTO_MONITOR_FILE");
+		error = 0;
+	}
+
 	// FORMEATEAR ANTES DE INICIAR
 	if (config_has_property(config, "FORMATEAR"))
 	{

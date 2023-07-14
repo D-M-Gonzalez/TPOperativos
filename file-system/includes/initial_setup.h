@@ -27,6 +27,8 @@ void failed_setup(char* key);
 
 extern char* memoria_ip;
 extern char* memoria_port;
+extern char* monitor_ip;
+extern char* monitor_port;
 
 extern char* server_port;
 

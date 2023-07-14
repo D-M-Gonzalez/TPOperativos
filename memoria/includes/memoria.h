@@ -43,6 +43,9 @@ char* algoritmo_asignacion;
 int cpu_connection;
 int kernel_connection;
 int fileSystem_connection;
+char* monitor_ip;
+char* monitor_port;
+int inicializar;
 t_config* config;
 
 // _____________________

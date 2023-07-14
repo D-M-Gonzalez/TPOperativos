@@ -18,6 +18,9 @@ extern int cant_segmentos;
 extern double retardo_memoria;
 extern double retardo_compactacion;
 extern char* algoritmo_asignacion;
+extern char* monitor_ip;
+extern char* monitor_port;
+extern int inicializar;
 
 extern t_config* config;
 extern t_log* logger;

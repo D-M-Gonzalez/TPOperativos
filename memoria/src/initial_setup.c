@@ -59,6 +59,35 @@ int initial_setup(){
 		error = 0;
 	}
 
+	//MONITOR
+	if (config_has_property(config, "IP_MONITOR_MEM"))
+	{
+		monitor_ip = config_get_string_value(config, "IP_MONITOR_MEM");
+	}
+	else
+	{
+		failed_initial_setup("IP_MONITOR_MEM");
+		error = 0;
+	}
+
+	if (config_has_property(config, "PUERTO_MONITOR_MEM"))
+	{
+		monitor_port = config_get_string_value(config, "PUERTO_MONITOR_MEM");
+	}
+	else
+	{
+		failed_initial_setup("PUERTO_MONITOR_MEM");
+		error = 0;
+	}
+
+	// INICIALIZAR
+	if (config_has_property(config, "INICIALIZAR")){
+		inicializar = config_get_int_value(config, "INICIALIZAR");
+	} else {
+		failed_initial_setup("INICIALIZAR");
+		error = 0;
+	}
+
 	if(error == 1){
 		log_info(logger, "Valores de configuracion leidos correctamente");
 		return EXIT_SUCCESS;
