@@ -112,6 +112,7 @@ void conexion_kernel(int server_connection){
 				break;
 			default:
 				exit_status=1;
+				sem_post(&semaforo);
 				break;
 			}
 

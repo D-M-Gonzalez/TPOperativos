@@ -6,6 +6,7 @@
 #include<string.h>
 #include<commons/log.h>
 #include<commons/collections/list.h>
+#include <semaphore.h>
 
 #include "server_utils.h"
 #include "utils.h"
@@ -24,5 +25,6 @@ extern t_list* lista_de_tablas;
 extern char* algoritmo_asignacion;
 extern void* memoria;
 extern double retardo_compactacion;
+extern sem_t semaforo;
 
 #endif /* COMM_THREADKERNEL_H_ */

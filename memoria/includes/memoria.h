@@ -64,6 +64,8 @@ bool fileSystem_conectado;
 
 int exit_status = 0;
 
+sem_t semaforo;
+
 
 // _____________________
 

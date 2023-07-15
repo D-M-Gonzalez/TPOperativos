@@ -56,6 +56,7 @@ void conexion_file_system(int server_connection)
 
 		default:
 			exit_status = 1;
+			sem_post(&semaforo);
 			break;
 		}
 

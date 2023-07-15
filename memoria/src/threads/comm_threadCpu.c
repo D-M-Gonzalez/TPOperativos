@@ -45,6 +45,7 @@ void conexion_cpu(int server_connection)
 
 		default:
 			exit_status = 1;
+			sem_post(&semaforo);
 			break;
 		}
 

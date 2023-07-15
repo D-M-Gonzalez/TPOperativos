@@ -70,7 +70,9 @@ int main(int argc, char *argv[])
 	pthread_t threads[3];
 	int num_threads = 0;
 
-	while (exit_status == 0)
+	sem_init(&semaforo, 0, 0);
+
+	while (num_threads < 2)
 	{
 		if(num_threads < CANTIDAD_DE_THREADS){
 			t_conexion *conexion = malloc(sizeof *conexion);
@@ -82,6 +84,7 @@ int main(int argc, char *argv[])
 			num_threads++;
 		}
 	}
+	sem_wait(&semaforo);
 
 	//log_info(logger, "Terminando modulo MEMORIA");
 	liberar_conexion(server_connection);

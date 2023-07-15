@@ -6,6 +6,7 @@
 #include<string.h>
 #include<commons/log.h>
 #include<commons/collections/list.h>
+#include <semaphore.h>
 
 #include"client_utils.h"
 #include"server_utils.h"
@@ -18,5 +19,6 @@ extern int exit_status;
 extern t_log* logger;
 extern void* memoria;
 extern double retardo_memoria;
+extern sem_t semaforo;
 
 #endif /* COMM_THREADCPU_H_ */
