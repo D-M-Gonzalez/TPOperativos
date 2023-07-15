@@ -1,1 +1,4 @@
-../kernel/Debug/kernel ../config-files/kernel.config &
+#!/bin/bash
+configPath="$1";
+
+../kernel/Debug/kernel ../config-files/"$configPath"/kernel.config &
