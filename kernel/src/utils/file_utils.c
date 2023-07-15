@@ -34,7 +34,8 @@ int verif_eliminar_recurso_file(pcb_t *proceso, archivo_abierto_t* archivo){
 
 	int instancias_recurso = obtener_instancias(lista_recursos, archivo->nombre_archivo);
 	t_recurso *recurso_a_eliminar = buscar_recurso(lista_recursos, archivo->nombre_archivo);
-	if(instancias_recurso == 1 && list_size(recurso_a_eliminar->cola_bloqueados->lista) == 0){
+
+	if(instancias_recurso == 0 && list_size(recurso_a_eliminar->cola_bloqueados->lista) == 0){
 		for(int i = 0; i<list_size(proceso->recursos_asignados) ; i++){
 			t_recurso* recurso = list_get(proceso->recursos_asignados,i);
 			if(strcmp(recurso->nombre_recurso,archivo->nombre_archivo) == 0) list_remove(proceso->recursos_asignados,i);

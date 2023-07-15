@@ -29,16 +29,6 @@ void copiar_string(char *origen, char *destino)
 
 void destroy_proceso(pcb_t *proceso) {
 
-//	while(list_size(proceso->tabla_archivos_abiertos) != 0){
-//
-//		if (recurso_existe_en_lista(lista_recursos, archivo->nombre_archivo) && archivo_existe_en_tabla(tabla_global_archivos_abiertos, archivo->nombre_archivo))
-//		{
-//			list_remove(proceso->tabla_archivos_abiertos,0);
-//
-//			verif_eliminar_recurso_file(proceso,archivo);
-//		}
-//	}
-
 	while(list_size(proceso->tabla_archivos_abiertos) > 0){
 
 		archivo_abierto_t* archivo = (archivo_abierto_t*) list_get(proceso->tabla_archivos_abiertos, 0);
@@ -74,6 +64,7 @@ void destroy_proceso(pcb_t *proceso) {
 	list_destroy(proceso->tabla_archivos_abiertos);
 
 	free(proceso->recurso_bloqueante);
+
 	devolver_instancias(proceso, lista_recursos);
 	free(proceso->recursos_asignados);
 
@@ -96,6 +87,6 @@ void imprimir_recursos(pcb_t* pcb){
 	for(int i=0; i<list_size(pcb->recursos_asignados); i++){
 		t_recurso* recurso = list_get(pcb->recursos_asignados,i);
 
-		log_info(logger,"PID: %d - Recurso: %s",pcb->pid, recurso->nombre_recurso);
+		log_info(logger,"PID: %d - Recurso: %s - Cantidad: %d",pcb->pid, recurso->nombre_recurso, recurso->instancias);
 	}
 }

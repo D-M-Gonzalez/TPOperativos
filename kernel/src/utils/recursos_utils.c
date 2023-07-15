@@ -80,10 +80,12 @@ void devolver_instancias(pcb_t *pcb, t_lista_mutex *lista_recursos)
 		{
 			t_recurso *recurso_asignado = list_remove(pcb->recursos_asignados, 0);
 			//log_info(logger,"Liberacion PID: %d - Recurso: %s", pcb->pid, recurso_asignado->nombre_recurso);
-			int instancias_recurso = obtener_instancias(lista_recursos, recurso_asignado->nombre_recurso);
-			sumar_instancia(lista_recursos, recurso_asignado->nombre_recurso);
+			if(!archivo_existe_en_tabla(tabla_global_archivos_abiertos, recurso_asignado->nombre_recurso)){
+				int instancias_recurso = obtener_instancias(lista_recursos, recurso_asignado->nombre_recurso);
+				sumar_instancia(lista_recursos, recurso_asignado->nombre_recurso);
 
-			liberar_proceso_de_bloqueados_si_necesario(recurso_asignado->nombre_recurso, instancias_recurso);
+				liberar_proceso_de_bloqueados_si_necesario(recurso_asignado->nombre_recurso, instancias_recurso);
+			}
 
 			//log_info(logger, "PID: %d - Libera recurso: %s - Instancias: %d", pcb->pid, recurso_asignado->nombre_recurso, recurso_asignado->instancias);
 		}

@@ -160,7 +160,6 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			break;
 
 		case F_CLOSE:
-			imprimir_recursos(pcb);
 			log_info(logger, "PID: %d - Cerrar Archivo: %s", pcb->pid, contexto_actualizado->param1);
 
 			char *archivo_abierto = contexto_actualizado->param1;
