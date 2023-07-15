@@ -29,15 +29,34 @@ void copiar_string(char *origen, char *destino)
 
 void destroy_proceso(pcb_t *proceso) {
 
-	while(list_size(proceso->tabla_archivos_abiertos) != 0){
+//	while(list_size(proceso->tabla_archivos_abiertos) != 0){
+//
+//		if (recurso_existe_en_lista(lista_recursos, archivo->nombre_archivo) && archivo_existe_en_tabla(tabla_global_archivos_abiertos, archivo->nombre_archivo))
+//		{
+//			list_remove(proceso->tabla_archivos_abiertos,0);
+//
+//			verif_eliminar_recurso_file(proceso,archivo);
+//		}
+//	}
+
+	while(list_size(proceso->tabla_archivos_abiertos) > 0){
+
 		archivo_abierto_t* archivo = (archivo_abierto_t*) list_get(proceso->tabla_archivos_abiertos, 0);
 		if (recurso_existe_en_lista(lista_recursos, archivo->nombre_archivo) && archivo_existe_en_tabla(tabla_global_archivos_abiertos, archivo->nombre_archivo))
 		{
-			list_remove(proceso->tabla_archivos_abiertos,0);
 
-			verif_eliminar_recurso_file(proceso,archivo);
+			archivo_abierto_t* archivo_abierto_pcb = buscar_archivo_abierto_t(proceso->tabla_archivos_abiertos, archivo->nombre_archivo);
+			list_remove_element(proceso->tabla_archivos_abiertos,archivo_abierto_pcb);
+
+			if(verif_eliminar_recurso_file(proceso,archivo_abierto_pcb) == 0){
+				int instancias_recurso = obtener_instancias(lista_recursos, archivo->nombre_archivo);
+				sumar_instancia(lista_recursos, archivo->nombre_archivo);
+				liberar_proceso_de_bloqueados_si_necesario(archivo->nombre_archivo, instancias_recurso);
+			}
+
 		}
 	}
+
 	eliminar_tabla_segmentos(proceso);
 
 	while(list_size(proceso->tabla_segmento->segmentos) > 0){

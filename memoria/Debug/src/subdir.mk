@@ -28,10 +28,4 @@ src/%.o: ../src/%.c src/subdir.mk
 	@echo ' '
 
 
-clean: clean-src
-
-clean-src:
-	-$(RM) ./src/initial_setup.d ./src/initial_setup.o ./src/memoria.d ./src/memoria.o ./src/segmentacion.d ./src/segmentacion.o
-
-.PHONY: clean-src
 

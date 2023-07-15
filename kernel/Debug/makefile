@@ -8,6 +8,10 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include src/utils/subdir.mk
+-include src/lib/pcb/subdir.mk
+-include src/lib/Interruption_handler/subdir.mk
+-include src/comm/subdir.mk
 -include src/subdir.mk
 ifneq ($(MAKECMDGOALS),clean)
 ifneq ($(strip $(C_DEPS)),)
@@ -40,10 +44,10 @@ main-build: kernel
 kernel: $(OBJS) $(USER_OBJS) makefile $(OPTIONAL_TOOL_DEPS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -L"/home/utnso/Documents/TPSO/shared/includes" -o "kernel" $(OBJS) $(USER_OBJS) $(LIBS) -lcommons
+	gcc -L"/home/utnso/Documents/tp-2023-1c-Segmentation-Fault/shared/includes" -o "kernel" $(OBJS) $(USER_OBJS) $(LIBS) -lcommons
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-# Other Targets
+
 
 -include ../makefile.targets
