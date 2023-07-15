@@ -47,11 +47,6 @@ memoria: $(OBJS) $(USER_OBJS) makefile $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-# Other Targets
-clean:
-	-$(RM) memoria
-	-@echo ' '
 
-.PHONY: all clean dependents main-build
 
 -include ../makefile.targets

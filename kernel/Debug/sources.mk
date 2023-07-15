@@ -14,4 +14,8 @@ OBJS :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 src \
+src/comm \
+src/lib/Interruption_handler \
+src/lib/pcb \
+src/utils \
 

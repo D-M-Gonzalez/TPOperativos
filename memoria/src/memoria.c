@@ -53,11 +53,11 @@ int main(int argc, char *argv[])
 
 	// Conectamos al monitor, comentar para la entrega
 
-	int monitor_connection = crear_conexion(monitor_ip,monitor_port);
+	// int monitor_connection = crear_conexion(monitor_ip,monitor_port);
 
-	pthread_t thread_mon;
-	pthread_create(&thread_mon, NULL, (void*) thread_monitor, monitor_connection);
-	pthread_detach(thread_mon);
+	// pthread_t thread_mon;
+	// pthread_create(&thread_mon, NULL, (void*) thread_monitor, monitor_connection);
+	// pthread_detach(thread_mon);
 
 	// Esperamos conexiones de Kernel, CPU y File-System
 
