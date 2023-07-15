@@ -67,3 +67,6 @@ https://docs.google.com/document/d/1xYmkJXRRddM51fQZfxr3CEuhNtFCWe5YU7hhvsUnTtg/
 ## División de tareas
 
     Para comenzar hay que realizar las conecciones iniciales. Empezar por memoria -> cpu -> kernel -> consolas.
+
+## KEY
+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
