@@ -7,6 +7,7 @@
 #include <commons/log.h>
 #include <stdbool.h>
 #include <pthread.h>
+#include <semaphore.h>
 
 #include "server_utils.h"
 #include "utils.h"
