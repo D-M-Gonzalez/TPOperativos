@@ -53,7 +53,7 @@ void create_segment(t_contexto* contexto, pcb_t* pcb){
 
 	switch(respuesta){
 		case SUCCESS_CREATE_SEGMENT:
-			log_info(logger,"PID: %d - Crear Segmento - Id: %s - Tamanio: %s", contexto->pid, contexto->param1, contexto->param2);
+			log_info(logger,"PID: %d - Crear Segmento - Id: %s - Tamaño: %s", contexto->pid, contexto->param1, contexto->param2);
 			solicitar_tabla_segmentos();
 			enviar_contexto(pcb);
 			break;
@@ -65,9 +65,9 @@ void create_segment(t_contexto* contexto, pcb_t* pcb){
 			sem_post(&sem_estado_exit);
 			break;
 		case COMPACTION_NEEDED:
-			log_info(logger,"Solicitud de COMPACTACION recibida, esperando Fin de Operaciones de FS");
+			log_info(logger,"Compactación: esperando Fin de Operaciones de FS");
 			sem_wait(&sem_compactacion);
-			log_info(logger,"Compactación:Se solicitó compactación");
+			log_info(logger,"Compactación: Se solicitó compactación");
 			serializar_solicitud_compactacion(memoria_connection);
 			t_resp_mem resp_comp = esperar_respuesta_memoria();
 			sem_post(&sem_compactacion);
@@ -93,6 +93,6 @@ void delete_segment(t_contexto* contexto, pcb_t* pcb){
 	t_instruc_mem* instruccion_delete = inicializar_instruc_mem();
 	copiar_instruccion_mem(instruccion_delete,contexto);
 	serializar_instruccion_memoria(memoria_connection, instruccion_delete);
-	log_info(logger,"PID: %d - Eliminar Segmento - Id: %s", contexto->pid, contexto->param1);
+	log_info(logger,"PID: %d - Eliminar Segmento - Id Segmento: %s", contexto->pid, contexto->param1);
 	destruir_instruc_mem(instruccion_delete);
 }

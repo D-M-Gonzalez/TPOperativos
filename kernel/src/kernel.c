@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
 
 	// Inicio servidor del Kernel
 	int socket_servidor = iniciar_servidor(server_port);
-	log_info(logger, "Kernel listo para recibir Consolas");
+	//log_info(logger, "Kernel listo para recibir Consolas");
 
 	// ---------------------------------------------
 

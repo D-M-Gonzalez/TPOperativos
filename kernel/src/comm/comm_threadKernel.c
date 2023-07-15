@@ -46,7 +46,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 		case YIELD:
 			list_push(pcb_ready_list, pcb);
 			pcb->tiempo_espera_en_ready = temporal_create();
-			log_info(logger, "El proceso %d llego a yield. Se envio al final de ready", pcb->pid);
+			//log_info(logger, "El proceso %d llego a yield. Se envio al final de ready", pcb->pid);
 			sem_post(&sem_estado_ready);
 			break;
 
@@ -149,7 +149,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 
 		case F_DELETE:
 			manejar_archivo(contexto_actualizado,pcb);
-			log_info(logger, "El proceso %d se comunico con FileSystem. Se continua su ejecucion", pcb->pid);
+			//log_info(logger, "El proceso %d se comunico con FileSystem. Se continua su ejecucion", pcb->pid);
 			enviar_contexto(pcb);
 			break;
 
@@ -176,13 +176,14 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			else
 			{
 				list_push(pcb_exit_list, pcb);
-				log_error(logger, "No existe el archivo %s - terminando proceso PID: %d", archivo_abierto, pcb->pid);
+				log_info(logger, "Finaliza el proceso %d - Motivo: INVALID_RESOURCE", pcb->pid);
+				//log_error(logger, "No existe el archivo %s - terminando proceso PID: %d", archivo_abierto, pcb->pid);
 				sem_post(&sem_estado_exit);
 			}
 			break;
 
 		case F_TRUNCATE:
-			log_info(logger,"PID: %d - Archivo: %s - Tamanio: %s",pcb->pid,contexto_actualizado->param1, contexto_actualizado->param2);
+			log_info(logger,"PID: %d - Archivo: %s - Tamaño: %s",pcb->pid,contexto_actualizado->param1, contexto_actualizado->param2);
 			t_read_write_block_args *args_truncate = malloc(sizeof(t_read_write_block_args));
 			args_truncate->pcb = pcb;
 			args_truncate->contexto = inicializar_contexto();
@@ -195,7 +196,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			break;
 
 		case F_SEEK:
-			log_info(logger, "PID: %d - Actualizar puntero Archivo: %s - Puntero: %s", pcb->pid, contexto_actualizado->param1, contexto_actualizado->param2);
+			log_info(logger, "PID: %d - Actualizar puntero Archivo: %s - Puntero %s", pcb->pid, contexto_actualizado->param1, contexto_actualizado->param2);
 
 			int archivo_abierto_seek = atoi(contexto_actualizado->param2);
 
@@ -218,7 +219,8 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			archivo_abierto_t* archivo_abierto_pcb_read = buscar_archivo_abierto_t(pcb->tabla_archivos_abiertos, contexto_actualizado->param1);
 
 			log_info(logger, "PID: %d - Leer Archivo: %s - Puntero %d - Dirección Memoria %s - Tamaño %s", pcb->pid, contexto_actualizado->param1, archivo_abierto_pcb_read->posicion_puntero, contexto_actualizado->param2, contexto_actualizado->param3);
-			log_info(logger,"PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_BLOCK - Razon: F_READ",pcb->pid);
+			log_info(logger,"PID: %d - Bloqueado por: %s",pcb->pid, contexto_actualizado->param1);
+			//log_info(logger,"PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_BLOCK - Razon: F_READ",pcb->pid);
 			pthread_t thread_read_block;
 			pthread_create(&thread_read_block, NULL, (void*) file_system_read_write_block, args_read);
 			pthread_detach(thread_read_block);
@@ -235,7 +237,8 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			archivo_abierto_t* archivo_abierto_pcb_write = buscar_archivo_abierto_t(pcb->tabla_archivos_abiertos, contexto_actualizado->param1);
 
 			log_info(logger, "PID: %d - Escribir  Archivo: %s - Puntero %d - Dirección Memoria %s - Tamaño %s", pcb->pid, contexto_actualizado->param1, archivo_abierto_pcb_write->posicion_puntero, contexto_actualizado->param2, contexto_actualizado->param3);
-			log_info(logger,"PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_BLOCK - Razon: F_WRITE",pcb->pid);
+			log_info(logger,"PID: %d - Bloqueado por: %s",pcb->pid, contexto_actualizado->param1);
+			//log_info(logger,"PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_BLOCK - Razon: F_WRITE",pcb->pid);
 			pthread_t thread_write_block;
 			pthread_create(&thread_write_block, NULL, (void*) file_system_read_write_block, args_write);
 			pthread_detach(thread_write_block);
@@ -257,12 +260,12 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			enviar_contexto(pcb);
 			break;
 		case CREATE_SEGMENT:
-			log_info(logger, "PID: %d - Comunicacion con MEMORIA", pcb->pid);
+			//log_info(logger, "PID: %d - Comunicacion con MEMORIA", pcb->pid);
 			create_segment(contexto_actualizado,pcb);
 			break;
 
 		case DELETE_SEGMENT:
-			log_info(logger, "PID: %d - Comunicacion con MEMORIA", pcb->pid);
+			//log_info(logger, "PID: %d - Comunicacion con MEMORIA", pcb->pid);
 			delete_segment(contexto_actualizado,pcb);
 			solicitar_tabla_segmentos();
 			enviar_contexto(pcb);

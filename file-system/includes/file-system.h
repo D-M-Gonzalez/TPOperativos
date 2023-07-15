@@ -83,5 +83,6 @@ t_list *fcb_list;
 void* memoria_file_system;
 int tam_memoria_file_system;
 uint32_t  *array_de_bloques;
+char* nombre_archivo;
 
 #endif

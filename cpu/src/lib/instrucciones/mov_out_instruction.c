@@ -9,9 +9,7 @@ int ejecutar_mov_out(t_contexto *contexto, t_instruc *instruccion)
 	char *registro = seleccionar_registro(instruccion->param2);
 	uint32_t tamanio = strlen(registro);
 
-	log_info(logger, "Ejecutando [MOV_OUT]");
-
-	int dir_fisica = traducir_direccion(instruccion->param1, contexto);
+	int dir_fisica = traducir_direccion(instruccion->param1, contexto, tamanio);
 
 	if(dir_fisica < 0) return 1;
 
@@ -23,10 +21,22 @@ int ejecutar_mov_out(t_contexto *contexto, t_instruc *instruccion)
 
 	destroy_instruc_mov(instruccion_movimiento);
 
-	log_info(logger, "PID: %d - Accion: [MOV_OUT] - Valor: %s - Registro: %s",contexto->pid, contexto->param2, instruccion->param2);
+	int direccion_logica = atoi(instruccion->param2);
+
+	int num_segmento = floor(direccion_logica / tam_max_segmento);
+
+	log_info(logger,"PID: %d - Accion: LEER - Segmento: %d - Dirección Física: %d - Valor: %s ", contexto->pid, num_segmento, dir_fisica, valor);
+
+	int largo1 = strlen(instruccion->param1);
+	int largo2 = strlen(instruccion->param2);
+	char* params = malloc(largo1 + largo2 + 1);
+	memcpy(params,instruccion->param1,largo1);
+	memcpy(params + largo1, instruccion->param2, largo2);
+	memcpy(params + largo1 + largo2, "", 1);
+	log_instruccion(contexto->pid,"MOV OUT",params);
 
 	ip++;
-
+	free(params);
 	free(valor);
 
 	return exit_status;

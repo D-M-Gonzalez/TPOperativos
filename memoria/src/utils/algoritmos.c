@@ -124,5 +124,5 @@ int worst(uint32_t pid, int id_segmento, int tamanio_segmento){
 }
 
 void log_algoritmos(uint32_t pid, int id_segmento, int tamanio_segmento, int base_segmento){
-	log_info(logger, "PID: %d - Crear Segmento: %d - Base: %d - Tamanio: %d",pid,id_segmento,base_segmento,tamanio_segmento);
+	log_info(logger, "PID: %d - Crear Segmento: %d - Base: %d - TAMAÑO: %d",pid,id_segmento,base_segmento,tamanio_segmento);
 }

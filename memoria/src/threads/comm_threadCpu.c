@@ -3,7 +3,7 @@
 void conexion_cpu(int server_connection)
 {
 	cpu_connection = esperar_cliente(server_connection);
-	log_info(logger,"Se conecto CPU");
+	//log_info(logger,"Se conecto CPU");
 
 	while (exit_status == 0)
 	{
@@ -28,13 +28,13 @@ void conexion_cpu(int server_connection)
 					nueva_instruccion->param3 = realloc(nueva_instruccion->param3, tamanio);
 					memcpy(nueva_instruccion->param3,memoria + direccion_fisica, tamanio);
 					nueva_instruccion->param3_length = tamanio;
-					log_info(logger,"PID: %d - Accion: LEER - Direccion Fisica: %d - Tamanio: %d - Origen: CPU",nueva_instruccion->pid,direccion_fisica,tamanio);
+					log_info(logger,"PID: %d - Accion: LEER - Direccion Fisica: %d - Tamaño: %d - Origen: CPU",nueva_instruccion->pid,direccion_fisica,tamanio);
 					break;
 				case MOV_OUT:
 					direccion_fisica = atoi(nueva_instruccion->param1);
 					tamanio = atoi(nueva_instruccion->param2);
 					memcpy(memoria + direccion_fisica, nueva_instruccion->param3, tamanio);
-					log_info(logger,"PID: %d - Accion: ESCRIBIR - Direccion Fisica: %d - Tamanio: %d - Origen: CPU",nueva_instruccion->pid,direccion_fisica,tamanio);
+					log_info(logger,"PID: %d - Accion: ESCRIBIR - Direccion Fisica: %d - Tamaño: %d - Origen: CPU",nueva_instruccion->pid,direccion_fisica,tamanio);
 					break;
 			}
 			sleep(retardo_memoria);

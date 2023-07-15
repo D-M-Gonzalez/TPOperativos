@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 	cpu_conectada = false;
 	kernel_conectado = false;
 	fileSystem_conectado = false;
-	log_info(logger, "Memoria lista para recibir al CPU, Kernel o File System");
+	//log_info(logger, "Memoria lista para recibir al CPU, Kernel o File System");
 	pthread_t threads[3];
 	int num_threads = 0;
 
@@ -83,16 +83,16 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	log_info(logger, "Terminando modulo MEMORIA");
+	//log_info(logger, "Terminando modulo MEMORIA");
 	liberar_conexion(server_connection);
 
 }
 
 void thread_main(t_conexion* conexion)
 {
-	log_info(logger, "Thread iniciado correctamente");
+	//log_info(logger, "Thread iniciado correctamente");
 	char *mensaje = handshake(conexion->num_socket);
-	log_info(logger,"%s", mensaje);
+	//log_info(logger,"%s", mensaje);
 
 	if (strcmp(mensaje, "Handshake de CPU recibido correctamente") == 0)
 	{

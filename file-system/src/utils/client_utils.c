@@ -46,11 +46,11 @@ int handshake_cliente(int socket_cliente, uint8_t tipo_cliente, uint8_t tipo_ser
 			}
 
 	send(socket_cliente, &handshake, sizeof(uint8_t), NULL);
-	log_info(logger, message);
+	//log_info(logger, message);
 	recv(socket_cliente, &result, sizeof(uint8_t), MSG_WAITALL); //consultar por un timeout
 
 	if(result == 1){
-		log_info(logger, "Se establecio correctamente la conexion");
+		//log_info(logger, "Se establecio correctamente la conexion");
 	} else {
 		log_info(logger, "Fallo al realizar el handshake, cerrando conexion");
 		result = -1;

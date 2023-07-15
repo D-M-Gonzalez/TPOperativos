@@ -63,7 +63,7 @@ void* leer_datos(t_list* lista_offsets){
 	for(int i = 1; i<cant_bloques; i++){
 		offset_fcb_t* bloque = list_get(lista_offsets,i);
 
-		log_info(logger,"ACCESO A BLOQUE - ID Bloque: %d", bloque->id_bloque);
+		log_info(logger,"Acceso Bloque - Archivo: %s - Bloque File System: %d",nombre_archivo, bloque->id_bloque);
 		void* dato2 = leer_dato(bloque->offset,bloque->tamanio);
 
 		datos = realloc(datos,offset + bloque->tamanio);

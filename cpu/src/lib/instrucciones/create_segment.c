@@ -9,7 +9,7 @@ int ejecutar_create_segment(t_contexto *contexto, t_instruc *instruccion)
 	else
 	{
 		log_error(logger, "PID: %d - Error SEG_FAULT - Segmento: %s - Tamanio invalido: %s",
-				contexto->pid, instruccion->param1, instruccion->param2);
+		contexto->pid, instruccion->param1, instruccion->param2);
 		contexto_estado = ERROR_SEG_FAULT;
 		return -1;
 	}

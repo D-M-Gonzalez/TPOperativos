@@ -3,7 +3,7 @@
 void conexion_file_system(int server_connection)
 {
 	cpu_connection = esperar_cliente(server_connection);
-	log_info(logger, "Se conecto FILE SYSTEM");
+	//log_info(logger, "Se conecto FILE SYSTEM");
 
 	while (exit_status == 0)
 	{
@@ -27,7 +27,7 @@ void conexion_file_system(int server_connection)
 				direccion_fisica = atoi(nueva_instruccion->param1);
 				tamanio = atoi(nueva_instruccion->param2);
 
-				log_info(logger, "PID: %d - Accion: LEER - Direccion Fisica: %d - Tamanio: %d - Origen: FS", nueva_instruccion->pid, direccion_fisica, tamanio);
+				log_info(logger, "PID: %d - Accion: LEER - Direccion Fisica: %d - Tamaño: %d - Origen: FS", nueva_instruccion->pid, direccion_fisica, tamanio);
 
 				nueva_instruccion->param3 = realloc(nueva_instruccion->param3, tamanio);
 				memcpy(nueva_instruccion->param3, memoria + direccion_fisica, tamanio);
@@ -36,7 +36,7 @@ void conexion_file_system(int server_connection)
 
 			case F_READ:
 
-				log_info(logger,"PID: %d - Accion: ESCRIBIR - Direccion Fisica: %d - Tamanio: %d - Origen: FS",nueva_instruccion->pid,direccion_fisica,tamanio);
+				log_info(logger,"PID: %d - Accion: ESCRIBIR - Direccion Fisica: %d - Tamaño: %d - Origen: FS",nueva_instruccion->pid,direccion_fisica,tamanio);
 
 				direccion_fisica = atoi(nueva_instruccion->param1);
 				tamanio = atoi(nueva_instruccion->param2);

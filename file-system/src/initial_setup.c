@@ -126,7 +126,7 @@ int initial_setup()
 
 	if (error == 1)
 	{
-		log_info(logger, "Valores de configuracion leidos correctamente");
+		//log_info(logger, "Valores de configuracion leidos correctamente");
 		return EXIT_SUCCESS;
 	}
 	else
@@ -192,7 +192,7 @@ int leer_superbloque_config()
 
 	if (error == 1)
 	{
-		log_info(logger, "Valores de super_bloque leidos correctamente");
+		//log_info(logger, "Valores de super_bloque leidos correctamente");
 		return EXIT_SUCCESS;
 	}
 	else

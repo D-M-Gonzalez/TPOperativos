@@ -15,6 +15,8 @@ int main(int argc, char *argv[]) {
 	}
 
 	superbloque_config = iniciar_config(path_superbloque);
+	nombre_archivo = malloc(5);
+	memcpy(nombre_archivo,"HOLA",5);
 
 	exit_status = leer_superbloque_config();
 	if (exit_status==EXIT_FAILURE){
@@ -56,10 +58,11 @@ int main(int argc, char *argv[]) {
 	//log_info(logger,"%d",tamanio_archivo);
 	int server_connection = iniciar_servidor(server_port);
 
-	log_info(logger, "File System listo para recibir al Kernel");
+	//log_info(logger, "File System listo para recibir al Kernel");
 	//log_info(logger,"%d",tamanio_archivo);
 	int connection_fd = esperar_cliente(server_connection);
-	log_info(logger,"%s",handshake(connection_fd));
+	handshake(connection_fd);
+	//log_info(logger,"%s",handshake(connection_fd));
 	pthread_t thread_kernel;
 	pthread_create(&thread_kernel, NULL, (void*) comm_threadKernel, connection_fd);
 	pthread_join(thread_kernel, NULL);

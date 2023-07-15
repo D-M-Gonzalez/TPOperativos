@@ -43,7 +43,7 @@ void escribir_datos(void* datos, t_list* lista_offsets){
 
 	for(int i = 0; i<cant_bloques; i++){
 		offset_fcb_t* bloque = list_get(lista_offsets,i);
-		log_info(logger,"ACCESO A BLOQUE - ID Bloque: %d", bloque->id_bloque);
+		log_info(logger,"Acceso Bloque - Archivo: %s - Bloque File System: %d",nombre_archivo, bloque->id_bloque);
 		escribir_dato(datos + offset, bloque->offset, bloque->tamanio);
 		offset += bloque->tamanio;
 	}

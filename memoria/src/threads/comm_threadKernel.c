@@ -3,7 +3,7 @@
 void conexion_kernel(int server_connection){
 
 	kernel_connection= esperar_cliente(server_connection);
-	log_info(logger,"Se conecto KERNEL");
+	//log_info(logger,"Se conecto KERNEL");
 
 	while (exit_status==0)
 	{
@@ -47,7 +47,7 @@ void conexion_kernel(int server_connection){
 								estado_memoria = worst(pid, id_segmento, tamanio_segmento);
 
 							if(estado_memoria == COMPACTION_NEEDED ){
-								log_info(logger, "Se requiere COMPACTACION");
+								//log_info(logger, "Se requiere COMPACTACION");
 							}
 						}
 
@@ -73,10 +73,10 @@ void conexion_kernel(int server_connection){
 							list_remove_element(lista_de_tablas, tabla_de_proceso_to_delete);
 							free(tabla_de_proceso_to_delete->segmentos);
 							free(tabla_de_proceso_to_delete);
-							log_info(logger,"Eliminacion del Proceso PID: %d", nueva_instruccion->pid);
+							log_info(logger,"Eliminación de Proceso PID: %d", nueva_instruccion->pid);
 							break;
 						case ALLOCATE_SEGMENT:
-							log_info(logger,"Creacion del Proceso PID: %d", nueva_instruccion->pid);
+							log_info(logger,"Creación de Proceso PID: %d", nueva_instruccion->pid);
 							allocate_segmento_0(nueva_instruccion->pid);
 							break;
 						case PRINT_SEGMENTS:
@@ -102,9 +102,9 @@ void conexion_kernel(int server_connection){
 				serializar_tabla_segmentos(server_connection,lista_de_tablas);
 				break;
 			case 3:
-				log_info(logger,"Solicitud de COMPACTACION recibida");
+				log_info(logger,"Solicitud de Compactación");
 				compactar_memoria();
-				log_info(logger,"Resultado de COMPACTACION");
+				//log_info(logger,"Resultado de COMPACTACION");
 				imprimir_tabla_segmentos();
 				t_resp_mem estado_memoria = COMPACTATION_SUCCESS;
 				sleep(retardo_compactacion);

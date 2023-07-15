@@ -31,6 +31,6 @@ pcb_t *crear_proceso(t_list* instrucciones, uint32_t socket){
 void agregar_pcb_a_new(t_list* instrucciones, uint32_t socket){
 	pcb_t *proceso = crear_proceso(instrucciones, socket);
 	list_push(pcb_new_list,proceso);
-	log_info(logger, "Se crea el proceso: %d en NEW", proceso->pid);
+	log_info(logger, "Se crea el proceso %d en NEW", proceso->pid);
 	sem_post(&sem_estado_new);
 }

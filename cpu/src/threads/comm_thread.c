@@ -2,9 +2,10 @@
 
 void conexion_kernel(int server_connection){
 
-	log_info(logger, "Cpu lista para recibir al Kernel");
+	//log_info(logger, "Cpu lista para recibir al Kernel");
 	int connection_fd = esperar_cliente(server_connection);
-	log_info(logger,"%s",handshake(connection_fd));
+	handshake(connection_fd);
+	//log_info(logger,"%s",handshake(connection_fd));
 
 	int exit_status = 0;
 

@@ -3,7 +3,8 @@
 
 int ejecutar_f_write_read(t_contexto *contexto, t_instruc *instruccion, contexto_estado_t estado)
 {
-	int dir_fisica = traducir_direccion(instruccion->param2, contexto);
+	int tamanio = atoi(instruccion->param3);
+	int dir_fisica = traducir_direccion(instruccion->param2, contexto, tamanio);
 
 	if(dir_fisica < 0) return 1;
 

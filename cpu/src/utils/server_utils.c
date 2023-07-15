@@ -36,7 +36,7 @@ int esperar_cliente(int socket_servidor)
 {
 	// Aceptamos un nuevo cliente
 	int socket_cliente = accept(socket_servidor, NULL, NULL);
-	log_info(logger, "Se conecto el Kernel");
+	//log_info(logger, "Se conecto el Kernel");
 
 	return socket_cliente;
 }

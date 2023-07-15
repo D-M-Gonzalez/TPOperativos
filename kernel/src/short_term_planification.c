@@ -74,7 +74,7 @@ void estado_block()
 
 		pcb_t *pcb_bloqueado = list_pop(pcb_block_list);
 
-		log_info(logger, "PID: %d - Estado Anterior PCB_EXEC - Estado Actual: PCB_BLOCK", pcb_bloqueado->pid);
+		//log_info(logger, "PID: %d - Estado Anterior PCB_EXEC - Estado Actual: PCB_BLOCK", pcb_bloqueado->pid);
 
 		pcb_bloqueado->estado = PCB_BLOCK;
 
@@ -91,7 +91,7 @@ void io_block(void *args)
 	t_io_block_args *arguments = (t_io_block_args*) args;
 
 	log_info(logger,"PID: %d - Ejecuta IO: %d",arguments->pcb->pid, arguments->block_time);
-	log_info(logger,"PID: %d - Bloqueado por: IO",arguments->pcb->pid);
+	//log_info(logger,"PID: %d - Bloqueado por: IO",arguments->pcb->pid);
 
 	arguments->pcb->estado = PCB_BLOCK;
 	sleep(arguments->block_time);
@@ -118,7 +118,7 @@ void file_system_read_write_block(t_read_write_block_args* args)
 	arguments->pcb->estado = PCB_READY;
 	arguments->pcb->tiempo_espera_en_ready = temporal_create();
 
-	log_info(logger,"PID: %d - Estado Anterior: PCB_BLOCK - Estado Actual: PCB_READY - Razon: %s", arguments->pcb->pid, arguments->pcb->estado_exec == F_WRITE ? "F_WRITE" : "F_READ");
+	//log_info(logger,"PID: %d - Estado Anterior: PCB_BLOCK - Estado Actual: PCB_READY - Razon: %s", arguments->pcb->pid, arguments->pcb->estado_exec == F_WRITE ? "F_WRITE" : "F_READ");
 
 	sem_post(&sem_compactacion);
 	sem_post(&sem_estado_ready);
@@ -131,7 +131,7 @@ void file_system_truncate_block(t_read_write_block_args* args)
 {
 	t_read_write_block_args *arguments = args;
 
-	log_info(logger,"PID: %d - Bloqueado por: Truncate",arguments->pcb->pid);
+	//log_info(logger,"PID: %d - Bloqueado por: Truncate",arguments->pcb->pid);
 
 	arguments->pcb->estado = PCB_BLOCK;
 

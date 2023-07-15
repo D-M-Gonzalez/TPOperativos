@@ -4,17 +4,18 @@ char* armar_lista_pids(t_list *lista)
 {
 	int largo = list_size(lista);
 	char *pids = string_new();
-	string_append(&pids, "Cola Ready %s:");
+	string_append(&pids, "Cola Ready %s: [");
 
 	for (int i = 0; i < largo; i++)
 	{
 		pcb_t *pcb = list_get(lista, i);
 		char *pid = string_from_format("%u", pcb->pid);
-		string_append(&pids, " PID");
+		string_append(&pids, " ");
 		string_append(&pids, pid);
 
 		free(pid);
 	}
+	string_append(&pids, "]");
 
 	return pids;
 }

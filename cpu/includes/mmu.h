@@ -13,7 +13,7 @@ extern t_log *logger;
 extern int server_connection;
 extern uint32_t contexto_estado;
 
-int traducir_direccion(char *param, t_contexto *contexto);
+int traducir_direccion(char* direccion, t_contexto *contexto, uint32_t largo);
 bool validar_tam_segmento(int tam_segmento);
 segmento_t* buscar_segmento(int num_segmento, t_list *segmentos);
 int obtener_direccion_base(int num_segmento, tabla_segmentos_t *tabla_segmentos);

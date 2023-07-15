@@ -57,7 +57,7 @@ void eliminar_segmento(tabla_segmentos_t* tabla_proceso, t_list* lista_huecos, u
 	nuevo_hueco->tamanio = segmento->tamanio;
 
 	list_add(lista_huecos,nuevo_hueco);
-	log_info(logger,"PID: %d - Eliminar Segmento: %d - Base: %d - Tamanio: %d",tabla_proceso->pid,id_segmento,segmento->direccion_base,segmento->tamanio);
+	log_info(logger,"PID: %d - Eliminar Segmento: %d - Base: %d - TAMAÑO: %d",tabla_proceso->pid,id_segmento,segmento->direccion_base,segmento->tamanio);
 	free(segmento);
 
 	list_sort(lista_huecos,(void*) ordenar_lista_huecos);
@@ -177,7 +177,7 @@ t_list* extraer_segmentos(){
 void imprimir_tabla_segmentos(){
 	void imprimir_tabla(tabla_segmentos_t* tabla){
 		void imprimir_segmentos(segmento_t* segmento){
-			log_info(logger,"PID: %d - Segmento: %d - Base: %d - Tamanio: %d",tabla->pid,segmento->ids,segmento->direccion_base,segmento->tamanio);
+			log_info(logger,"PID: %d - Segmento: %d - Base: %d - Tamaño: %d",tabla->pid,segmento->ids,segmento->direccion_base,segmento->tamanio);
 		}
 		list_iterate(tabla->segmentos, (void*) imprimir_segmentos);
 	}
