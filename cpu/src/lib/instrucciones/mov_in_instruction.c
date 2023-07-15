@@ -29,10 +29,11 @@ int ejecutar_mov_in(t_contexto *contexto, t_instruc *instruccion)
 
 	int largo1 = strlen(instruccion->param1);
 	int largo2 = strlen(instruccion->param2);
-	char* params = malloc(largo1 + largo2 + 1);
+	char* params = malloc(largo1 + largo2 + 2);
 	memcpy(params,instruccion->param1,largo1);
-	memcpy(params + largo1, instruccion->param2, largo2);
-	memcpy(params + largo1 + largo2, "", 1);
+	memcpy(params + largo1, " ", 1);
+	memcpy(params + largo1 + 1, instruccion->param2, largo2);
+	memcpy(params + largo1 + largo2 + 1, "", 1);
 
 	free(valor);
 	free(params);

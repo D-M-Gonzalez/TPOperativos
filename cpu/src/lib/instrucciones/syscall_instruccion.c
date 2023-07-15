@@ -23,7 +23,7 @@ int ejecutar_syscall(t_contexto* contexto, t_instruc* instruccion, contexto_esta
 			memcpy(contexto->param2,instruccion->param2,contexto->param2_length);
 
 			string_append(&params,contexto->param1);
-			string_append(&params," , ");
+			string_append(&params," ");
 			string_append(&params,contexto->param2);
 
 			break;
@@ -41,9 +41,9 @@ int ejecutar_syscall(t_contexto* contexto, t_instruc* instruccion, contexto_esta
 			memcpy(contexto->param3,instruccion->param3,contexto->param3_length);
 
 			string_append(&params,contexto->param1);
-			string_append(&params," , ");
+			string_append(&params," ");
 			string_append(&params,contexto->param2);
-			string_append(&params," , ");
+			string_append(&params," ");
 			string_append(&params,contexto->param3);
 			break;
 		default:

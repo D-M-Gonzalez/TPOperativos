@@ -12,8 +12,10 @@ void comm_threadKernel(int kernel_connection){
 				deserializar_instruccion_file(nueva_instruccion, paquete->buffer, paquete->lineas);
 				uint32_t pid = nueva_instruccion->pid;
 				t_resp_file estado_file = F_ERROR;
-				//nombre_archivo = realloc(nombre_archivo,1);
-				//string_append(&nombre_archivo,nueva_instruccion->param1);
+				int largo = strlen(nueva_instruccion->param1);
+				nombre_archivo = realloc(nombre_archivo,largo + 1);
+				memcpy(nombre_archivo,nueva_instruccion->param1,largo);
+				memcpy(nombre_archivo + largo, "", 1);
 
 				switch (nueva_instruccion->estado){
 					case F_OPEN:

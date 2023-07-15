@@ -1,0 +1,1 @@
+./monitormem ../monitormem.config

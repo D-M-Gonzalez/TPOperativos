@@ -140,7 +140,7 @@ void file_system_truncate_block(t_read_write_block_args* args)
 	list_push(pcb_ready_list, arguments->pcb);
 	arguments->pcb->estado = PCB_READY;
 	arguments->pcb->tiempo_espera_en_ready = temporal_create();
-	log_info(logger,"PID: %d - Salio del Bloqueo por: Truncate",arguments->pcb->pid);
+	//log_info(logger,"PID: %d - Salio del Bloqueo por: Truncate",arguments->pcb->pid);
 
 	sem_post(&sem_estado_ready);
 	destruir_contexto(args->contexto);

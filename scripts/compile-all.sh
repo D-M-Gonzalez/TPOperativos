@@ -16,3 +16,7 @@ echo "================= Consola3 ================="
 make main-build -C ../consola3/Debug;
 echo "================= Consola4 ================="
 make main-build -C ../consola4/Debug;
+echo "================= Monitor-File ================="
+make main-build -C ../monitorfile/Debug;
+echo "================= Monitor-Mem ================="
+make main-build -C ../monitormem/Debug;

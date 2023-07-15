@@ -15,7 +15,7 @@ char* armar_lista_pids(t_list *lista)
 
 		free(pid);
 	}
-	string_append(&pids, "]");
+	string_append(&pids, " ]");
 
 	return pids;
 }

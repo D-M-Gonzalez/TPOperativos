@@ -34,6 +34,7 @@ void escribir_bloques_indirectos(t_list* lista_bloques, int indice_inicial, int 
 
 		_escribir_int(bloque->id_bloque, offset);
 	}
+
 	sleep(retardo_acceso_bloque);
 }
 

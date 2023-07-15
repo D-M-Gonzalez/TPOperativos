@@ -9,26 +9,28 @@ void manejar_archivo(t_contexto* contexto, pcb_t* pcb){
 
 	switch(respuesta){
 		case F_OPEN_SUCCESS:
-			log_info(logger,"PID: %d - F_OPEN correcto", pcb->pid);
+			//log_info(logger,"PID: %d - F_OPEN correcto", pcb->pid);
 			break;
 		case F_CLOSE_SUCCESS:
-			log_info(logger,"PID: %d - F_CLOSE correcto", pcb->pid);
+			//log_info(logger,"PID: %d - F_CLOSE correcto", pcb->pid);
 			break;
 		case F_TRUNCATE_SUCCESS:
-			log_info(logger,"PID: %d - F_TRUNCATE correcto", pcb->pid);
+			//log_info(logger,"PID: %d - F_TRUNCATE correcto", pcb->pid);
 			break;
 		case F_SEEK_SUCCESS:
-			log_info(logger,"PID: %d - F_SEEK correcto", pcb->pid);
+			//log_info(logger,"PID: %d - F_SEEK correcto", pcb->pid);
 			break;
 		case FILE_DOESNT_EXISTS:
-			log_info(logger,"PID: %d - F_CREATE requerido", pcb->pid);
+			//log_info(logger,"PID: %d - F_CREATE requerido", pcb->pid);
 			contexto->estado = F_CREATE;
+			manejar_archivo(contexto,pcb);
+			contexto->estado = F_OPEN;
 			manejar_archivo(contexto,pcb);
 			break;
 		case F_DELETE_SUCCESS:
 			log_info(logger,"PID: %d - Cerrar Archivo: %s", pcb->pid, contexto->param1);
 			list_remove_element(tabla_global_archivos_abiertos,contexto->param1);
-			log_info(logger,"PID: %d - F_DELETE correcto", pcb->pid);
+			//log_info(logger,"PID: %d - F_DELETE correcto", pcb->pid);
 			break;
 		default:
 			break;
@@ -49,10 +51,10 @@ void editar_archivo(t_contexto* contexto, pcb_t* pcb){
 
 	switch(respuesta){
 		case F_WRITE_SUCCESS:
-			log_info(logger,"PID: %d - F_WRITE correcto", pcb->pid);
+			//log_info(logger,"PID: %d - F_WRITE correcto", pcb->pid);
 			break;
 		case F_READ_SUCCESS:
-			log_info(logger,"PID: %d - F_READ correcto", pcb->pid);
+			//log_info(logger,"PID: %d - F_READ correcto", pcb->pid);
 			break;
 		default:
 			break;

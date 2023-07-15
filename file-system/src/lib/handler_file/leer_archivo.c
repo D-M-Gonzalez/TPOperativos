@@ -43,6 +43,8 @@ void leer_bloques_indirectos(int id_fcb,t_list* lista_de_bloques, int offset_ini
 		offset_fcb += tamanio_de_bloque;
 	}
 
+	log_info(logger,"Acceso Bloque - Archivo: %s - Bloque File System: %d",nombre_archivo, valor_fcb(id_fcb, PUNTERO_INDIRECTO));
+
 	sleep(retardo_acceso_bloque);
 }
 

@@ -265,7 +265,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			break;
 
 		case DELETE_SEGMENT:
-			//log_info(logger, "PID: %d - Comunicacion con MEMORIA", pcb->pid);
+			log_info(logger,"PID: %d - Eliminar Segmento - Id Segmento: %s", contexto->pid, contexto->param1);
 			delete_segment(contexto_actualizado,pcb);
 			solicitar_tabla_segmentos();
 			enviar_contexto(pcb);

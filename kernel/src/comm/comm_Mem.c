@@ -93,6 +93,6 @@ void delete_segment(t_contexto* contexto, pcb_t* pcb){
 	t_instruc_mem* instruccion_delete = inicializar_instruc_mem();
 	copiar_instruccion_mem(instruccion_delete,contexto);
 	serializar_instruccion_memoria(memoria_connection, instruccion_delete);
-	log_info(logger,"PID: %d - Eliminar Segmento - Id Segmento: %s", contexto->pid, contexto->param1);
+	//log_info(logger,"PID: %d - Eliminar Segmento - Id Segmento: %s", contexto->pid, contexto->param1);
 	destruir_instruc_mem(instruccion_delete);
 }

@@ -64,7 +64,7 @@ void asignar_bloques(int id_fcb, int nuevo_tamanio)
 	if(size_final > 2){
 		uint32_t offset_indirecto = valor_fcb(id_fcb,PUNTERO_INDIRECTO) * tamanio_de_bloque;
 
-		log_info(logger,"Acceso a Bloque - Archivo: %s - ID Bloque: %d",nombre_archivo,valor_fcb(id_fcb,PUNTERO_INDIRECTO));
+		log_info(logger,"Acceso a Bloque - Archivo: %s - Bloque File System: %d",nombre_archivo,valor_fcb(id_fcb,PUNTERO_INDIRECTO));
 		escribir_bloques_indirectos(lista_total_de_bloques, size_inicial, offset_indirecto);
 	}
 

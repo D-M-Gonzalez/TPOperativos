@@ -1,0 +1,1 @@
+./monitorfile ../monitorfile.config
