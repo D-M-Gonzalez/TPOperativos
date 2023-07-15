@@ -48,5 +48,10 @@ memoria: $(OBJS) $(USER_OBJS) makefile $(OPTIONAL_TOOL_DEPS)
 	@echo ' '
 
 # Other Targets
+clean:
+	-$(RM) memoria
+	-@echo ' '
+
+.PHONY: all clean dependents main-build
 
 -include ../makefile.targets

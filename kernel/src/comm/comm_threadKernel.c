@@ -51,6 +51,8 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			break;
 
 		case IO:
+			log_info(logger, "PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_BLOCK", pcb->pid);
+			log_info(logger,"PID: %d - Bloqueado por: IO",pcb->pid);
 			t_io_block_args *args = malloc(sizeof(t_io_block_args));
 			args->pcb = pcb;
 			int time = atoi(contexto_actualizado->param1);
@@ -71,6 +73,7 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 				log_info(logger, "PID: %d - Wait: %s - Instancias: %d", pcb->pid, recurso_wait, instancias_recurso);
 				if (instancias_recurso < 0)
 				{
+					log_info(logger, "PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_BLOCK", pcb->pid);
 					log_info(logger,"PID: %d - Bloqueado por: %s",pcb->pid,recurso_wait);
 					int recurso_length = strlen(recurso_wait) + 1;
 					pcb->recurso_bloqueante = realloc(pcb->recurso_bloqueante, recurso_length);
@@ -110,8 +113,9 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			else
 			{
 				list_push(pcb_exit_list, pcb);
-				log_info(logger, "Finaliza el proceso %d - Motivo: INVALID_RESOURCE", pcb->pid);
 				log_error(logger, "No existe el recurso %s - terminando proceso PID: %d", recurso_signal, pcb->pid);
+				log_info(logger, "PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_EXIT", pcb->pid);
+				log_info(logger, "Finaliza el proceso %d - Motivo: INVALID_RESOURCE", pcb->pid);
 				sem_post(&sem_estado_exit);
 			}
 			free(recurso_signal);
@@ -132,6 +136,8 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 			int instancias_recurso = obtener_instancias(lista_recursos, archivo->nombre_archivo);
 			if (instancias_recurso < 0)
 			{
+				log_info(logger, "PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_BLOCK", pcb->pid);
+				log_info(logger,"PID: %d - Bloqueado por: %s",pcb->pid,archivo->nombre_archivo);
 				int recurso_length = strlen(archivo->nombre_archivo) + 1;
 				pcb->recurso_bloqueante = realloc(pcb->recurso_bloqueante, recurso_length);
 				memcpy(pcb->recurso_bloqueante, archivo->nombre_archivo, recurso_length);
@@ -184,6 +190,8 @@ contexto_estado_t enviar_contexto(pcb_t *pcb)
 
 		case F_TRUNCATE:
 			log_info(logger,"PID: %d - Archivo: %s - Tamaño: %s",pcb->pid,contexto_actualizado->param1, contexto_actualizado->param2);
+			log_info(logger, "PID: %d - Estado Anterior: PCB_EXEC - Estado Actual: PCB_BLOCK", pcb->pid);
+			log_info(logger,"PID: %d - Bloqueado por: %s",pcb->pid,contexto_actualizado->param1);
 			t_read_write_block_args *args_truncate = malloc(sizeof(t_read_write_block_args));
 			args_truncate->pcb = pcb;
 			args_truncate->contexto = inicializar_contexto();
