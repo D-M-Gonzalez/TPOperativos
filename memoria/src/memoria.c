@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
 
 	sem_init(&semaforo, 0, 0);
 
-	while (num_threads < 2)
+	while (num_threads < 3)
 	{
 		if(num_threads < CANTIDAD_DE_THREADS){
 			t_conexion *conexion = malloc(sizeof *conexion);
