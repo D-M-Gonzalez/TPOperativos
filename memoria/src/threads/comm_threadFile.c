@@ -3,7 +3,7 @@
 void conexion_file_system(int server_connection)
 {
 	cpu_connection = esperar_cliente(server_connection);
-	//log_info(logger, "Se conecto FILE SYSTEM");
+	log_info(logger, "Se conecto FILE SYSTEM");
 
 	while (exit_status == 0)
 	{

@@ -46,5 +46,10 @@ monitormem: $(OBJS) $(USER_OBJS) makefile $(OPTIONAL_TOOL_DEPS)
 	@echo ' '
 
 # Other Targets
+clean:
+	-$(RM) monitormem
+	-@echo ' '
+
+.PHONY: all clean dependents main-build
 
 -include ../makefile.targets

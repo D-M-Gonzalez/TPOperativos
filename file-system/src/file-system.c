@@ -44,11 +44,11 @@ int main(int argc, char *argv[]) {
 
 	// Conectamos al monitor, comentar para la entrega
 
-	// int monitor_connection = crear_conexion(monitor_ip,monitor_port);
+	int monitor_connection = crear_conexion(monitor_ip,monitor_port);
 
-	// pthread_t thread_mon;
-	// pthread_create(&thread_mon, NULL, (void*) thread_monitor, monitor_connection);
-	// pthread_detach(thread_mon);
+	pthread_t thread_mon;
+	pthread_create(&thread_mon, NULL, (void*) thread_monitor, monitor_connection);
+	pthread_detach(thread_mon);
 
 	//Inicializamos conexion con memoria
 	if((memoria_connection = crear_conexion(memoria_ip,memoria_port)) == 0 || handshake_cliente(memoria_connection,3,4) == -1) {
@@ -58,11 +58,10 @@ int main(int argc, char *argv[]) {
 	//log_info(logger,"%d",tamanio_archivo);
 	int server_connection = iniciar_servidor(server_port);
 
-	//log_info(logger, "File System listo para recibir al Kernel");
+	log_info(logger, "File System listo para recibir al Kernel");
 	//log_info(logger,"%d",tamanio_archivo);
 	int connection_fd = esperar_cliente(server_connection);
-	handshake(connection_fd);
-	//log_info(logger,"%s",handshake(connection_fd));
+	log_info(logger,"%s",handshake(connection_fd));
 	pthread_t thread_kernel;
 	pthread_create(&thread_kernel, NULL, (void*) comm_threadKernel, connection_fd);
 	pthread_join(thread_kernel, NULL);

@@ -53,11 +53,11 @@ int main(int argc, char *argv[])
 
 	// Conectamos al monitor, comentar para la entrega
 
-	// int monitor_connection = crear_conexion(monitor_ip,monitor_port);
+	int monitor_connection = crear_conexion(monitor_ip,monitor_port);
 
-	// pthread_t thread_mon;
-	// pthread_create(&thread_mon, NULL, (void*) thread_monitor, monitor_connection);
-	// pthread_detach(thread_mon);
+	pthread_t thread_mon;
+	pthread_create(&thread_mon, NULL, (void*) thread_monitor, monitor_connection);
+	pthread_detach(thread_mon);
 
 	// Esperamos conexiones de Kernel, CPU y File-System
 
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 	cpu_conectada = false;
 	kernel_conectado = false;
 	fileSystem_conectado = false;
-	//log_info(logger, "Memoria lista para recibir al CPU, Kernel o File System");
+	log_info(logger, "Memoria lista para recibir al CPU, Kernel o File System");
 	pthread_t threads[3];
 	int num_threads = 0;
 
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
 	}
 	sem_wait(&semaforo);
 
-	//log_info(logger, "Terminando modulo MEMORIA");
+	log_info(logger, "Terminando modulo MEMORIA");
 	liberar_conexion(server_connection);
 
 }
@@ -95,7 +95,7 @@ void thread_main(t_conexion* conexion)
 {
 	//log_info(logger, "Thread iniciado correctamente");
 	char *mensaje = handshake(conexion->num_socket);
-	//log_info(logger,"%s", mensaje);
+	log_info(logger,"%s", mensaje);
 
 	if (strcmp(mensaje, "Handshake de CPU recibido correctamente") == 0)
 	{

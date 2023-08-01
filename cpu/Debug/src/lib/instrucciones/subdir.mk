@@ -55,4 +55,10 @@ src/lib/instrucciones/%.o: ../src/lib/instrucciones/%.c src/lib/instrucciones/su
 	@echo ' '
 
 
+clean: clean-src-2f-lib-2f-instrucciones
+
+clean-src-2f-lib-2f-instrucciones:
+	-$(RM) ./src/lib/instrucciones/cmp_instruction.d ./src/lib/instrucciones/cmp_instruction.o ./src/lib/instrucciones/create_segment.d ./src/lib/instrucciones/create_segment.o ./src/lib/instrucciones/exit_instruction.d ./src/lib/instrucciones/exit_instruction.o ./src/lib/instrucciones/f_read_write_instruction.d ./src/lib/instrucciones/f_read_write_instruction.o ./src/lib/instrucciones/inc_instruction.d ./src/lib/instrucciones/inc_instruction.o ./src/lib/instrucciones/ip_instruction.d ./src/lib/instrucciones/ip_instruction.o ./src/lib/instrucciones/jz_instruction.d ./src/lib/instrucciones/jz_instruction.o ./src/lib/instrucciones/mov_in_instruction.d ./src/lib/instrucciones/mov_in_instruction.o ./src/lib/instrucciones/mov_out_instruction.d ./src/lib/instrucciones/mov_out_instruction.o ./src/lib/instrucciones/set_instruction.d ./src/lib/instrucciones/set_instruction.o ./src/lib/instrucciones/syscall_instruccion.d ./src/lib/instrucciones/syscall_instruccion.o ./src/lib/instrucciones/yield_instruction.d ./src/lib/instrucciones/yield_instruction.o
+
+.PHONY: clean-src-2f-lib-2f-instrucciones
 

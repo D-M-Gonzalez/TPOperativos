@@ -28,5 +28,10 @@ src/threads/%.o: ../src/threads/%.c src/threads/subdir.mk
 	@echo ' '
 
 
+clean: clean-src-2f-threads
 
+clean-src-2f-threads:
+	-$(RM) ./src/threads/comm_threadCpu.d ./src/threads/comm_threadCpu.o ./src/threads/comm_threadFile.d ./src/threads/comm_threadFile.o ./src/threads/comm_threadKernel.d ./src/threads/comm_threadKernel.o
+
+.PHONY: clean-src-2f-threads
 

@@ -22,4 +22,10 @@ src/lib/%.o: ../src/lib/%.c src/lib/subdir.mk
 	@echo ' '
 
 
+clean: clean-src-2f-lib
+
+clean-src-2f-lib:
+	-$(RM) ./src/lib/allocate_segment.d ./src/lib/allocate_segment.o
+
+.PHONY: clean-src-2f-lib
 

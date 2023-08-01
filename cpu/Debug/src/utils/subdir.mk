@@ -34,3 +34,10 @@ src/utils/%.o: ../src/utils/%.c src/utils/subdir.mk
 	@echo ' '
 
 
+clean: clean-src-2f-utils
+
+clean-src-2f-utils:
+	-$(RM) ./src/utils/calculos.d ./src/utils/calculos.o ./src/utils/client_utils.d ./src/utils/client_utils.o ./src/utils/datos.d ./src/utils/datos.o ./src/utils/server_utils.d ./src/utils/server_utils.o ./src/utils/utils.d ./src/utils/utils.o
+
+.PHONY: clean-src-2f-utils
+

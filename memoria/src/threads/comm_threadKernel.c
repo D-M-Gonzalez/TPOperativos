@@ -3,7 +3,7 @@
 void conexion_kernel(int server_connection){
 
 	kernel_connection= esperar_cliente(server_connection);
-	//log_info(logger,"Se conecto KERNEL");
+	log_info(logger,"Se conecto KERNEL");
 
 	while (exit_status==0)
 	{

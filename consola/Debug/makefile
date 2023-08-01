@@ -40,7 +40,15 @@ main-build: consola
 consola: $(OBJS) $(USER_OBJS) makefile $(OPTIONAL_TOOL_DEPS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -L"/home/utnso/Documents/tp-2023-1c-Segmentation-Fault/shared/includes" -o "consola" $(OBJS) $(USER_OBJS) $(LIBS) -lcommons -lreadline
+	gcc -L"/home/utnso/Documents/SO/shared/includes" -o "consola" $(OBJS) $(USER_OBJS) $(LIBS) -lcommons -lreadline
 	@echo 'Finished building target: $@'
 	@echo ' '
 
+# Other Targets
+clean:
+	-$(RM) consola
+	-@echo ' '
+
+.PHONY: all clean dependents main-build
+
+-include ../makefile.targets

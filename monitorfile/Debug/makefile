@@ -41,10 +41,15 @@ main-build: monitorfile
 monitorfile: $(OBJS) $(USER_OBJS) makefile $(OPTIONAL_TOOL_DEPS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc  -o "monitorfile" $(OBJS) $(USER_OBJS) $(LIBS) -lcommons
+	gcc  -o "monitorfile" $(OBJS) $(USER_OBJS) $(LIBS) -lcommons -lm
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
+clean:
+	-$(RM) monitorfile
+	-@echo ' '
+
+.PHONY: all clean dependents main-build
 
 -include ../makefile.targets

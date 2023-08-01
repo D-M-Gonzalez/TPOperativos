@@ -12,6 +12,31 @@
 
 
 int main(int argc, char *argv[]) {
+	/*
+	void print_bytes(void *ptr, int size){
+		unsigned char *p = ptr;
+		int i;
+		for (i=0; i<size; i++){
+			printf("%02hhX ", p[i]);
+		}
+		printf("\n");
+	}*/
+/*
+
+	uint16_t numero = 99;
+	uint16_t* p_numero = &numero;
+
+	//print_bytes(p_numero, 4);
+
+	char string = '\0';
+
+	char asd;
+
+	sprintf(&asd,"%02hhX",string);
+	printf("%s\n",asd);
+
+	//print_bytes(string, 1);
+	fflush(stdout);*/
 
 	t_list* instruc_list = list_create();
 

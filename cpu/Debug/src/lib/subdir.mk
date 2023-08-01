@@ -28,4 +28,10 @@ src/lib/%.o: ../src/lib/%.c src/lib/subdir.mk
 	@echo ' '
 
 
+clean: clean-src-2f-lib
+
+clean-src-2f-lib:
+	-$(RM) ./src/lib/code_reader.d ./src/lib/code_reader.o ./src/lib/instruc_log.d ./src/lib/instruc_log.o ./src/lib/manejador_contexto.d ./src/lib/manejador_contexto.o
+
+.PHONY: clean-src-2f-lib
 

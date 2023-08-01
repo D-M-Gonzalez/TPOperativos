@@ -3,7 +3,7 @@
 void conexion_cpu(int server_connection)
 {
 	cpu_connection = esperar_cliente(server_connection);
-	//log_info(logger,"Se conecto CPU");
+	log_info(logger,"Se conecto CPU");
 
 	while (exit_status == 0)
 	{

@@ -25,4 +25,10 @@ src/lib/handler_file/%.o: ../src/lib/handler_file/%.c src/lib/handler_file/subdi
 	@echo ' '
 
 
+clean: clean-src-2f-lib-2f-handler_file
+
+clean-src-2f-lib-2f-handler_file:
+	-$(RM) ./src/lib/handler_file/escribir_archivo.d ./src/lib/handler_file/escribir_archivo.o ./src/lib/handler_file/leer_archivo.d ./src/lib/handler_file/leer_archivo.o
+
+.PHONY: clean-src-2f-lib-2f-handler_file
 

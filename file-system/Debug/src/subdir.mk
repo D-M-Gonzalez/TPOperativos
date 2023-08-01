@@ -25,5 +25,10 @@ src/%.o: ../src/%.c src/subdir.mk
 	@echo ' '
 
 
+clean: clean-src
 
+clean-src:
+	-$(RM) ./src/file-system.d ./src/file-system.o ./src/initial_setup.d ./src/initial_setup.o
+
+.PHONY: clean-src
 

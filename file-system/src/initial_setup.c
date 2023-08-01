@@ -126,7 +126,7 @@ int initial_setup()
 
 	if (error == 1)
 	{
-		//log_info(logger, "Valores de configuracion leidos correctamente");
+		log_info(logger, "Valores de configuracion leidos correctamente");
 		return EXIT_SUCCESS;
 	}
 	else

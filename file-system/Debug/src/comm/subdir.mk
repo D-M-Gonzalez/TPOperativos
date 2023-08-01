@@ -25,5 +25,10 @@ src/comm/%.o: ../src/comm/%.c src/comm/subdir.mk
 	@echo ' '
 
 
+clean: clean-src-2f-comm
 
+clean-src-2f-comm:
+	-$(RM) ./src/comm/comm_Mem.d ./src/comm/comm_Mem.o ./src/comm/comm_ThreadKernel.d ./src/comm/comm_ThreadKernel.o
+
+.PHONY: clean-src-2f-comm
 
