@@ -11,11 +11,19 @@ int initial_setup(){
 		error = 0;
 	}
 
-	// TAM_MEMORIA
+	// TAM_LINEA
 	if (config_has_property(config, "TAM_LINEA")){
 		tam_linea = config_get_int_value(config, "TAM_LINEA");
 	} else {
 		failed_initial_setup("TAM_LINEA");
+		error = 0;
+	}
+
+	// TAM_COLUMNA
+	if (config_has_property(config, "TAM_COLUMNA")){
+		tam_columna = config_get_int_value(config, "TAM_COLUMNA");
+	} else {
+		failed_initial_setup("TAM_COLUMNA");
 		error = 0;
 	}
 

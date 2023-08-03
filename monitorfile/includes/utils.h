@@ -21,5 +21,6 @@ t_log* iniciar_logger(void);
 extern t_config* config;
 extern t_log* logger;
 extern int tam_linea;
+extern int tam_columna;
 
 #endif /* UTILS_H_ */

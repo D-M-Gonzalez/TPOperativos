@@ -12,6 +12,7 @@ extern t_config* config;
 extern t_log* logger;
 extern char* server_port;
 extern int tam_linea;
+extern int tam_columna;
 
 int initial_setup();
 void failed_initial_setup(char* key);

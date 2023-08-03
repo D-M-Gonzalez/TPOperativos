@@ -13,6 +13,7 @@ t_config* config;
 t_log* logger;
 char* server_port;
 int tam_linea;
+int tam_columna;
 
 void conexion_memoria(int server_connection);
 
